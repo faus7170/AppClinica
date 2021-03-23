@@ -9,4 +9,7 @@
     <string name="invalid_username">El usuario no se ha encontrado</string>
     <string name="invalid_password">La contraseña debe tener almenos 5 caracteres</string>
     <string name="login_failed">"Fallo el ingreso"</string>
+    <string name="ok">Ok</string>
+    <string name="confirm_email">Confirm Email</string>
+    <string name="please_confirm_email">Please confirm your email (%s) to create an account</string>
 </resources>
