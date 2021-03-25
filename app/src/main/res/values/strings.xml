@@ -12,4 +12,6 @@
     <string name="ok">Ok</string>
     <string name="confirm_email">Confirm Email</string>
     <string name="please_confirm_email">Please confirm your email (%s) to create an account</string>
+    <string name="facebook_app_id">241605911000791</string>
+    <string name="fb_login_protocol_scheme">fb241605911000791</string>
 </resources>
