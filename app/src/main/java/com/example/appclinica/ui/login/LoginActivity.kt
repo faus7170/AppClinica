@@ -157,7 +157,6 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-
     //Ingresar con google
 
     private fun initGoogleClient() {
@@ -177,7 +176,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         super.onActivityResult(requestCode, resultCode, data)
 
         callbackManager.onActivityResult(requestCode, resultCode, data)
@@ -189,21 +187,6 @@ class LoginActivity : AppCompatActivity() {
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)!!
                 //Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
-
-                val user = Firebase.auth.currentUser
-                user?.let {
-                    // Name, email address, and profile photo Url
-                    val name = user.displayName
-                    val email = user.email
-                    val hasMap = HashMap<String, String>()
-                    hasMap.put("nombre", name)
-                    hasMap.put("correo", email)
-                    val uid = auth.currentUser.uid
-                    database.child("usuarios").child(uid).setValue(hasMap)
-
-                    //Toast.makeText(applicationContext, "name "+photoUrl+ " "+isAnonimo, Toast.LENGTH_LONG).show()
-                }
-
                 firebaseAuthWithGoogle(account.idToken!!)
 
             } catch (e: ApiException) {
@@ -242,6 +225,5 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
-
 
 }
