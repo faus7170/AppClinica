@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1026834042993",
+    "firebase_url": "https://clinicaapp-2a450-default-rtdb.firebaseio.com",
     "project_id": "clinicaapp-2a450",
     "storage_bucket": "clinicaapp-2a450.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1026834042993-n2hr6ngrsfae7vujs9oh79n8sis7chf7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.appclinica",
+            "certificate_hash": "29fc5bdcb5ea365226e88168c7b93f3562a3571a"
+          }
+        },
         {
           "client_id": "1026834042993-f2bk0cvnic2iv82pcki66uqgtq335pqn.apps.googleusercontent.com",
           "client_type": 3

@@ -20,11 +20,45 @@
             android:text="Bienvenido"
             android:textSize="36sp" />
 
-        <Button
-            android:id="@+id/button2"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Registrar con google" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ejercicios" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="AUTOHIPNOSIS " />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Chat" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_registroFacebookMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar con Facebook"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_pruebaObtenerDatos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Obtener datos" />
 
         <Button
             android:id="@+id/btn_cerrarSesion"
