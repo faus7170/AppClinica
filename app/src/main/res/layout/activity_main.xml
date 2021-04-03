@@ -55,12 +55,6 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/btn_pruebaObtenerDatos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Obtener datos" />
-
-        <Button
             android:id="@+id/btn_cerrarSesion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
