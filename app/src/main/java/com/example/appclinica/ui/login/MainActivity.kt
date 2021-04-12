@@ -12,8 +12,6 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : AppCompatActivity() {
 
     lateinit var btn_cerrarSesion: Button
-    lateinit var btn_pruebaObtenerDatos: Button
-    private lateinit var btn_registroFacebook : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         btn_cerrarSesion.setOnClickListener{
             salir()
         }
+
+
 
     }
 

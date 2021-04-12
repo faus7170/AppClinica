@@ -6,32 +6,38 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
 import com.example.appclinica.R
 import com.example.appclinica.data.Autenticacion
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.*
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 
-class LoginActivity : Autenticacion() , View.OnClickListener{
+class LoginActivity : AppCompatActivity(){
 
     private lateinit var database: DatabaseReference
 
-    lateinit var btn_registrarGoogle: ImageButton
+    /*lateinit var btn_registrarGoogle: ImageButton
     lateinit var btn_registrarFacebook: ImageButton
     lateinit var btn_ingresoAnonimo: Button
     lateinit var btn_ingresrCorreo: Button
     lateinit var btn_resetPasswordLogin: Button
     lateinit var btn_ingresrRegistrarCorreo: Button
     lateinit var txt_correo : EditText
-    lateinit var txt_clave : EditText
+    lateinit var txt_clave : EditText*/
+
+    lateinit var tabLayout : TabLayout
+    lateinit var viewPager : ViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         
-        auth = FirebaseAuth.getInstance()
+        /*auth = FirebaseAuth.getInstance()
         database = Firebase.database.reference
 
         declarValores()
@@ -42,7 +48,15 @@ class LoginActivity : Autenticacion() , View.OnClickListener{
         btn_ingresoAnonimo.setOnClickListener(this)
         btn_ingresrCorreo.setOnClickListener(this)
         btn_ingresrRegistrarCorreo.setOnClickListener(this)
-        btn_resetPasswordLogin.setOnClickListener(this)
+        btn_resetPasswordLogin.setOnClickListener(this)*/
+
+        tabLayout = findViewById(R.id.idTabLayout)
+        viewPager = findViewById(R.id.idViewPager)
+
+        val pageAdapter = PageAdapter(supportFragmentManager)
+        viewPager.adapter = pageAdapter
+
+        tabLayout.setupWithViewPager(viewPager)
 
 
     }
@@ -53,14 +67,14 @@ class LoginActivity : Autenticacion() , View.OnClickListener{
      */
 
 
-    override fun onStart() {
+    /*override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         updateUI(currentUser)
-    }
+    }*/
 
-    private fun declarValores() {
+    /*private fun declarValores() {
 
         btn_registrarGoogle = findViewById(R.id.btn_img_google)
         btn_ingresoAnonimo = findViewById(R.id.btnIngresoAnonimo)
@@ -95,7 +109,7 @@ class LoginActivity : Autenticacion() , View.OnClickListener{
                 showConfirmationDialogPersonalisadoResetPassword()
             }
         }
-    }
+    }*/
 
 
 
