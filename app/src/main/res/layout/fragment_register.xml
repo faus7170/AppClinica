@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.login.fragmentos.RegisterFragment"
+    tools:context=".ui.login.fragment.RegisterFragment"
     >
 
     <ScrollView
@@ -58,37 +58,12 @@
 
 
             <Button
-                android:id="@+id/btn_dialogo_registrar"
+                android:id="@+id/btnRegistrarCorreo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/btn_login_register"
                 android:text="Registrar" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <ImageButton
-                    android:id="@+id/btn_img_googleRegister"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:background="@color/colorbg"
-                    android:src="@drawable/google" />
-
-                <ImageButton
-                    android:id="@+id/btn_img_facebookRegister"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:background="@color/colorbg"
-                    android:src="@drawable/facebook" />
-
-            </LinearLayout>
 
 
         </LinearLayout>

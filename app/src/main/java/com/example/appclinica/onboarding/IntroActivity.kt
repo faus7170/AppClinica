@@ -110,7 +110,7 @@ class IntroActivity : AppCompatActivity() {
     private fun loaddLastScreen() {
         btnNext.visibility = View.INVISIBLE
         btnGetStarted.visibility = View.VISIBLE
-        tvSkip.visibility = View.INVISIBLE
+        //tvSkip.visibility = View.INVISIBLE
         tabIndicator.visibility = View.INVISIBLE
         // TODO : ADD an animation the getstarted button
         // setup animation
@@ -123,7 +123,7 @@ class IntroActivity : AppCompatActivity() {
         btnNext = findViewById(R.id.btn_next)
         btnGetStarted = findViewById(R.id.btn_get_started)
         btnAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_animation);
-        tvSkip = findViewById(R.id.tv_skip)
+        //tvSkip = findViewById(R.id.tv_skip)
 
     }
 }

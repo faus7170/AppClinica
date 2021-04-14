@@ -1,12 +1,15 @@
-package com.example.appclinica.ui.login
+package com.example.appclinica.ui.chat
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.appclinica.ui.login.fragment.LoginFragment
-import com.example.appclinica.ui.login.fragment.RegisterFragment
+import com.example.appclinica.ui.chat.fragment.ChatPsicologos
+import com.example.appclinica.ui.chat.fragment.ChatSala
+import com.example.appclinica.ui.exercise.fragment.ExerciseFree
+import com.example.appclinica.ui.exercise.fragment.ExerciseToPay
 
-class PageAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
+
+class PageAdapterChat(fm: FragmentManager): FragmentPagerAdapter(fm) {
 
 
     override fun getCount(): Int {
@@ -17,10 +20,10 @@ class PageAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
 
         when(position){
             0 -> {
-                return LoginFragment()
+                return ChatPsicologos()
             }
             else -> {
-                return RegisterFragment()
+                return ChatSala()
             }
 
         }
@@ -29,10 +32,10 @@ class PageAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position){
             0 -> {
-                "Iniciar sesión"
+                "Psicologos"
             }
             else -> {
-                return "Registrar"
+                return "Chats"
             }
 
         }

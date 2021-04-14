@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appclinica.R
-import com.example.appclinica.ui.login.MainActivity
+import com.example.appclinica.ui.login.PrincipalActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -32,13 +32,8 @@ open class Autenticacion : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
 
 
-    lateinit var txt_dialogo_correo : EditText
-    lateinit var txt_dialogo_clave: EditText
-    lateinit var txt_dialogo_nombre: EditText
     lateinit var txt_dialogo_correo_reset: EditText
-    lateinit var txt_dialogo_edad: EditText
     lateinit var btn_resetPassword: Button
-    lateinit var btn_dialogo_registro: Button
 
 
     //Registrar con facebook
@@ -83,7 +78,7 @@ open class Autenticacion : AppCompatActivity() {
                 }
     }
 
-    //Registrar como invitado
+    //Registrar como anonimo
 
     fun loginAnonimo() {
         auth.signInAnonymously()
@@ -166,68 +161,16 @@ open class Autenticacion : AppCompatActivity() {
 
     fun updateUI(currentUser: FirebaseUser?) { //send current user to next activity
         if (currentUser == null) return
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, PrincipalActivity::class.java)
         startActivity(intent)
         finish()
     }
 
     //Ingresar con correo
 
-    fun checkCredentials(email: String, password: String): Boolean {
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(applicationContext, "Llenar los campos", Toast.LENGTH_LONG).show()
-            return false
-        }else if (!email.contains("@") || email.length < 6) {
-            Toast.makeText(applicationContext, "Verificar que el correo", Toast.LENGTH_LONG).show()
-            return false
-        } else if (password.length < 6) {
-            Toast.makeText(
-                    applicationContext,
-                    "La contraseña no puede ser menor a 6 digitos",
-                    Toast.LENGTH_LONG
-            ).show()
-            return false
-        }
-
-        return true
-    }
-
-    fun registerNewUser(email: String, password: String) {
-
-        auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-
-                        val user = auth.currentUser
-
-                        sendEmailVerification(user)
-                    } else {
-                        // If sign in fails, display a message to the user.
-
-                        Toast.makeText(baseContext, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show()
-                        updateUI(null)
-                    }
-                }
-    }
 
 
-    fun sendEmailVerification(user: FirebaseUser) {
-        //Log.d(TAG, "started Verification")
 
-        user!!.sendEmailVerification()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        showConfirmationDialog(
-                                R.string.confirm_email,
-                                getString(R.string.please_confirm_email, user.email)
-                        )
-                    }else {
-                        //Log.e(TAG, "sendEmailVerification", task.exception)
-                    }
-                }
-    }
 
     fun showConfirmationDialog(title: Int, msg: String) {
         val dlg = AlertDialog.Builder(this)
@@ -262,32 +205,6 @@ open class Autenticacion : AppCompatActivity() {
         }
     }
 
-    fun loginUser(email: String, password: String) {
-
-        if (checkCredentials(email, password)) {
-
-            auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            val user: FirebaseUser = auth.getCurrentUser()
-                            if (!user.isEmailVerified) {
-                                //showConfirmationDialog(R.string.confirm_email,
-                                //      getString(R.string.please_confirm_email, user.email))
-                                Toast.makeText(applicationContext, "El usuario no confirma el correo", Toast.LENGTH_SHORT).show()
-                            } else {
-                                updateUI(user)
-
-                            }
-                        } else {
-                            Toast.makeText(applicationContext, "Error while login", Toast.LENGTH_SHORT)
-                                    .show()
-                        }
-                    }
-
-        }
-
-    }
 
     fun resetPasword(emailAddress:String){
 
@@ -299,51 +216,5 @@ open class Autenticacion : AppCompatActivity() {
                 }
     }
 
-
-    fun showConfirmationDialogPersonalisado() {
-        val dlg = AlertDialog.Builder(this)
-        val inflater = layoutInflater
-        val view = inflater.inflate(R.layout.dialog_signin, null)
-        dlg.setView(view)
-
-        val alertDialog = dlg.create()
-        alertDialog.show()
-
-        btn_dialogo_registro = view.findViewById<Button>(R.id.btn_dialogo_registrar)
-        txt_dialogo_clave = view.findViewById(R.id.txt_dialogo_clave)
-        txt_dialogo_correo = view.findViewById(R.id.txt_dialogo_correo)
-        txt_dialogo_nombre = view.findViewById(R.id.txt_dialogo_nombre)
-        txt_dialogo_edad = view.findViewById(R.id.txt_dialogo_edad)
-
-        btn_dialogo_registro.setOnClickListener {
-            //Toast.makeText(applicationContext, "Registrar usuario"+txt_dialogo_clave.text+" "+txt_dialogo_usr.text, Toast.LENGTH_SHORT).show()
-
-            if (checkCredentials(txt_dialogo_correo.getText().toString(), txt_dialogo_clave.getText().toString())) {
-                registerNewUser(txt_dialogo_correo.getText().toString(), txt_dialogo_clave.getText().toString())
-            }
-        }
-    }
-    //Autenticar un usuario anonimo con facebook
-
-    private fun handleFacebookAccessTokenAnonimo(token: AccessToken) {
-        val credential = FacebookAuthProvider.getCredential(token.token)
-        auth.currentUser!!.linkWithCredential(credential)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-
-                        Toast.makeText(baseContext, "Autenticacion correcta.",
-                                Toast.LENGTH_SHORT).show()
-                        val user = task.result?.user
-                        updateUI(user)
-                    } else {
-
-                        Toast.makeText(baseContext, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show()
-
-                    }
-
-                    // ...
-                }
-    }
 
 }

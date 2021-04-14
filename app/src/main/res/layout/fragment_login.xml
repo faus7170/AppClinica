@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.login.fragmentos.LoginFragment">
+    tools:context=".ui.login.fragment.LoginFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -46,38 +46,12 @@
 
 
             <Button
-                android:id="@+id/btnIngresar"
+                android:id="@+id/btnIngresarCorreo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/btn_login_register"
                 android:text="Ingresar" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <ImageButton
-                    android:id="@+id/btn_img_google"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:background="@color/colorbg"
-                    android:src="@drawable/google" />
-
-                <ImageButton
-                    android:id="@+id/btn_img_facebook"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:background="@color/colorbg"
-                    android:src="@drawable/facebook" />
-
-            </LinearLayout>
-
 
 
         </LinearLayout>

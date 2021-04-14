@@ -10,10 +10,19 @@
     <string name="invalid_password">La contraseña debe tener almenos 5 caracteres</string>
     <string name="login_failed">"Fallo el ingreso"</string>
     <string name="ok">Ok</string>
-    <string name="confirm_email">Confirm Email</string>
-    <string name="please_confirm_email">Please confirm your email (%s) to create an account</string>
+    <string name="confirm_email">Confirmar el correo</string>
+    <string name="please_confirm_email">Confirme su correo electrónico (% s) para crear una cuenta</string>
     <string name="facebook_app_id">241605911000791</string>
     <string name="fb_login_protocol_scheme">fb241605911000791</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_exercise">ExerciseActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
