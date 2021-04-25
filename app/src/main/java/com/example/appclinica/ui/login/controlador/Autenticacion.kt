@@ -1,4 +1,4 @@
-package com.example.appclinica.data
+package com.example.appclinica.ui.login.controlador
 
 import android.content.Intent
 import android.widget.Button

@@ -1,5 +1,6 @@
 package com.example.appclinica.ui.login.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,9 +11,14 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.appclinica.R
+import com.example.appclinica.ui.PrincipalActivity
+import com.example.appclinica.ui.chat.controlador.FirestoreAdapterUser
+import com.example.appclinica.ui.psicologo.GetDatosPsicologo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class RegisterFragment : Fragment() {
@@ -72,7 +78,11 @@ class RegisterFragment : Fragment() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             val user = auth.currentUser
-                            sendEmailVerification(user)
+
+                            setDatos(user.uid)
+
+                            updateUI(user)
+                            //sendEmailVerification(user)
                         } else {
                             Toast.makeText(activity, "Authentication failed.", Toast.LENGTH_SHORT).show()
                             //updateUI(null)
@@ -99,12 +109,39 @@ class RegisterFragment : Fragment() {
     }
 
     fun showConfirmationDialog(title: Int, msg: String) {
-        val dlg = AlertDialog.Builder(activity!!)
+        val dlg = AlertDialog.Builder(requireActivity())
         dlg.setMessage(msg)
         dlg.setTitle(title)
         dlg.setPositiveButton(R.string.ok, null)
         dlg.show()
 
+    }
+
+    fun updateUI(currentUser: FirebaseUser?) { //send current user to next activity
+        if (currentUser == null) return
+        val intent = Intent(activity, PrincipalActivity::class.java)
+        startActivity(intent)
+        //finish()
+    }
+
+    fun setDatos(uid:String){
+
+        val db = Firebase.firestore
+
+        val datos = hashMapOf(
+                "nombre" to "Usuario sin identifiacion",
+                "descripcion" to "Usuario sin identifiacion",
+                "titulo" to "Usuario sin identifiacion",
+                "foto" to "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png",
+                "ispsicologo" to false
+        )
+
+        db.collection("usuarios").document(uid).set(datos)
+                .addOnSuccessListener {
+                    Toast.makeText(activity,"Registro con exito",Toast.LENGTH_LONG).show()
+                }.addOnFailureListener {
+
+        }
     }
 
 }

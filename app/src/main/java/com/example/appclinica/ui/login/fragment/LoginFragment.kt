@@ -70,11 +70,12 @@ class LoginFragment : Fragment(){
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             val user = auth.currentUser
-                            if (!user.isEmailVerified) {
+                            updateUI(user)
+                            /*if (!user.isEmailVerified) {
                                 Toast.makeText(activity, "En la espera de confirmacion del correo", Toast.LENGTH_SHORT).show()
                             } else {
                                 updateUI(user)
-                            }
+                            }*/
                         } else {
                             Toast.makeText(activity, "Error al cargar", Toast.LENGTH_SHORT).show()
                         }

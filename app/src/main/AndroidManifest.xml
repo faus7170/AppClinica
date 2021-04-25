@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ui.chat.SalaDeChatActivity"></activity>
+        <activity android:name=".ui.psicologo.DisplayPsicoActivity"></activity>
+        <activity android:name=".ui.chat.SalaDeChatActivity" />
         <activity android:name=".ui.chat.ChatActivity" />
         <activity android:name=".ui.chatnofunciona.ChatTest" />
         <activity android:name=".ui.psicologo.PsicoActivity" />

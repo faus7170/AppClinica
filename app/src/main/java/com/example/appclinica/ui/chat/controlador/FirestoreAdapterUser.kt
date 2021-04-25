@@ -5,9 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.appclinica.R
 import com.example.appclinica.ui.chat.modelo.GetDatosMensaje
-import com.example.appclinica.ui.chat.modelo.GetDatosUser
+import com.example.appclinica.ui.psicologo.GetDatosPsicologo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -16,54 +17,45 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import de.hdodenhof.circleimageview.CircleImageView
 
-class TestAdapter( val dataSet: MutableList<GetDatosUser>, val listener: (GetDatosUser) -> Unit,var isChat: Boolean) : RecyclerView.Adapter<TestAdapter.EjercHolder>() {
+class FirestoreAdapterUser(val dataSet: MutableList<GetDatosPsicologo>, val listener: (GetDatosPsicologo) -> Unit, val isChat:Boolean) : RecyclerView.Adapter<FirestoreAdapterUser.EjercHolder>() {
 
-    //var dataSet : MutableList<GetDatosUser> = mutableListOf()
-
-    lateinit var viewName: TextView
     lateinit var thelastmessage: String
     lateinit var auth: FirebaseAuth
 
-
-    fun addUser (user: GetDatosUser){
-        dataSet.add(user)
-        notifyItemInserted(dataSet.size)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EjercHolder {
-        val layout = LayoutInflater.from(parent.context)
+        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.designer_user_contact,parent,false)
 
-        return EjercHolder(layout.inflate(R.layout.designer_user_contact,parent,false))
-
-
+        return EjercHolder(view)
     }
 
     override fun onBindViewHolder(holder: EjercHolder, position: Int) {
         holder.render(dataSet[position])
         holder.itemView.setOnClickListener { listener(dataSet[position]) }
 
-
         if (isChat){
             lastMsm(dataSet[position].id,holder.viewLastmsm)
 
-        }else{
-            holder.viewLastmsm.visibility = View.GONE
         }
 
     }
-
 
     override fun getItemCount(): Int = dataSet.size
 
     inner class EjercHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        var viewName = view.findViewById(R.id.viewNameUserMsm) as TextView
+        var txtNombreEjerccio = view.findViewById(R.id.viewNameUserMsm) as TextView
+        var txtDescripcion = view.findViewById(R.id.viewLastMsm) as TextView
         var viewLastmsm = view.findViewById(R.id.viewLastMsm) as TextView
+        var imgPerfil = view.findViewById(R.id.imgCircleFragmentUser) as CircleImageView
 
-        fun render (informacion: GetDatosUser){
-            viewName.text = informacion.nombre
+        fun render (informacion : GetDatosPsicologo){
 
+            Glide.with(itemView.context).load(informacion.foto).into(imgPerfil)
+            txtNombreEjerccio.text = informacion.nombre
+            txtDescripcion.text = informacion.descripcion
+            //txtComenzarEjercicio.text = informacion.titulo
         }
 
     }
@@ -108,6 +100,7 @@ class TestAdapter( val dataSet: MutableList<GetDatosUser>, val listener: (GetDat
         })
 
     }
+
 
 
 }

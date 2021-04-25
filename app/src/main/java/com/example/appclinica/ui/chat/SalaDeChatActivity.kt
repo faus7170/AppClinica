@@ -6,10 +6,12 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.appclinica.R
 import com.example.appclinica.ui.chat.controlador.MessageAdapter
 import com.example.appclinica.ui.chat.modelo.GetDatosMensaje
-import com.example.appclinica.ui.chat.modelo.GetDatosUser
+import com.example.appclinica.ui.psicologo.DisplayPsicoActivity
+import com.example.appclinica.ui.psicologo.ViewPsiocologo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -18,19 +20,19 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import de.hdodenhof.circleimageview.CircleImageView
 
-class SalaDeChatActivity : AppCompatActivity() {
+class SalaDeChatActivity : ViewPsiocologo() {
 
     lateinit var messageAdapter: MessageAdapter
     lateinit var btnenviar: ImageButton
     lateinit var txt_mensaje: TextView
-    lateinit var txtName: TextView
     lateinit var recyclerView: RecyclerView
     lateinit var iduser:String
     lateinit var auth: FirebaseAuth
     lateinit var uid :String
-    lateinit var database: FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,13 +47,9 @@ class SalaDeChatActivity : AppCompatActivity() {
         iduser = valor.toString()
 
 
-        txt_mensaje = findViewById(R.id.txtSendMensaje)
-        txtName = findViewById(R.id.viewNameSalaChat)
-        btnenviar = findViewById(R.id.btnSendMensaje)
-        recyclerView = findViewById(R.id.recyclerSalaChat)
+        getValores()
 
         recyclerView.setHasFixedSize(true)
-
 
         val linerLinearLayoutManager = LinearLayoutManager(this)
         linerLinearLayoutManager.stackFromEnd = true
@@ -63,23 +61,19 @@ class SalaDeChatActivity : AppCompatActivity() {
             txt_mensaje.text = ""
         }
 
-        val database = Firebase.database
-        val myRef = database.getReference("user").child(valor.toString())
+        val name = SalaDeChatActivity::class.simpleName
+        activityPerfile(iduser,name.toString())
 
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val post = dataSnapshot.getValue<GetDatosUser>()
+        readMessege(uid,iduser)
 
-                txtName.text = post!!.nombre
+    }
 
-                readMessege(uid,iduser)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        })
-
+    private fun getValores() {
+        txt_mensaje = findViewById(R.id.txtSendMensaje)
+        txtNombre = findViewById(R.id.viewNameSalaChat)
+        btnenviar = findViewById(R.id.btnSendMensaje)
+        recyclerView = findViewById(R.id.recyclerSalaChat)
+        imgProfile = findViewById(R.id.imgCircleSalaChat)
     }
 
     fun sendMessege(sender:String,reciver:String,msm:String){
@@ -140,7 +134,6 @@ class SalaDeChatActivity : AppCompatActivity() {
 
         })
     }
-
 
     fun readMessege(myid:String,userid:String){
 

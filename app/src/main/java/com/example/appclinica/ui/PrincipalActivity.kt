@@ -4,12 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import com.example.appclinica.R
 import com.example.appclinica.ui.chat.ChatActivity
 import com.example.appclinica.ui.exercise.EjercicioActivity
 import com.example.appclinica.ui.login.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -21,6 +23,7 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var cardVieweChat: CardView
     lateinit var cardVieweConfiguracion: CardView
     lateinit var cardViewePremium: CardView
+    lateinit var btnCerrarSesion: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +34,14 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
         cardVieweChat = findViewById(R.id.bankcardChat)
         cardVieweConfiguracion = findViewById(R.id.bankcardConfiguracion)
         cardViewePremium = findViewById(R.id.bankcardPremium)
+        btnCerrarSesion = findViewById(R.id.btnCerrarSesion)
 
         cardViewEjercicio.setOnClickListener(this)
         cardVieweAutohipnosis.setOnClickListener(this)
         cardVieweChat.setOnClickListener(this)
         cardVieweConfiguracion.setOnClickListener(this)
         cardViewePremium.setOnClickListener(this)
+        btnCerrarSesion.setOnClickListener(this)
 
 
     }
@@ -67,6 +72,12 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.bankcardPremium ->{
                 Toast.makeText(applicationContext,"En mantenimiento",Toast.LENGTH_LONG).show()
+            }
+            R.id.btnCerrarSesion ->{
+                Firebase.auth.signOut()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+
             }
         }
     }

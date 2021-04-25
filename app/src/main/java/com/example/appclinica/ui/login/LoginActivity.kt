@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.*
 import androidx.viewpager.widget.ViewPager
 import com.example.appclinica.R
-import com.example.appclinica.data.Autenticacion
+import com.example.appclinica.ui.login.controlador.Autenticacion
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.*
 import com.google.firebase.database.DatabaseReference
