@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appclinica.R
-import com.example.appclinica.ui.login.PrincipalActivity
+import com.example.appclinica.ui.PrincipalActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -167,9 +167,6 @@ open class Autenticacion : AppCompatActivity() {
     }
 
     //Ingresar con correo
-
-
-
 
 
     fun showConfirmationDialog(title: Int, msg: String) {

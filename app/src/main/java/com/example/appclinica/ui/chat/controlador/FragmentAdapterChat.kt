@@ -1,15 +1,12 @@
-package com.example.appclinica.ui.chat
+package com.example.appclinica.ui.chat.controlador
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.appclinica.ui.chat.fragment.ChatPsicologos
-import com.example.appclinica.ui.chat.fragment.ChatSala
-import com.example.appclinica.ui.exercise.fragment.ExerciseFree
-import com.example.appclinica.ui.exercise.fragment.ExerciseToPay
+import com.example.appclinica.ui.chat.fragment.FragmentContact
+import com.example.appclinica.ui.chat.fragment.FragmentUser
 
-
-class PageAdapterChat(fm: FragmentManager): FragmentPagerAdapter(fm) {
+class FragmentAdapterChat (fm: FragmentManager): FragmentPagerAdapter(fm) {
 
 
     override fun getCount(): Int {
@@ -20,10 +17,10 @@ class PageAdapterChat(fm: FragmentManager): FragmentPagerAdapter(fm) {
 
         when(position){
             0 -> {
-                return ChatPsicologos()
+                return FragmentUser()
             }
             else -> {
-                return ChatSala()
+                return FragmentContact()
             }
 
         }

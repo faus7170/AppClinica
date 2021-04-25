@@ -8,7 +8,7 @@
     android:layout_gravity="center"
     android:background="#fcfcfc"
     android:padding="10dp"
-    tools:context="com.example.appclinica.ui.login.PrincipalActivity">
+    tools:context="com.example.appclinica.ui.PrincipalActivity">
     tools:context=".ui.login.PrincipalActivity" >
 
     <ScrollView
