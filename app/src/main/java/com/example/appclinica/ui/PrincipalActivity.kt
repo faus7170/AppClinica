@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import com.example.appclinica.R
+import com.example.appclinica.ui.autohipnosis.AutohipnosisActivity
 import com.example.appclinica.ui.chat.ChatActivity
 import com.example.appclinica.ui.exercise.EjercicioActivity
 import com.example.appclinica.ui.login.LoginActivity
@@ -60,7 +61,8 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
             R.id.bankcardAutohipnosis ->{
-                Toast.makeText(applicationContext,"En mantenimiento",Toast.LENGTH_LONG).show()
+                val intent = Intent(this, AutohipnosisActivity::class.java)
+                startActivity(intent)
             }
             R.id.bankcardChat ->{
                 //Toast.makeText(applicationContext,"En mantenimiento",Toast.LENGTH_LONG).show()

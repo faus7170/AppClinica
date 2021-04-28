@@ -1,4 +1,4 @@
-package com.example.appclinica.ui.exercise
+package com.example.appclinica.ui.exercise.controlador
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

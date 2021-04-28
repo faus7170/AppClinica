@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
-import com.example.appclinica.ui.chat.modelo.GetDatosMensaje
+import com.example.appclinica.ui.chat.modelo.DatosMensaje
 import com.example.appclinica.ui.chat.modelo.GetDatosUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -81,7 +81,7 @@ class RealtimeAdapterUser(val dataSet: MutableList<GetDatosUser>, val listener: 
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (postSnapshot in dataSnapshot.children) {
-                    val post = postSnapshot.getValue<GetDatosMensaje>()
+                    val post = postSnapshot.getValue<DatosMensaje>()
                     if (post!!.reciver.equals(uid) && post!!.sender.equals(userid) ||
                         post!!.reciver.equals(userid) && post!!.sender.equals(uid) ){
                         thelastmessage = post.msm

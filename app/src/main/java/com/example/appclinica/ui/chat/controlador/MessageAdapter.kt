@@ -6,12 +6,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
-import com.example.appclinica.ui.chat.modelo.GetDatosMensaje
+import com.example.appclinica.ui.chat.modelo.DatosMensaje
+import com.example.appclinica.ui.chat.modelo.MessageReciver
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.*
 
-class MessageAdapter(val dataSet: MutableList<GetDatosMensaje>) : RecyclerView.Adapter<MessageAdapter.EjercHolder>() {
+class MessageAdapter(val dataSet: MutableList<MessageReciver>) : RecyclerView.Adapter<MessageAdapter.EjercHolder>() {
 
     var type_left :Int = 0
     var type_right :Int = 1
@@ -23,10 +26,6 @@ class MessageAdapter(val dataSet: MutableList<GetDatosMensaje>) : RecyclerView.A
 
     //var dataSet : MutableList<GetDatosMensaje> = mutableListOf()
 
-    fun addMsm (msm: GetDatosMensaje){
-        dataSet.add(msm)
-        notifyItemInserted(dataSet.size)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EjercHolder {
 
@@ -43,17 +42,11 @@ class MessageAdapter(val dataSet: MutableList<GetDatosMensaje>) : RecyclerView.A
 
     override fun onBindViewHolder(holder: EjercHolder, position: Int) {
         holder.render(dataSet[position])
-        //holder.showmsm.text = dataSet[position].messenge
 
-        //holder.showmsm.text = dataSet[position].messenge
-
-        /*var getDatosMensaje:GetDatosMensaje = dataSet[position]
-
-        holder.showmsm.text = getDatosMensaje.msm*/
-
-
-
-
+        val longHora = dataSet[position].hora
+        val date = Date(longHora)
+        val simpleDateFormat = SimpleDateFormat ("hh:mm a")
+        holder.txt_date.text = simpleDateFormat.format(date)
     }
 
 
@@ -77,8 +70,10 @@ class MessageAdapter(val dataSet: MutableList<GetDatosMensaje>) : RecyclerView.A
     inner class EjercHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         var showmsm = view.findViewById(R.id.showMessege) as TextView
+        var txt_date = view.findViewById(R.id.viewHora) as TextView
 
-        fun render (informacion: GetDatosMensaje){
+
+        fun render (informacion: DatosMensaje){
             showmsm.text = informacion.msm
 
         }

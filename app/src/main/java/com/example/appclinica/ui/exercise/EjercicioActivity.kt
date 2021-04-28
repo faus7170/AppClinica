@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager.widget.ViewPager
 import com.example.appclinica.R
+import com.example.appclinica.ui.exercise.controlador.PageAdapterExercice
 import com.google.android.material.tabs.TabLayout
 
 class EjercicioActivity : AppCompatActivity() {

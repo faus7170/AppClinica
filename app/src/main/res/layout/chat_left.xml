@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/background_left"
+    android:orientation="horizontal"
     android:padding="5dp">
 
     <TextView
@@ -9,8 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
-        android:background="@drawable/background_left"
         android:paddingLeft="25dp"
         android:text="TextView"
         android:textSize="18sp" />
-</RelativeLayout>
+
+    <TextView
+        android:id="@+id/viewHora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:textSize="18sp" />
+
+</LinearLayout>
