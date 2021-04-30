@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView
 import com.example.appclinica.R
 import com.example.appclinica.ui.autohipnosis.AutohipnosisActivity
 import com.example.appclinica.ui.chat.ChatActivity
+import com.example.appclinica.ui.comunidad.ComunidadActivity
 import com.example.appclinica.ui.exercise.EjercicioActivity
 import com.example.appclinica.ui.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -23,6 +24,7 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var cardVieweAutohipnosis: CardView
     lateinit var cardVieweChat: CardView
     lateinit var cardVieweConfiguracion: CardView
+    lateinit var cardVieweForo: CardView
     lateinit var cardViewePremium: CardView
     lateinit var btnCerrarSesion: Button
 
@@ -34,6 +36,7 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
         cardVieweAutohipnosis= findViewById(R.id.bankcardAutohipnosis)
         cardVieweChat = findViewById(R.id.bankcardChat)
         cardVieweConfiguracion = findViewById(R.id.bankcardConfiguracion)
+        cardVieweForo = findViewById(R.id.bankcardForo)
         cardViewePremium = findViewById(R.id.bankcardPremium)
         btnCerrarSesion = findViewById(R.id.btnCerrarSesion)
 
@@ -42,6 +45,7 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
         cardVieweChat.setOnClickListener(this)
         cardVieweConfiguracion.setOnClickListener(this)
         cardViewePremium.setOnClickListener(this)
+        cardVieweForo.setOnClickListener(this)
         btnCerrarSesion.setOnClickListener(this)
 
 
@@ -74,6 +78,10 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.bankcardPremium ->{
                 Toast.makeText(applicationContext,"En mantenimiento",Toast.LENGTH_LONG).show()
+            }
+            R.id.bankcardForo -> {
+                val intent = Intent(this, ComunidadActivity::class.java)
+                startActivity(intent)
             }
             R.id.btnCerrarSesion ->{
                 Firebase.auth.signOut()

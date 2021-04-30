@@ -61,7 +61,7 @@ class ExerciseFree : Fragment() {
                 extras.putString("id", it.id)
                 extras.putString("nombre", it.nombre)
 
-                extras.putBoolean("HABILITADO", true)
+                //extras.putBoolean("HABILITADO", true)
                 val intent = Intent(activity, PasosActivity::class.java)
                 intent.putExtras(extras)
                 startActivity(intent)

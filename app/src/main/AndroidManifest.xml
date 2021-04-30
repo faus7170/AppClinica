@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ui.autohipnosis.AutohipnosisActivity"></activity>
+        <activity android:name=".ui.comunidad.ComentActivity"></activity>
+        <activity android:name=".ui.comunidad.ComunidadActivity" />
+        <activity android:name=".ui.autohipnosis.AutohipnosisActivity" />
         <activity android:name=".ui.exercise.MultimediaActivity" />
         <activity android:name=".ui.exercise.PasosActivity" />
         <activity android:name=".ui.psicologo.DisplayPsicoActivity" />

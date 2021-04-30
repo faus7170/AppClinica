@@ -163,7 +163,5 @@ class SalaDeChatActivity : ViewPsiocologo() {
             }
         })
 
-
-
     }
 }
