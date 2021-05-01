@@ -77,15 +77,15 @@ class FirestoreAdapterUser(val dataSet: MutableList<GetDatosPsicologo>, val list
                     if (post!!.reciver.equals(uid) && post!!.sender.equals(userid) ||
                         post!!.reciver.equals(userid) && post!!.sender.equals(uid) ){
                         thelastmessage = post.msm
-
                     }
 
                 }
 
                 when(thelastmessage){
                     "default"->{
-                        lastMsm.text = "No message"
+                        lastMsm.text = "No hay mensaje"
                     }else ->
+
                     lastMsm.text = thelastmessage
 
                 }

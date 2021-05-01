@@ -8,30 +8,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:background="@color/white"
         android:clickable="false"
-        android:padding="5dp"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="8dp">
+        app:cardCornerRadius="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="125dp"
+            android:background="@drawable/test_xml"
             android:gravity="center|left"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:orientation="horizontal">
 
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:background="@drawable/cerclebackground"
-                android:padding="10dp"
-                android:src="@drawable/ic_baseline_extension_24" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:orientation="vertical">
 
                 <TextView

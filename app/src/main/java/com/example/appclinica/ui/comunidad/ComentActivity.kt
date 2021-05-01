@@ -9,12 +9,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.appclinica.R
 import com.example.appclinica.ui.chat.controlador.MessageAdapter
 import com.example.appclinica.ui.chat.modelo.MessageReciver
 import com.example.appclinica.ui.chat.modelo.MessageSender
 import com.example.appclinica.ui.comunidad.controlador.AdapterComent
 import com.example.appclinica.ui.comunidad.controlador.AdapterPreguntas
+import com.example.appclinica.ui.comunidad.controlador.TestAdapterComunidad
 import com.example.appclinica.ui.comunidad.model.SetPregunt
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -23,67 +25,76 @@ import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import de.hdodenhof.circleimageview.CircleImageView
 
 class ComentActivity : AppCompatActivity() {
 
-    lateinit var adapter: AdapterComent
+    lateinit var adapter: TestAdapterComunidad
     lateinit var btnenviar: ImageButton
     lateinit var txtPregunta: TextView
+    lateinit var imagenCircleImageView: CircleImageView
     lateinit var recyclerView: RecyclerView
     lateinit var txtComent:EditText
+    val database = Firebase.database
+    val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coment)
         getValores()
 
-        val valor = intent.extras!!.getString("id")
-        val valordos = intent.extras!!.getString("pregunta")
+        val idpublicacion = intent.extras!!.getString("id")
+        val pregunta = intent.extras!!.getString("pregunta")
+        val nombre = intent.extras!!.getString("nombre")
+        val foto = intent.extras!!.getString("foto")
 
-        txtPregunta.text = valordos
+        txtPregunta.text = pregunta
 
-        val idpe = Firebase.auth.currentUser
+        Glide.with(this).load(foto).into(imagenCircleImageView)
 
+        val user = Firebase.auth.currentUser
 
-        recyclerView.setHasFixedSize(true)
-
-        val linerLinearLayoutManager = LinearLayoutManager(this)
-        linerLinearLayoutManager.stackFromEnd = true
-
-        recyclerView.layoutManager = linerLinearLayoutManager
 
         btnenviar.setOnClickListener {
-            sendMessege(valor.toString(),txtComent.text.toString(),idpe.uid)
+            sendComentario(idpublicacion.toString(),txtComent.text.toString(),user.uid)
             txtComent.setText("")
         }
 
-        readMessege(valor.toString())
+        readComentarios(idpublicacion.toString())
 
     }
 
-    fun sendMessege(idpregunta: String, comentario: String,sender:String){
+    fun sendComentario(sender: String, question: String,uid:String){
 
-        val database = Firebase.database
-        val myRefprueba = database.getReference("preguntas").child(idpregunta).child("comentarios")
+        db.collection("usuarios").document(uid).get().addOnSuccessListener { getdatos ->
+            val nombre = getdatos.getString("nombre")
+            val foto = getdatos.getString("foto")
 
-        val hashMap: HashMap<String, String> = hashMapOf()
-        hashMap.put("idusuario",sender)
-        hashMap.put("pregunta", comentario)
+            val myRefprueba = database.getReference("publicacion").child(sender).child("comentarios")
 
-        myRefprueba.push().setValue(hashMap)
+            val hashMap: HashMap<String, String> = hashMapOf()
+            hashMap.put("sender", sender)
+            hashMap.put("pregunta", question)
+            hashMap.put("nombre", nombre!!)
+            hashMap.put("foto", foto!!)
+
+            myRefprueba.push().setValue(hashMap)
+
+
+        }.addOnFailureListener { exception ->
+
+        }
 
 
     }
 
-    fun readMessege(idpregunta: String){
+    fun readComentarios(idpregunta: String){
 
-        var mutableList: MutableList<SetPregunt>
+        var mutableList: MutableList<SetPregunt> = mutableListOf()
 
-        mutableList = mutableListOf()
-
-        val database = Firebase.database
-        val myRef = database.getReference("preguntas").child(idpregunta).child("comentarios")
+        val myRef = database.getReference("publicacion").child(idpregunta).child("comentarios")
 
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -95,7 +106,9 @@ class ComentActivity : AppCompatActivity() {
 
                 }
 
-                adapter = AdapterComent(mutableList)
+                adapter = TestAdapterComunidad(mutableList,{
+
+                },false)
                 recyclerView.adapter = adapter
 
             }
@@ -112,5 +125,13 @@ class ComentActivity : AppCompatActivity() {
         btnenviar = findViewById(R.id.btnSendComent)
         recyclerView = findViewById(R.id.recyclerComent)
         txtComent= findViewById(R.id.txtSendComent)
+        imagenCircleImageView = findViewById(R.id.imgCircleComent)
+
+        recyclerView.setHasFixedSize(true)
+
+        val linerLinearLayoutManager = LinearLayoutManager(this)
+        linerLinearLayoutManager.stackFromEnd = true
+
+        recyclerView.layoutManager = linerLinearLayoutManager
     }
 }

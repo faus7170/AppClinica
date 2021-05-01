@@ -6,14 +6,21 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
-import com.example.appclinica.ui.exercise.model.GetDatosExercise
+import com.example.appclinica.ui.exercise.model.TestDatos
 
-class AdapterExercise(val dataSet: MutableList<GetDatosExercise>, val listener: (GetDatosExercise) -> Unit) : RecyclerView.Adapter<AdapterExercise.EjercHolder>() {
+class AdapterExercise(val dataSet: MutableList<TestDatos>, val listener: (TestDatos) -> Unit, var isExercise:Boolean) : RecyclerView.Adapter<AdapterExercise.EjercHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EjercHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.designer_exercice,parent,false)
 
-        return EjercHolder(view)
+        if (isExercise){
+            val view: View = LayoutInflater.from(parent.context).inflate(R.layout.designer_exercice,parent,false)
+            return EjercHolder(view)
+
+        }else{
+            val view: View = LayoutInflater.from(parent.context).inflate(R.layout.designer_pasos,parent,false)
+            return EjercHolder(view)
+        }
+
     }
 
     override fun onBindViewHolder(holder: EjercHolder, position: Int) {
@@ -26,13 +33,28 @@ class AdapterExercise(val dataSet: MutableList<GetDatosExercise>, val listener: 
 
     inner class EjercHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        var txtNombreEjerccio = view.findViewById(R.id.viewNameExercise) as TextView
-        var txtDescripcion = view.findViewById(R.id.viewDescriptionExercise) as TextView
+        /*var viewNombreEjerccio = view.findViewById(R.id.viewNameExercise) as TextView
+        var viewDescripcionEjercicio = view.findViewById(R.id.viewDescriptionExercise) as TextView
+        var viewPaso = view.findViewById(R.id.viewNamePaso) as TextView*/
 
-        fun render (informacion : GetDatosExercise){
+        lateinit var viewNombreEjerccio : TextView
+        lateinit var viewDescripcionEjercicio :TextView
+        lateinit var viewPaso : TextView
 
-            txtNombreEjerccio.text = informacion.nombre
-            txtDescripcion.text = informacion.descripcion
+        fun render (informacion : TestDatos){
+
+            if (isExercise){
+                viewNombreEjerccio = itemView.findViewById(R.id.viewNameExercise)
+                viewDescripcionEjercicio = itemView.findViewById(R.id.viewDescriptionExercise)
+
+                viewNombreEjerccio.text = informacion.nombre
+                viewDescripcionEjercicio.text = informacion.descripcion
+            }else{
+
+                viewPaso = itemView.findViewById(R.id.viewNamePaso)
+                viewPaso.text = informacion.identificador
+            }
+
         }
 
     }

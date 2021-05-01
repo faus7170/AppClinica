@@ -34,7 +34,7 @@ class AdapterComent(var dataSet: MutableList<SetPregunt>) : RecyclerView.Adapter
 
     inner class EjercHolder(view: View) : RecyclerView.ViewHolder(view){
 
-        var txtNombreEjerccio = view.findViewById(R.id.txtComentario) as TextView
+        var txtNombreEjerccio = view.findViewById(R.id.viewComentario) as TextView
 
         fun render(informacion: SetPregunt){
 

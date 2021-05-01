@@ -4,20 +4,21 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
-import com.example.appclinica.ui.exercise.controlador.AdapterPasosExercise
-import com.example.appclinica.ui.exercise.model.GetDatosPasosExercise
+import com.example.appclinica.ui.exercise.controlador.AdapterExercise
+import com.example.appclinica.ui.exercise.model.TestDatos
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class PasosActivity : AppCompatActivity() {
 
-    lateinit var adapter: AdapterPasosExercise
+    //lateinit var adapter: AdapterPasosExercise
+    lateinit var adapter: AdapterExercise
     lateinit var mRecyclerView: RecyclerView
-    lateinit var userList: MutableList<GetDatosPasosExercise>
+    //lateinit var userList: MutableList<GetDatosPasosExercise>
+    lateinit var userList: MutableList<TestDatos>
     lateinit var textView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,16 +51,17 @@ class PasosActivity : AppCompatActivity() {
                 val contenido = getdatos.getString("contenido")
                 val id = getdatos.id
 
-                val getDatos = GetDatosPasosExercise(ident!!, contenido!!)
+                val testDatos = TestDatos("null","null","null",ident!!,contenido!!)
 
-                userList.add(getDatos)
+                userList.add(testDatos)
 
             }
-            adapter = AdapterPasosExercise(userList) {
+
+            adapter = AdapterExercise(userList,{
                 val intent = Intent(this, MultimediaActivity::class.java)
                 intent.putExtra("url", it.contenido)
                 startActivity(intent)
-            }
+            },false)
             mRecyclerView.adapter = adapter
         }.addOnFailureListener { exception ->
 

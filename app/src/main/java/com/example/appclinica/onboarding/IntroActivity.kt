@@ -37,9 +37,10 @@ class IntroActivity : AppCompatActivity() {
 
         getValor()
 
-        val mList: List<ScreenItem> = listOf(ScreenItem("Inteligencia Emocional", "En las últimas décadas en el ámbito de la psicología la inteligencia emocioanl tomado mucho relevancia, pues ha mostrado ser clave en el rendimiento laboral, educativo y deportivo", R.drawable.inteligenciaemocional),
+        val mList: List<ScreenItem> = listOf(ScreenItem("Inteligencia Emocional", "En las últimas décadas en el ámbito de la psicología la inteligencia emocioanl tomado mucho relevancia", R.drawable.inteligenciaemocional),
                 ScreenItem("Autohipnosis", "Activar tu capacidad de curación, regulación y confianza, resolver conflictos internos y mejorar tu bienestar, o conseguir soluciones creativas a cosas del día a día", R.drawable.yoga),
-                ScreenItem("Chat", "Terapia online individual con psicolgos donde se plantean un trabajo con su terapeuta que apunte a resolver el conflicto emocional que presente.", R.drawable.chat))
+                ScreenItem("Chat", "Comunicación en tiempo real con psicolgos profesionales y entre varios usuarios ", R.drawable.chat),
+                ScreenItem("Comunidad", "Espacio de comunicación asíncrona en el que los personas de un tema en específico", R.drawable.comunidad))
 
 
         introViewPagerAdapter = IntroViewPagerAdapter(this, mList)
@@ -112,7 +113,6 @@ class IntroActivity : AppCompatActivity() {
         btnGetStarted.visibility = View.VISIBLE
         //tvSkip.visibility = View.INVISIBLE
         tabIndicator.visibility = View.INVISIBLE
-        // TODO : ADD an animation the getstarted button
         // setup animation
         btnGetStarted.animation = btnAnim
     }

@@ -7,8 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
 import com.example.appclinica.ui.autohipnosis.model.GetDatosAutohipnosis
-import com.example.appclinica.ui.exercise.model.GetDatosExercise
-import com.example.appclinica.ui.exercise.model.GetDatosPasosExercise
 
 class AdapterTes(val dataSet: MutableList<GetDatosAutohipnosis>, val listener: (GetDatosAutohipnosis) -> Unit) : RecyclerView.Adapter<AdapterTes.EjercHolder>() {
 

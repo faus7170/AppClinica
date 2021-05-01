@@ -3,7 +3,9 @@ package com.example.appclinica.ui.comunidad.controlador
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.appclinica.R
@@ -11,7 +13,7 @@ import com.example.appclinica.ui.comunidad.model.SetPregunt
 import de.hdodenhof.circleimageview.CircleImageView
 
 
-class AdapterPreguntas(var dataSet: MutableList<SetPregunt>,var item: (SetPregunt)-> Unit) : RecyclerView.Adapter<AdapterPreguntas.EjercHolder>() {
+class TestAdapterComunidad(var dataSet: MutableList<SetPregunt>, var item: (SetPregunt)-> Unit, var isPublicacion:Boolean) : RecyclerView.Adapter<TestAdapterComunidad.EjercHolder>() {
 
     //var dataSet : MutableList<SetPregunt> = mutableListOf()
 
@@ -22,9 +24,10 @@ class AdapterPreguntas(var dataSet: MutableList<SetPregunt>,var item: (SetPregun
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EjercHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.designer_publicacion, parent, false)
 
+        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.designer_publicacion, parent, false)
         return EjercHolder(view)
+
     }
 
     override fun onBindViewHolder(holder: EjercHolder, position: Int) {
@@ -38,17 +41,32 @@ class AdapterPreguntas(var dataSet: MutableList<SetPregunt>,var item: (SetPregun
 
     inner class EjercHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        var viewComentario = view.findViewById(R.id.viewComentario) as TextView
-        var viewName = view.findViewById(R.id.viewNameIdUser) as TextView
-        var imagenCircle = view.findViewById(R.id.viewCirclePersonComent) as CircleImageView
-        var txtLike = view.findViewById(R.id.viewLike) as TextView
-        var txtComent = view.findViewById(R.id.viewComent) as TextView
+
+        lateinit var viewComentario :TextView
+        lateinit var viewName : TextView
+        lateinit var imagenCircle : CircleImageView
+        lateinit var txtLike : TextView
+        lateinit var txtComent :TextView
+        lateinit var linearLayout: LinearLayout
 
         fun render(informacion: SetPregunt){
+
+            viewComentario = itemView.findViewById(R.id.viewComentario) as TextView
+            viewName = itemView.findViewById(R.id.viewNameIdUser) as TextView
+            imagenCircle = itemView.findViewById(R.id.viewCirclePersonComent) as CircleImageView
+            txtLike = itemView.findViewById(R.id.viewLike) as TextView
+            txtComent = itemView.findViewById(R.id.viewComent) as TextView
+            linearLayout= itemView.findViewById(R.id.linerLayoutLikeComentar) as LinearLayout
 
             viewComentario.text = informacion.pregunta
             viewName.text = informacion.nombre
             Glide.with(itemView.context).load(informacion.foto).into(imagenCircle)
+
+            if (isPublicacion){
+                linearLayout.visibility = View.VISIBLE
+            }else{
+                linearLayout.visibility = View.GONE
+            }
 
         }
 

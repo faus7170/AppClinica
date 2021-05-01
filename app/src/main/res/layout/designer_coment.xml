@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
+    android:background="@drawable/test_dos"
     android:orientation="vertical">
 
     <LinearLayout
@@ -10,11 +11,11 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="10dp">
 
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img"
+            android:id="@+id/viewCirclePersonComent"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
@@ -35,13 +36,13 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/txtComentario"
+                android:id="@+id/viewComentario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Comentario..."
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
         </LinearLayout>
 
     </LinearLayout>

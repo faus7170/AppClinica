@@ -12,8 +12,7 @@
         android:layout_margin="5dp"
         android:clickable="false"
         android:padding="5dp"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="8dp">
+        app:cardCornerRadius="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,7 +25,7 @@
             <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:src="@drawable/ic_headphones" />
 
             <LinearLayout
@@ -59,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
+                    android:drawableBottom="@drawable/ic_arrow_down"
                     android:gravity="center"
                     android:text="Mas información"
                     android:textColor="@color/black"

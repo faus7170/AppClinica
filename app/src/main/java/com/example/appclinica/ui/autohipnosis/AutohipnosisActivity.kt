@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
 import com.example.appclinica.ui.autohipnosis.model.GetDatosAutohipnosis
-import com.example.appclinica.ui.exercise.model.GetDatosExercise
 
 
 class AutohipnosisActivity : AppCompatActivity(), View.OnClickListener {

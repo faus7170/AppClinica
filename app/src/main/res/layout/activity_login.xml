@@ -23,13 +23,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/idViewPagerExercise"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/idTabLayoutExercise"
@@ -42,31 +42,39 @@
 
                 </com.google.android.material.tabs.TabLayout>
 
-            </androidx.viewpager.widget.ViewPager>
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/idViewPagerExercise"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="20dp">
+                </androidx.viewpager.widget.ViewPager>
 
-                <ImageButton
-                    android:id="@+id/btnLoginGoogle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:src="@drawable/google" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="20dp"
+                    android:gravity="center"
+                    android:padding="10dp">
 
-                <ImageButton
-                    android:id="@+id/btnLoginFacebook"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:src="@drawable/facebook" />
+                    <ImageButton
+                        android:id="@+id/btnLoginGoogle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp"
+                        android:src="@drawable/google" />
+
+                    <ImageButton
+                        android:id="@+id/btnLoginFacebook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp"
+                        android:src="@drawable/facebook" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

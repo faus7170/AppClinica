@@ -27,36 +27,28 @@ class SalaDeChatActivity : ViewPsiocologo() {
     lateinit var iduser:String
     lateinit var auth: FirebaseAuth
     lateinit var uid :String
+    val database = Firebase.database
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sala_de_chat)
 
-        val valor = intent.extras!!.getString("id")
+        iduser = intent.extras!!.getString("id").toString()
 
-        val idpe = Firebase.auth.currentUser
+        activityPerfile(iduser,"SalaDeChatActivity"
+        )
 
-        uid = idpe.uid
+        val user = Firebase.auth.currentUser
 
-        iduser = valor.toString()
-
+        uid = user.uid
 
         getValores()
-
-        recyclerView.setHasFixedSize(true)
-
-        val linerLinearLayoutManager = LinearLayoutManager(this)
-        linerLinearLayoutManager.stackFromEnd = true
-
-        recyclerView.layoutManager = linerLinearLayoutManager
 
         btnenviar.setOnClickListener {
             sendMessege(uid,iduser,txt_mensaje.text.toString(), ServerValue.TIMESTAMP)
             txt_mensaje.text = ""
         }
 
-        val name = SalaDeChatActivity::class.simpleName
-        activityPerfile(iduser,name.toString())
 
         readMessege(uid,iduser)
 
@@ -68,17 +60,16 @@ class SalaDeChatActivity : ViewPsiocologo() {
         btnenviar = findViewById(R.id.btnSendMensaje)
         recyclerView = findViewById(R.id.recyclerSalaChat)
         imgProfile = findViewById(R.id.imgCircleSalaChat)
+
+        recyclerView.setHasFixedSize(true)
+        val linerLinearLayoutManager = LinearLayoutManager(this)
+        linerLinearLayoutManager.stackFromEnd = true
+        recyclerView.layoutManager = linerLinearLayoutManager
     }
 
     fun sendMessege(sender: String, reciver: String, msm: String, timestamp: MutableMap<String, String>){
 
-        val database = Firebase.database
         val myRefprueba = database.getReference("chats")
-
-        /*val hashMap: HashMap<String,String> = hashMapOf()
-        hashMap.put("sender",sender)
-        hashMap.put("reciver",reciver)
-        hashMap.put("msm",msm)*/
 
         myRefprueba.push().setValue(MessageSender(sender,reciver,msm,timestamp))
 
@@ -136,7 +127,7 @@ class SalaDeChatActivity : ViewPsiocologo() {
 
         mutableList = mutableListOf()
 
-        val database = Firebase.database
+        //val database = Firebase.database
         val myRef = database.getReference("chats")
 
         myRef.addValueEventListener(object : ValueEventListener {

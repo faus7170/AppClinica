@@ -63,7 +63,7 @@ class MultimediaActivity : AppCompatActivity() {
                 mediaPlayer.start()
                 seekBar.max = mediaPlayer.duration
                 handler.postDelayed(mRunnable,0)
-                imgPlayPause.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24)
+                imgPlayPause.setImageResource(R.drawable.ic_pause_circle)
             }
         }
 

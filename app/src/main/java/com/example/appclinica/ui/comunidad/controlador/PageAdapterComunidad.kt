@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.appclinica.ui.comunidad.fragment.FragmentMisPreguntas
-import com.example.appclinica.ui.comunidad.fragment.FragmentPreguntas
+import com.example.appclinica.ui.comunidad.fragment.FragmentPublicacion
 
 class PageAdapterComunidad(fm: FragmentManager): FragmentPagerAdapter(fm) {
 
@@ -17,7 +17,7 @@ class PageAdapterComunidad(fm: FragmentManager): FragmentPagerAdapter(fm) {
 
         when(position){
             0 -> {
-                return FragmentPreguntas()
+                return FragmentPublicacion()
             }
             else -> {
                 return FragmentMisPreguntas()

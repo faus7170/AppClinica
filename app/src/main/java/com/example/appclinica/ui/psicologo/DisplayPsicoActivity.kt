@@ -12,9 +12,8 @@ class DisplayPsicoActivity : ViewPsiocologo() {
         val valor = intent.extras!!.getString("id")
 
         getId()
-        val name = DisplayPsicoActivity::class.simpleName
 
-        activityPerfile(valor.toString(),name.toString())
+        activityPerfile(valor.toString(),"DisplayPsicoActivity")
 
     }
 
