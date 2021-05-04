@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.appclinica.R
+import com.example.appclinica.ui.configuracion.ConfigurarPerfilActivity
 import com.example.appclinica.ui.login.LoginActivity
 import com.google.android.material.tabs.TabLayout
 

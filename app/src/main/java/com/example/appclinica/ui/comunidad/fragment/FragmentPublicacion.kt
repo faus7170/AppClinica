@@ -1,29 +1,22 @@
 package com.example.appclinica.ui.comunidad.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
-import com.example.appclinica.ui.comunidad.ComentActivity
-import com.example.appclinica.ui.comunidad.controlador.AdapterPreguntas
+import com.example.appclinica.ui.comunidad.controlador.TestAdapterComunidad
 import com.example.appclinica.ui.comunidad.controlador.TestComunidadFunciones
 import com.example.appclinica.ui.comunidad.model.SetPregunt
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import kotlin.collections.HashMap
 
 
 class FragmentPublicacion : TestComunidadFunciones() {
@@ -49,17 +42,50 @@ class FragmentPublicacion : TestComunidadFunciones() {
         val linerLinearLayoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = linerLinearLayoutManager
 
-        readPublicacion()
+        //readPublicacion()
 
         btnPublicar.setOnClickListener {
             sendPublicacion(uid.uid, textPregunta.text.toString())
             textPregunta.setText("")
         }
 
+        readPublicaciones()
+
         return view
 
     }
 
+    private fun readPublicaciones() {
+        val mutableList: MutableList<SetPregunt> = mutableListOf()
+
+        val myRef = database.getReference("publicacion")
+
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                mutableList.clear()
+                for (postSnapshot in dataSnapshot.children) {
+                    val post = postSnapshot.getValue<SetPregunt>()
+
+                    var pregunta = post!!.pregunta
+                    var uid = post.uid
+                    var nombre = post.nombre
+                    var foto = post.foto
+                    var id = postSnapshot.key.toString()
+
+                    mutableList.add(SetPregunt(pregunta, nombre, foto, "2021", id,uid))
+                }
+
+                mutableList.reverse()
+                adapter = TestAdapterComunidad(mutableList, true, this@FragmentPublicacion)
+                recyclerView.adapter = adapter
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        })
+    }
 
 
 }

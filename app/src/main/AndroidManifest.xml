@@ -4,15 +4,18 @@
     package="com.example.appclinica">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_icono_principal"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_icono_principal_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ui.comunidad.ComentActivity"></activity>
+        <activity android:name=".ui.configuracion.ConfigurarPerfilActivity" />
+        <activity android:name=".ui.comunidad.ComentActivity" />
         <activity android:name=".ui.comunidad.ComunidadActivity" />
         <activity android:name=".ui.autohipnosis.AutohipnosisActivity" />
         <activity android:name=".ui.exercise.MultimediaActivity" />
@@ -20,15 +23,7 @@
         <activity android:name=".ui.psicologo.DisplayPsicoActivity" />
         <activity android:name=".ui.chat.SalaDeChatActivity" />
         <activity android:name=".ui.chat.ChatActivity" />
-        <activity android:name=".ui.chatnofunciona.ChatTest" />
-        <activity android:name=".ui.psicologo.PsicoActivity" />
-        <activity android:name=".ui.chatnofunciona.SalaChatActivity" />
         <activity android:name=".ui.exercise.EjercicioActivity" />
-        <activity
-            android:name=".ui.exercise.ExerciseActivity"
-            android:label="@string/title_activity_exercise"
-            android:theme="@style/NoActionBar" />
-        <activity android:name=".ui.chatnofunciona.ChatActivity" />
         <activity android:name=".onboarding.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

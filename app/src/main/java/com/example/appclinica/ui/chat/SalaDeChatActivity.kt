@@ -16,6 +16,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class SalaDeChatActivity : ViewPsiocologo() {
@@ -29,14 +30,14 @@ class SalaDeChatActivity : ViewPsiocologo() {
     lateinit var uid :String
     val database = Firebase.database
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sala_de_chat)
 
         iduser = intent.extras!!.getString("id").toString()
 
-        activityPerfile(iduser,"SalaDeChatActivity"
-        )
+        activityPerfile(iduser,"SalaDeChatActivity")
 
         val user = Firebase.auth.currentUser
 

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import com.example.appclinica.R
 import com.example.appclinica.ui.PrincipalActivity
 import com.example.appclinica.ui.chat.controlador.FirestoreAdapterUser
+import com.example.appclinica.ui.configuracion.ConfigurarPerfilActivity
 import com.example.appclinica.ui.psicologo.GetDatosPsicologo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -79,7 +80,7 @@ class RegisterFragment : Fragment() {
                             // Sign in success, update UI with the signed-in user's information
                             val user = auth.currentUser
 
-                            setDatos(user.uid)
+                            //setDatos(user.uid)
 
                             updateUI(user)
                             //sendEmailVerification(user)
@@ -119,7 +120,7 @@ class RegisterFragment : Fragment() {
 
     fun updateUI(currentUser: FirebaseUser?) { //send current user to next activity
         if (currentUser == null) return
-        val intent = Intent(activity, PrincipalActivity::class.java)
+        val intent = Intent(activity, ConfigurarPerfilActivity::class.java)
         startActivity(intent)
         //finish()
     }
@@ -129,9 +130,9 @@ class RegisterFragment : Fragment() {
         val db = Firebase.firestore
 
         val datos = hashMapOf(
-                "nombre" to "Usuario sin identifiacion",
-                "descripcion" to "Usuario sin identifiacion",
-                "titulo" to "Usuario sin identifiacion",
+                "nombre" to "Anononimo",
+                "descripcion" to "default",
+                "titulo" to "defeult",
                 "foto" to "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png",
                 "ispsicologo" to false
         )

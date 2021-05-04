@@ -2,26 +2,18 @@ package com.example.appclinica.ui.comunidad
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.appclinica.R
-import com.example.appclinica.ui.chat.controlador.MessageAdapter
-import com.example.appclinica.ui.chat.modelo.MessageReciver
-import com.example.appclinica.ui.chat.modelo.MessageSender
-import com.example.appclinica.ui.comunidad.controlador.AdapterComent
-import com.example.appclinica.ui.comunidad.controlador.AdapterPreguntas
 import com.example.appclinica.ui.comunidad.controlador.TestAdapterComunidad
 import com.example.appclinica.ui.comunidad.model.SetPregunt
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
@@ -29,11 +21,12 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ComentActivity : AppCompatActivity() {
+class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister {
 
     lateinit var adapter: TestAdapterComunidad
     lateinit var btnenviar: ImageButton
     lateinit var txtPregunta: TextView
+    lateinit var viewName: TextView
     lateinit var imagenCircleImageView: CircleImageView
     lateinit var recyclerView: RecyclerView
     lateinit var txtComent:EditText
@@ -51,6 +44,7 @@ class ComentActivity : AppCompatActivity() {
         val foto = intent.extras!!.getString("foto")
 
         txtPregunta.text = pregunta
+        viewName.text = nombre
 
         Glide.with(this).load(foto).into(imagenCircleImageView)
 
@@ -106,9 +100,7 @@ class ComentActivity : AppCompatActivity() {
 
                 }
 
-                adapter = TestAdapterComunidad(mutableList,{
-
-                },false)
+                adapter = TestAdapterComunidad(mutableList,false,this@ComentActivity)
                 recyclerView.adapter = adapter
 
             }
@@ -122,6 +114,7 @@ class ComentActivity : AppCompatActivity() {
 
     private fun getValores() {
         txtPregunta = findViewById(R.id.viewPreguntaComent)
+        viewName = findViewById(R.id.viewNameComent)
         btnenviar = findViewById(R.id.btnSendComent)
         recyclerView = findViewById(R.id.recyclerComent)
         txtComent= findViewById(R.id.txtSendComent)
@@ -133,5 +126,13 @@ class ComentActivity : AppCompatActivity() {
         linerLinearLayoutManager.stackFromEnd = true
 
         recyclerView.layoutManager = linerLinearLayoutManager
+    }
+
+    override fun onComentar(id: String, nombre: String, pregunta: String, foto: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onBorrar(nombre: String) {
+        TODO("Not yet implemented")
     }
 }

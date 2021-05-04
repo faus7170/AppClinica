@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
@@ -18,72 +19,109 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center|top|left"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/viewCirclePersonComent"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="10dp"
-                android:src="@drawable/ic_baseline_insert_emoticon_24" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:gravity="center|top|left"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-                <TextView
-                    android:id="@+id/viewNameIdUser"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Nombre ..."
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/viewComentario"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Pregunta ..."
-                    android:textColor="@color/black"
-                    android:textSize="24sp" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/viewCirclePersonComent"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_baseline_insert_emoticon_24" />
 
                 <LinearLayout
-                    android:id="@+id/linerLayoutLikeComentar"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/viewLike"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/viewNameIdUser"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_like"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="Me gusta" />
+                        android:layout_margin="5dp"
+                        android:text="Nombre ..."
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/viewComent"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/viewComentario"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_comment"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="Comentar" />
+                        android:layout_margin="5dp"
+                        android:text="Pregunta ..."
+                        android:textColor="@color/black"
+                        android:textSize="24sp" />
+
                 </LinearLayout>
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/linerLayoutLikeComentar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/viewLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_like"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="Me gusta"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/viewComent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableRight="@drawable/ic_comment"
+                    android:gravity="left"
+                    android:padding="5dp"
+                    android:text="Comentar"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/viewDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableRight="@drawable/ic_delete"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Borrar"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_edit"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="Editar"
+                    android:visibility="gone" />
+
+            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
