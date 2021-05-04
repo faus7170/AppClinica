@@ -24,7 +24,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
-class PrincipalActivity : AppCompatActivity(), View.OnClickListener, TestsSharedPreferences {
+class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
 
     lateinit var cardViewEjercicio: CardView
     lateinit var cardVieweAutohipnosis: CardView
@@ -34,18 +34,20 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener, TestsShared
     lateinit var cardViewePremium: CardView
     lateinit var btnCerrarSesion: Button
     lateinit var auth: FirebaseAuth
-    lateinit var texttest: TextView
-
+    val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
 
-
         findById()
+        getDatosUser()
+
+    }
+
+    private fun getDatosUser() {
 
         val user = Firebase.auth.currentUser
-
 
         val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
         val editor = pref.edit()
@@ -57,8 +59,6 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener, TestsShared
                     val titulo = getdatos.getString("titulo")
                     val foto = getdatos.getString("foto")
 
-
-
                     //editor.putString("uid",user.uid)
                     editor.putString("nombre", nombre)
                     editor.putString("descripcion", descripcion)
@@ -66,32 +66,9 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener, TestsShared
                     editor.putString("foto", foto)
                     editor.apply()
 
-                    /*val nombretest = pref.getString("nombre","default")
-                    val descripciontest = pref.getString("descripcion","default")
-
-                    //texttest.text = nombretest +" "+descripciontest
-                    Log.d("firestoretest","valores "+ nombretest+" "+descripciontest)*/
-
                 }.addOnFailureListener { exception ->
 
                 }
-
-        /*val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
-
-        val nombretest = pref.getString("nombre","default")
-        val descripciontest = pref.getString("descripcion","default")
-
-        texttest.text = nombretest +" "+descripciontest
-
-        Log.d("firestoretestdos","valores "+ nombretest+" "+descripciontest)*/
-
-        //dataUser(user.uid)
-        //conexionFirestore(user.uid)
-
-        //val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
-
-
-
     }
 
     override fun onClick(v: View?) {
@@ -113,9 +90,6 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener, TestsShared
                 val intent = Intent(this, ConfigurarPerfilActivity::class.java)
                 startActivity(intent)
             }
-            R.id.bankcardPremium -> {
-                Toast.makeText(applicationContext, "En mantenimiento", Toast.LENGTH_LONG).show()
-            }
             R.id.bankcardForo -> {
                 val intent = Intent(this, ComunidadActivity::class.java)
                 startActivity(intent)
@@ -131,17 +105,14 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener, TestsShared
     }
 
     private fun clearData() {
-        val preftest = applicationContext.getSharedPreferences("myPrefs", MODE_PRIVATE)
+        val preftest = applicationContext.getSharedPreferences("introConf", MODE_PRIVATE)
         preftest.edit().remove("isConfiguracion").apply()
-
 
         val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
         val editor = pref.edit()
         editor.clear().apply()
     }
 
-    override val context = this
-    override val db = Firebase.firestore
 
 
     private fun findById() {
@@ -150,15 +121,12 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener, TestsShared
         cardVieweChat = findViewById(R.id.bankcardChat)
         cardVieweConfiguracion = findViewById(R.id.bankcardConfiguracion)
         cardVieweForo = findViewById(R.id.bankcardForo)
-        cardViewePremium = findViewById(R.id.bankcardPremium)
         btnCerrarSesion = findViewById(R.id.btnCerrarSesion)
-        texttest = findViewById(R.id.txttest)
 
         cardViewEjercicio.setOnClickListener(this)
         cardVieweAutohipnosis.setOnClickListener(this)
         cardVieweChat.setOnClickListener(this)
         cardVieweConfiguracion.setOnClickListener(this)
-        cardViewePremium.setOnClickListener(this)
         cardVieweForo.setOnClickListener(this)
         btnCerrarSesion.setOnClickListener(this)
     }

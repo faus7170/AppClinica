@@ -21,9 +21,9 @@ class IntroActivity : AppCompatActivity() {
     lateinit var introViewPagerAdapter: IntroViewPagerAdapter
     lateinit var tabIndicator: TabLayout
     lateinit var btnNext: Button
-    var position = 0
     lateinit var btnGetStarted: Button
     lateinit var btnAnim: Animation
+    var position = 0
     lateinit var tvSkip: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,8 +35,13 @@ class IntroActivity : AppCompatActivity() {
             startActivity(loginActivity)
             finish()
         }
+        findById()
 
-        getValor()
+        intro()
+
+    }
+
+    private fun intro() {
 
         val mList: List<ScreenItem> = listOf(ScreenItem("Inteligencia Emocional", "En las últimas décadas en el ámbito de la psicología la inteligencia emocioanl tomado mucho relevancia", R.drawable.inteligenciaemocional),
                 ScreenItem("Autohipnosis", "Activar tu capacidad de curación, regulación y confianza, resolver conflictos internos y mejorar tu bienestar, o conseguir soluciones creativas a cosas del día a día", R.drawable.yoga),
@@ -57,12 +62,12 @@ class IntroActivity : AppCompatActivity() {
                 screenPager.currentItem = position
             }
 
-            if (position == mList.size - 1) { // when we rech to the last screen
-                    loaddLastScreen()
-                }
+            if (position == mList.size - 1) {
+                loaddLastScreen()
             }
+        }
 
-        btnGetStarted.setOnClickListener{
+        btnGetStarted.setOnClickListener {
 
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -72,19 +77,18 @@ class IntroActivity : AppCompatActivity() {
 
 
         listenerTab(mList)
-
     }
 
     private fun restorePrefData(): Boolean {
-        val pref = applicationContext.getSharedPreferences("myPrefs", MODE_PRIVATE)
+        val pref = applicationContext.getSharedPreferences("introConf", MODE_PRIVATE)
         return pref.getBoolean("isIntroOpnend", false)
     }
 
     private fun savePrefsData() {
-        val pref = applicationContext.getSharedPreferences("myPrefs", MODE_PRIVATE)
+        val pref = applicationContext.getSharedPreferences("introConf", MODE_PRIVATE)
         val editor = pref.edit()
         editor.putBoolean("isIntroOpnend", true)
-        editor.commit()
+        editor.apply()
     }
 
     private fun listenerTab(mList: List<ScreenItem>) {
@@ -114,17 +118,15 @@ class IntroActivity : AppCompatActivity() {
         btnGetStarted.visibility = View.VISIBLE
         //tvSkip.visibility = View.INVISIBLE
         tabIndicator.visibility = View.INVISIBLE
-        // setup animation
         btnGetStarted.animation = btnAnim
     }
 
-    fun getValor(){
+    fun findById(){
         screenPager = findViewById(R.id.screen_viewpager)
         tabIndicator = findViewById(R.id.tab_indicator)
         btnNext = findViewById(R.id.btn_next)
         btnGetStarted = findViewById(R.id.btn_get_started)
         btnAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_animation);
         //tvSkip = findViewById(R.id.tv_skip)
-
     }
 }

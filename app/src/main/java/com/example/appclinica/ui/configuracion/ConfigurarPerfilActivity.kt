@@ -10,9 +10,9 @@ import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.appclinica.R
 import com.example.appclinica.ui.PrincipalActivity
-import com.example.appclinica.ui.psicologo.GetDatosPsicologo
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -28,104 +28,94 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
     lateinit var textViewDescripcion: EditText
     lateinit var btnOmitir:Button
     lateinit var btnGuardar:Button
-    lateinit var storage:StorageReference
-
     val user = Firebase.auth.currentUser
-    val db = Firebase.firestore
-
-    var token= String
-
 
     lateinit var uri:Uri
+    lateinit var imagenDefault: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_configurar_perfil)
+
 
         if (restorePrefData()) {
             staractivity()
         }
 
         findViewbyid()
-
         val uid = user.uid
+
+
+        uri = Uri.parse(imagenDefault.toString())
+
 
         imagenCircleImageView.setOnClickListener {
             viewimg()
         }
 
         btnGuardar.setOnClickListener {
-            subirImagen(uid)
+            if (!textViewNombre.text.isEmpty() || !textViewApellido.text.isEmpty()){
+                guardarDatos(uid)
+            }else{
+                Toast.makeText(this,"Campos vacios",Toast.LENGTH_LONG).show()
+            }
         }
 
         btnOmitir.setOnClickListener {
 
-            var imagen = "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"
 
-            setDatos(uid,"Anonimo","default","default",imagen,false)
+            setDatos(uid,"Anonimo","default","default",imagenDefault,false)
         }
 
     }
 
 
-    fun subirImagen(uid:String){
-        if (uri!=null){
-            var pd = ProgressDialog(this)
-            pd.setTitle("Guardando datos")
-            pd.show()
+    fun guardarDatos(uid:String){
 
-            var imageRef: StorageReference = FirebaseStorage.getInstance().reference.child("usuarios/foto_perfil/"+uid+".jpg")
-            imageRef.putFile(uri)
-            .addOnFailureListener {
-                pd.dismiss()
-                Toast.makeText(this,"Error al guardar",Toast.LENGTH_LONG).show()
-            }.addOnSuccessListener { taskSnapshot ->
-                 pd.dismiss()
-            }.continueWithTask { task ->
-                        if (!task.isSuccessful) {
-                            task.exception?.let {
-                                throw it
-                            }
-                        }
-                        imageRef.downloadUrl
-                    }.addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            val downloadUri = task.result
-                            var uri = downloadUri.toString()
-
-                            setDatos(uid,textViewNombre.text.toString()+" "+textViewApellido.text.toString(),textViewDescripcion.text.toString(),
-                            "default",uri,false)
-
-                            /*val washingtonRef = db.collection("usuarios").document(uid)
-                            washingtonRef
-                                    .update("foto",  uri)
-                                    .addOnSuccessListener {
-                                        staractivity()
-                                    }
-                                    .addOnFailureListener {
-
-                                    }*/
-
-                        } else {
-                            // Handle failures
-                            // ...
+        val pd = ProgressDialog(this)
+        pd.setTitle("Guardando datos")
+        pd.show()
+        val imageRef: StorageReference = FirebaseStorage.getInstance().reference.child("usuarios/foto_perfil/"+uid+".jpg")
+        imageRef.putFile(uri)
+                .addOnFailureListener {
+                    pd.dismiss()
+                    //
+                //
+                //
+                //
+                //
+                // Toast.makeText(this,"Error al guardar",Toast.LENGTH_LONG).show()
+                }.addOnSuccessListener { taskSnapshot ->
+                    pd.dismiss()
+                }.continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
                         }
                     }
+                    imageRef.downloadUrl
+                }.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val downloadUri = task.result
+                        val uri = downloadUri.toString()
+                        setDatos(uid,textViewNombre.text.toString()+" "+textViewApellido.text.toString(),textViewDescripcion.text.toString(),
+                                "default",uri,false)
 
-        }
+                    } else {
+                        setDatos(uid,textViewNombre.text.toString()+" "+textViewApellido.text.toString(),textViewDescripcion.text.toString(),
+                                "default",imagenDefault,false)
+
+                    }
+                }
+
+
     }
 
     fun viewimg(){
         val intent = Intent()
-        intent.setType("image/*")
-        intent.setAction(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(intent,1)
-    }
-    private fun staractivity() {
-        val loginActivity = Intent(applicationContext, PrincipalActivity::class.java)
-        startActivity(loginActivity)
-        savePrefsData()
-        finish()
     }
 
     fun setDatos(uid: String, nombre: String, descripcion: String, titulo: String, foto: String, ispsicologo: Boolean){
@@ -153,21 +143,28 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
 
         if (requestCode==1 && resultCode == Activity.RESULT_OK && data !=null){
             uri = data.data!!
-            var bitmap = MediaStore.Images.Media.getBitmap(contentResolver,uri)
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,uri)
             imagenCircleImageView.setImageBitmap(bitmap)
         }
     }
 
+    private fun staractivity() {
+        val loginActivity = Intent(applicationContext, PrincipalActivity::class.java)
+        startActivity(loginActivity)
+        savePrefsData()
+        finish()
+    }
+
     private fun restorePrefData(): Boolean {
-        val pref = applicationContext.getSharedPreferences("myPrefs", MODE_PRIVATE)
+        val pref = applicationContext.getSharedPreferences("introConf", MODE_PRIVATE)
         return pref.getBoolean("isConfiguracion", false)
     }
 
     private fun savePrefsData() {
-        val pref = applicationContext.getSharedPreferences("myPrefs", MODE_PRIVATE)
+        val pref = applicationContext.getSharedPreferences("introConf", MODE_PRIVATE)
         val editor = pref.edit()
         editor.putBoolean("isConfiguracion", true)
-        editor.commit()
+        editor.apply()
     }
 
     fun findViewbyid(){
@@ -177,5 +174,8 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
         textViewDescripcion = findViewById(R.id.editTextDescripcionProfile)
         btnOmitir = findViewById(R.id.btnOmitir)
         btnGuardar = findViewById(R.id.btnGuardarDatos)
+
+        imagenDefault = "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"
+
     }
 }
