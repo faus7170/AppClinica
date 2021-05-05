@@ -10,9 +10,8 @@ import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.bumptech.glide.Glide
 import com.example.appclinica.R
-import com.example.appclinica.ui.PrincipalActivity
+import com.example.appclinica.PrincipalActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -79,11 +78,7 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
         imageRef.putFile(uri)
                 .addOnFailureListener {
                     pd.dismiss()
-                    //
-                //
-                //
-                //
-                //
+
                 // Toast.makeText(this,"Error al guardar",Toast.LENGTH_LONG).show()
                 }.addOnSuccessListener { taskSnapshot ->
                     pd.dismiss()
@@ -95,6 +90,7 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
                     }
                     imageRef.downloadUrl
                 }.addOnCompleteListener { task ->
+                    pd.dismiss()
                     if (task.isSuccessful) {
                         val downloadUri = task.result
                         val uri = downloadUri.toString()

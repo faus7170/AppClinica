@@ -52,8 +52,11 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister {
 
 
         btnenviar.setOnClickListener {
-            sendComentario(idpublicacion.toString(),txtComent.text.toString(),user.uid)
-            txtComent.setText("")
+            if(!txtComent.text.toString().isEmpty()){
+                sendComentario(idpublicacion.toString(),txtComent.text.toString(),user.uid)
+                txtComent.setText("")
+            }
+            
         }
 
         readComentarios(idpublicacion.toString())

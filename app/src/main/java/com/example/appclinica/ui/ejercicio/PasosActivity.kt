@@ -1,4 +1,4 @@
-package com.example.appclinica.ui.exercise
+package com.example.appclinica.ui.ejercicio
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,8 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
-import com.example.appclinica.ui.exercise.controlador.AdapterExercise
-import com.example.appclinica.ui.exercise.model.TestDatos
+import com.example.appclinica.ui.ejercicio.controlador.AdapterExercise
+import com.example.appclinica.ui.ejercicio.model.TestDatos
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 

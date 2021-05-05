@@ -1,6 +1,7 @@
 package com.example.appclinica.ui.chat
 
 import android.os.Bundle
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,10 +24,9 @@ class SalaDeChatActivity : ViewPsiocologo() {
 
     lateinit var messageAdapter: MessageAdapter
     lateinit var btnenviar: ImageButton
-    lateinit var txt_mensaje: TextView
+    lateinit var txt_mensaje: EditText
     lateinit var recyclerView: RecyclerView
     lateinit var iduser:String
-    lateinit var auth: FirebaseAuth
     lateinit var uid :String
     val database = Firebase.database
 
@@ -36,18 +36,19 @@ class SalaDeChatActivity : ViewPsiocologo() {
         setContentView(R.layout.activity_sala_de_chat)
 
         iduser = intent.extras!!.getString("id").toString()
+        getfindViewBy()
 
+        //Obtener y mostrar datos del recpetor
         activityPerfile(iduser,"SalaDeChatActivity")
 
-        val user = Firebase.auth.currentUser
 
-        uid = user.uid
-
-        getValores()
+        uid = uidShared()
 
         btnenviar.setOnClickListener {
-            sendMessege(uid,iduser,txt_mensaje.text.toString(), ServerValue.TIMESTAMP)
-            txt_mensaje.text = ""
+            if (!txt_mensaje.text.toString().isEmpty()){
+                sendMessege(uid,iduser,txt_mensaje.text.toString(), ServerValue.TIMESTAMP)
+                txt_mensaje.setText("")
+            }
         }
 
 
@@ -55,18 +56,11 @@ class SalaDeChatActivity : ViewPsiocologo() {
 
     }
 
-    private fun getValores() {
-        txt_mensaje = findViewById(R.id.txtSendMensaje)
-        txtNombre = findViewById(R.id.viewNameSalaChat)
-        btnenviar = findViewById(R.id.btnSendMensaje)
-        recyclerView = findViewById(R.id.recyclerSalaChat)
-        imgProfile = findViewById(R.id.imgCircleSalaChat)
-
-        recyclerView.setHasFixedSize(true)
-        val linerLinearLayoutManager = LinearLayoutManager(this)
-        linerLinearLayoutManager.stackFromEnd = true
-        recyclerView.layoutManager = linerLinearLayoutManager
+    fun uidShared(): String {
+        val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
+        return pref.getString("uid", "default")!!
     }
+
 
     fun sendMessege(sender: String, reciver: String, msm: String, timestamp: MutableMap<String, String>){
 
@@ -155,5 +149,18 @@ class SalaDeChatActivity : ViewPsiocologo() {
             }
         })
 
+    }
+
+    private fun getfindViewBy() {
+        txt_mensaje = findViewById(R.id.txtSendMensaje)
+        txtNombre = findViewById(R.id.viewNameSalaChat)
+        btnenviar = findViewById(R.id.btnSendMensaje)
+        recyclerView = findViewById(R.id.recyclerSalaChat)
+        imgProfile = findViewById(R.id.imgCircleSalaChat)
+
+        recyclerView.setHasFixedSize(true)
+        val linerLinearLayoutManager = LinearLayoutManager(this)
+        linerLinearLayoutManager.stackFromEnd = true
+        recyclerView.layoutManager = linerLinearLayoutManager
     }
 }

@@ -1,4 +1,4 @@
-package com.example.appclinica.ui.exercise
+package com.example.appclinica.ui.ejercicio
 
 import android.media.MediaPlayer
 import android.net.Uri
@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import com.example.appclinica.R
-import java.util.concurrent.TimeUnit
 
 class MultimediaActivity : AppCompatActivity() {
 

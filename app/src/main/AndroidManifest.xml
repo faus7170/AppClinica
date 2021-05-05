@@ -14,16 +14,17 @@
         android:roundIcon="@mipmap/ic_launcher_icono_principal_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".ui.ejercicio.EjercicioActivity"></activity>
         <activity android:name=".ui.configuracion.ConfigurarPerfilActivity" />
         <activity android:name=".ui.comunidad.ComentActivity" />
         <activity android:name=".ui.comunidad.ComunidadActivity" />
         <activity android:name=".ui.autohipnosis.AutohipnosisActivity" />
-        <activity android:name=".ui.exercise.MultimediaActivity" />
-        <activity android:name=".ui.exercise.PasosActivity" />
+        <activity android:name=".ui.ejercicio.MultimediaActivity" />
+        <activity android:name=".ui.ejercicio.PasosActivity" />
         <activity android:name=".ui.psicologo.DisplayPsicoActivity" />
         <activity android:name=".ui.chat.SalaDeChatActivity" />
         <activity android:name=".ui.chat.ChatActivity" />
-        <activity android:name=".ui.exercise.EjercicioActivity" />
+        <activity android:name=".ui.ejercicio.EjercicioActivityAunNo" />
         <activity android:name=".onboarding.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +34,7 @@
         </activity>
         <activity android:name=".ui.login.LoginActivity" />
         <activity
-            android:name=".ui.PrincipalActivity"
+            android:name=".PrincipalActivity"
             android:label="@string/app_name" />
 
         <meta-data

@@ -11,10 +11,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.appclinica.R
-import com.example.appclinica.ui.PrincipalActivity
-import com.example.appclinica.ui.chat.controlador.FirestoreAdapterUser
 import com.example.appclinica.ui.configuracion.ConfigurarPerfilActivity
-import com.example.appclinica.ui.psicologo.GetDatosPsicologo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference

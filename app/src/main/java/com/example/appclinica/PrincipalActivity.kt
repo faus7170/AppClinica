@@ -1,25 +1,19 @@
-package com.example.appclinica.ui
+package com.example.appclinica
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import com.example.appclinica.R
 import com.example.appclinica.ui.autohipnosis.AutohipnosisActivity
 import com.example.appclinica.ui.chat.ChatActivity
 import com.example.appclinica.ui.comunidad.ComunidadActivity
 import com.example.appclinica.ui.configuracion.ConfigurarPerfilActivity
-import com.example.appclinica.ui.exercise.EjercicioActivity
+import com.example.appclinica.ui.ejercicio.EjercicioActivity
 import com.example.appclinica.ui.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -31,10 +25,10 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var cardVieweChat: CardView
     lateinit var cardVieweConfiguracion: CardView
     lateinit var cardVieweForo: CardView
-    lateinit var cardViewePremium: CardView
     lateinit var btnCerrarSesion: Button
     lateinit var auth: FirebaseAuth
     val db = Firebase.firestore
+    val user = Firebase.auth.currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +41,6 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun getDatosUser() {
 
-        val user = Firebase.auth.currentUser
-
         val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
         val editor = pref.edit()
 
@@ -59,7 +51,7 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
                     val titulo = getdatos.getString("titulo")
                     val foto = getdatos.getString("foto")
 
-                    //editor.putString("uid",user.uid)
+                    editor.putString("uid",user.uid)
                     editor.putString("nombre", nombre)
                     editor.putString("descripcion", descripcion)
                     editor.putString("titulo", titulo)

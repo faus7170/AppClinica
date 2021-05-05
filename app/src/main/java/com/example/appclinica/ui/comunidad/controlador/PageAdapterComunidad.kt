@@ -3,7 +3,7 @@ package com.example.appclinica.ui.comunidad.controlador
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.appclinica.ui.comunidad.fragment.FragmentMisPreguntas
+import com.example.appclinica.ui.comunidad.fragment.FragmentHistorial
 import com.example.appclinica.ui.comunidad.fragment.FragmentPublicacion
 
 class PageAdapterComunidad(fm: FragmentManager): FragmentPagerAdapter(fm) {
@@ -20,7 +20,7 @@ class PageAdapterComunidad(fm: FragmentManager): FragmentPagerAdapter(fm) {
                 return FragmentPublicacion()
             }
             else -> {
-                return FragmentMisPreguntas()
+                return FragmentHistorial()
             }
 
         }
@@ -32,7 +32,7 @@ class PageAdapterComunidad(fm: FragmentManager): FragmentPagerAdapter(fm) {
                 "Comunidad"
             }
             else -> {
-                return "Mis preguntas"
+                return "Historial"
             }
 
         }
