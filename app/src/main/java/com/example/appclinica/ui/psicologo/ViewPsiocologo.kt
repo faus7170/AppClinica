@@ -7,6 +7,8 @@ import com.bumptech.glide.Glide
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 open class ViewPsiocologo: AppCompatActivity(){

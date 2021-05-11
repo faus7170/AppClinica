@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.appclinica.R
-import com.example.appclinica.PrincipalActivity
+import com.example.appclinica.HomeActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
@@ -83,13 +83,11 @@ class LoginFragment : Fragment(){
 
         }
 
-
-
     }
 
     fun updateUI(currentUser: FirebaseUser?) { //send current user to next activity
         if (currentUser == null) return
-        val intent = Intent(activity, PrincipalActivity::class.java)
+        val intent = Intent(activity, HomeActivity::class.java)
         startActivity(intent)
         //finish()
     }

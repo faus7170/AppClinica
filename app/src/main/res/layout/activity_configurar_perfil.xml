@@ -9,88 +9,113 @@
     android:orientation="vertical"
     tools:context=".ui.configuracion.ConfigurarPerfilActivity">
 
-    <TextView
-        android:id="@+id/textView3"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Configura tu perfil"
-        android:textSize="36sp" />
+        android:layout_height="match_parent">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/editImagenProfile"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_margin="20dp"
-        android:src="@drawable/ic_add_photo_alternate" />
-
-    <EditText
-        android:id="@+id/editTextNombreProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:ems="10"
-        android:hint="Nombre"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/editTextApellidoProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:ems="10"
-        android:hint="Apellido"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/editTextDescripcionProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:ems="10"
-        android:hint="Tienes algun pasatiempo"
-        android:inputType="textPersonName" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/checkBox"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Hombre" />
+            android:gravity="center|top"
+            android:orientation="vertical">
 
-        <CheckBox
-            android:id="@+id/checkBox2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Mujer" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edita tu perfil"
+                android:textColor="@color/black"
+                android:textSize="36sp" />
 
-        <CheckBox
-            android:id="@+id/checkBox3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Otro" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/editImagenProfile"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="20dp"
+                android:src="@drawable/ic_add_photo_alternate" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/editTextNombreProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/txt_edit"
+                android:hint="Nombre"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/btnOmitir"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Omitir" />
+            <EditText
+                android:id="@+id/editTextApellidoProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/txt_edit"
+                android:ems="10"
+                android:hint="Apellido"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/btnGuardarDatos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Guardar datos" />
+            <EditText
+                android:id="@+id/editTextDescripcionProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/txt_edit"
+                android:ems="10"
+                android:hint="Tienes algun pasatiempo"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkBoxH"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Hombre" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Mujer" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxO"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Otro" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnGuardarDatos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Guardar datos" />
+
+            <Button
+                android:id="@+id/btnOmitir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/white"
+                android:text="Omitir" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
 
 </LinearLayout>

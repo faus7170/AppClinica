@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appclinica.R
-import com.example.appclinica.ui.chat.controlador.ReadPublicacionHistorial
+import com.example.appclinica.ui.comunidad.controlador.ReadPublicacionHistorial
 
 class FragmentHistorial : ReadPublicacionHistorial() {
 

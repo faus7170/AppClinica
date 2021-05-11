@@ -1,4 +1,4 @@
-package com.example.appclinica.ui.ejercicio.controlador
+package com.example.appclinica.ui.exercise.controlador
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
-import com.example.appclinica.ui.ejercicio.model.TestDatos
+import com.example.appclinica.ui.exercise.model.Exercise
 
-class AdapterExercise(val dataSet: MutableList<TestDatos>, val listener: (TestDatos) -> Unit, var isExercise:Boolean) : RecyclerView.Adapter<AdapterExercise.Holder>() {
+class AdapterExercise(val dataSet: MutableList<Exercise>, val listener: (Exercise) -> Unit, var isExercise:Boolean) : RecyclerView.Adapter<AdapterExercise.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
 
@@ -38,7 +38,7 @@ class AdapterExercise(val dataSet: MutableList<TestDatos>, val listener: (TestDa
         lateinit var viewDescripcionEjercicio :TextView
         lateinit var viewPaso : TextView
 
-        fun render (informacion : TestDatos){
+        fun render (informacion : Exercise){
 
             if (isExercise){
                 viewNombreEjerccio = itemView.findViewById(R.id.viewNameExercise)

@@ -45,6 +45,11 @@ class AutohipnosisActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
     private fun adapterdormir() {
 
         userListDormir = mutableListOf(

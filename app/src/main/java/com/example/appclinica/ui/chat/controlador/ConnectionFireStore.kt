@@ -3,29 +3,29 @@ package com.example.appclinica.ui.chat.controlador
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.os.health.UidHealthStats
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.example.appclinica.ui.chat.SalaDeChatActivity
+import com.example.appclinica.ui.chat.ChatRoomActivity
 import com.example.appclinica.ui.chat.modelo.ChatsList
+import com.example.appclinica.notification.Token
 import com.example.appclinica.ui.psicologo.DisplayPsicoActivity
 import com.example.appclinica.ui.psicologo.GetDatosPsicologo
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-open class TestDatosUsuarios: Fragment() {
+open class ConnectionFireStore: Fragment() {
 
     lateinit var mUser : MutableList<GetDatosPsicologo>
+    lateinit var mUserSearch : MutableList<GetDatosPsicologo>
     lateinit var adapter: FirestoreAdapterUser
     lateinit var mRecyclerView: RecyclerView
     val db = Firebase.firestore
-
+    lateinit var search: SearchView
     lateinit var userList: MutableList<ChatsList>
 
 
@@ -88,6 +88,17 @@ open class TestDatosUsuarios: Fragment() {
             }
 
         })
+
+
+    }
+
+    fun updateToken(token:String){
+
+        val firebaseUser  = FirebaseAuth.getInstance().currentUser
+        val reference : DatabaseReference = FirebaseDatabase.getInstance().getReference("Tokens")
+        val tokenl = Token(token)
+        reference.child(firebaseUser.uid).setValue(tokenl)
+
     }
 
     fun chatlist(){
@@ -111,7 +122,7 @@ open class TestDatosUsuarios: Fragment() {
                         mUser.add(getdatos)
                     }
                 adapter = FirestoreAdapterUser(mUser,{
-                    val intent = Intent(activity, SalaDeChatActivity::class.java)
+                    val intent = Intent(activity, ChatRoomActivity::class.java)
                     intent.putExtra("id", it.id)
                     startActivity(intent)
                 },true)
@@ -139,7 +150,7 @@ open class TestDatosUsuarios: Fragment() {
             bundle.putString("id",id)
             parentFragmentManager.setFragmentResult("key",bundle)*/
 
-            val intent = Intent(activity, SalaDeChatActivity::class.java)
+            val intent = Intent(activity, ChatRoomActivity::class.java)
             intent.putExtra("id", id)
             startActivity(intent)
         })
@@ -153,6 +164,28 @@ open class TestDatosUsuarios: Fragment() {
         builder.setNeutralButton("Cancelar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
+    }
+
+    fun buscarUser(s: String){
+
+        mUserSearch = mutableListOf()
+
+        for (test: GetDatosPsicologo in mUser){
+            //userListSearch.clear()
+            if (test.nombre.toLowerCase().contains(s.toLowerCase())){
+                val getDatos = GetDatosPsicologo(test.nombre,test.titulo,test.descripcion,test.foto,test.id)
+                mUserSearch.add(getDatos)
+            }
+        }
+
+         adapter = FirestoreAdapterUser(mUserSearch,{
+
+             option(it.id)
+
+         },false)
+         mRecyclerView.adapter = adapter
+
+
     }
 
 }

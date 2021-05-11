@@ -1,5 +1,6 @@
 package com.example.appclinica.ui.comunidad.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +8,12 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appclinica.R
-import com.example.appclinica.ui.chat.controlador.ReadPublicacionHistorial
-
+import com.example.appclinica.ui.comunidad.controlador.ReadPublicacionHistorial
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class FragmentPublicacion : ReadPublicacionHistorial() {
@@ -33,6 +38,7 @@ class FragmentPublicacion : ReadPublicacionHistorial() {
         val uid = pref.getString("uid", "default")!!
         val nombre = pref.getString("nombre", "default")!!
         val foto = pref.getString("foto", "default")!!
+
 
 
         findByid(view)
@@ -67,6 +73,8 @@ class FragmentPublicacion : ReadPublicacionHistorial() {
 
 
     }
+
+
 
     /*private fun readPublicaciones() {
         val mutableList: MutableList<SetPregunt> = mutableListOf()

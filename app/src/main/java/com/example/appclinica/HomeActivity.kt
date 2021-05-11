@@ -4,21 +4,28 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.appclinica.ui.autohipnosis.AutohipnosisActivity
 import com.example.appclinica.ui.chat.ChatActivity
 import com.example.appclinica.ui.comunidad.ComunidadActivity
 import com.example.appclinica.ui.configuracion.ConfigurarPerfilActivity
-import com.example.appclinica.ui.ejercicio.EjercicioActivity
+import com.example.appclinica.ui.exercise.ExerciseActivity
 import com.example.appclinica.ui.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
+/**
+ *@author David Aguinsaca
+ * Menu principal de la aplicaccion contiene los servicios ofreccidos:
+ * Ejerccios, Autohipnosis, Chat, Configuracción y Comunidad
+ **/
 
-class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
+
+class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     lateinit var cardViewEjercicio: CardView
     lateinit var cardVieweAutohipnosis: CardView
@@ -26,6 +33,7 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var cardVieweConfiguracion: CardView
     lateinit var cardVieweForo: CardView
     lateinit var btnCerrarSesion: Button
+    lateinit var btnTestNotification: Button
     lateinit var auth: FirebaseAuth
     val db = Firebase.firestore
     val user = Firebase.auth.currentUser
@@ -39,6 +47,8 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+
+    //Obtener datos del usuario en la base de datos y guardar en la clase SharedPreferences
     private fun getDatosUser() {
 
         val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
@@ -63,10 +73,11 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
                 }
     }
 
+    //Accion para accede a cada servicio con la clase onClick
     override fun onClick(v: View?) {
         when(v!!.id){
             R.id.bankcardEjercicio -> {
-                val intent = Intent(this, EjercicioActivity::class.java)
+                val intent = Intent(this, ExerciseActivity::class.java)
                 startActivity(intent)
             }
             R.id.bankcardAutohipnosis -> {
@@ -74,13 +85,14 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
             R.id.bankcardChat -> {
-                //Toast.makeText(applicationContext,"En mantenimiento",Toast.LENGTH_LONG).show()
                 val intent = Intent(this, ChatActivity::class.java)
                 startActivity(intent)
             }
             R.id.bankcardConfiguracion -> {
-                val intent = Intent(this, ConfigurarPerfilActivity::class.java)
-                startActivity(intent)
+                /*val intent = Intent(this, ConfigurarPerfilActivity::class.java)
+                startActivity(intent)*/
+                Toast.makeText(applicationContext,"En proceso ...",Toast.LENGTH_LONG).show()
+
             }
             R.id.bankcardForo -> {
                 val intent = Intent(this, ComunidadActivity::class.java)
@@ -93,9 +105,14 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
                 finish()
             }
+            /*R.id.testNotification ->{
+                val intent = Intent(this, TestNotificationActivity::class.java)
+                startActivity(intent)
+            }*/
         }
     }
 
+    //Limpiar la clase SharedPrefernces para cuando el usuario de en el boton "cerrar sesion"
     private fun clearData() {
         val preftest = applicationContext.getSharedPreferences("introConf", MODE_PRIVATE)
         preftest.edit().remove("isConfiguracion").apply()
@@ -104,9 +121,7 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
         val editor = pref.edit()
         editor.clear().apply()
     }
-
-
-
+    
     private fun findById() {
         cardViewEjercicio = findViewById(R.id.bankcardEjercicio)
         cardVieweAutohipnosis = findViewById(R.id.bankcardAutohipnosis)
@@ -114,6 +129,7 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
         cardVieweConfiguracion = findViewById(R.id.bankcardConfiguracion)
         cardVieweForo = findViewById(R.id.bankcardForo)
         btnCerrarSesion = findViewById(R.id.btnCerrarSesion)
+        btnTestNotification = findViewById(R.id.testNotification)
 
         cardViewEjercicio.setOnClickListener(this)
         cardVieweAutohipnosis.setOnClickListener(this)
@@ -121,6 +137,7 @@ class PrincipalActivity : AppCompatActivity(), View.OnClickListener {
         cardVieweConfiguracion.setOnClickListener(this)
         cardVieweForo.setOnClickListener(this)
         btnCerrarSesion.setOnClickListener(this)
+        btnTestNotification.setOnClickListener(this)
     }
 
 

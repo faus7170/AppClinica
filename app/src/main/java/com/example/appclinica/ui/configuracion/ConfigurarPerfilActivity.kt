@@ -8,10 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import com.example.appclinica.R
-import com.example.appclinica.PrincipalActivity
+import com.example.appclinica.HomeActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -28,16 +29,20 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
     lateinit var btnOmitir:Button
     lateinit var btnGuardar:Button
     val user = Firebase.auth.currentUser
+    lateinit var checkBoxH: CheckBox
+    lateinit var checkBoxM: CheckBox
+    lateinit var checkBoxO: CheckBox
 
     lateinit var uri:Uri
     lateinit var imagenDefault: String
+    lateinit var genero: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_configurar_perfil)
 
 
-        if (restorePrefData()) {
+        if (true) {
             staractivity()
         }
 
@@ -48,13 +53,20 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
         uri = Uri.parse(imagenDefault.toString())
 
 
+        checkValidacion()
+
         imagenCircleImageView.setOnClickListener {
             viewimg()
         }
 
         btnGuardar.setOnClickListener {
             if (!textViewNombre.text.isEmpty() || !textViewApellido.text.isEmpty()){
-                guardarDatos(uid)
+                if (!checkBoxH.isChecked && !checkBoxM.isChecked && !checkBoxO.isChecked){
+                    Toast.makeText(this,"Seleccionar el genero",Toast.LENGTH_LONG).show()
+                }else{
+                    guardarDatos(uid, genero)
+                }
+
             }else{
                 Toast.makeText(this,"Campos vacios",Toast.LENGTH_LONG).show()
             }
@@ -62,14 +74,67 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
 
         btnOmitir.setOnClickListener {
 
-
-            setDatos(uid,"Anonimo","default","default",imagenDefault,false)
+            setDatos(uid,"Anonimo","default","default",imagenDefault,"default",false)
         }
 
     }
 
+    fun checkValidacion(){
 
-    fun guardarDatos(uid:String){
+        /*checkBoxH.setOnCheckedChangeListener { compoundButton, b ->
+            checkBoxO.isSelected = false
+            checkBoxH.isSelected = false
+        }
+
+        checkBoxM.setOnCheckedChangeListener { compoundButton, b ->
+            checkBoxO.isSelected = false
+            checkBoxH.isSelected = false
+        }
+
+        checkBoxO.setOnCheckedChangeListener { compoundButton, b ->
+            checkBoxO.isSelected = false
+            checkBoxH.isSelected = false
+        }*/
+
+        checkBoxM.setOnClickListener {
+            genero = "Mujer"
+            checkBoxO.isChecked = false
+            checkBoxH.isChecked = false
+        }
+
+        checkBoxH.setOnClickListener {
+            genero = "Hombre"
+            checkBoxO.isChecked = false
+            checkBoxM.isChecked = false
+        }
+
+        checkBoxO.setOnClickListener {
+            genero = "Otro"
+            checkBoxH.isChecked = false
+            checkBoxM.isChecked = false
+        }
+
+        /*if (checkBoxM.isChecked){
+            genero = "Mujer"
+            checkBoxO.isChecked = false
+            checkBoxH.isChecked = false
+
+        } else if (checkBoxH.isSelected){
+            genero = "Hombre"
+            checkBoxO.isChecked = false
+            checkBoxM.isChecked = false
+            //checkBoxH.isSelected = true
+        }else if (checkBoxO.isSelected){
+            genero = "Otro"
+            checkBoxH.isChecked = false
+            checkBoxM.isChecked = false
+            //checkBoxH.isSelected = false
+        }*/
+
+    }
+
+
+    fun guardarDatos(uid:String, genero: String){
 
         val pd = ProgressDialog(this)
         pd.setTitle("Guardando datos")
@@ -95,11 +160,11 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
                         val downloadUri = task.result
                         val uri = downloadUri.toString()
                         setDatos(uid,textViewNombre.text.toString()+" "+textViewApellido.text.toString(),textViewDescripcion.text.toString(),
-                                "default",uri,false)
+                                "default",uri,genero,false)
 
                     } else {
                         setDatos(uid,textViewNombre.text.toString()+" "+textViewApellido.text.toString(),textViewDescripcion.text.toString(),
-                                "default",imagenDefault,false)
+                                "default",imagenDefault,genero,false)
 
                     }
                 }
@@ -114,7 +179,7 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
         startActivityForResult(intent,1)
     }
 
-    fun setDatos(uid: String, nombre: String, descripcion: String, titulo: String, foto: String, ispsicologo: Boolean){
+    fun setDatos(uid: String, nombre: String, descripcion: String, titulo: String, foto: String, genero:String, ispsicologo: Boolean){
 
         val db = Firebase.firestore
 
@@ -123,6 +188,7 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
                     "descripcion" to descripcion,
                     "titulo" to titulo,
                     "foto" to foto,
+                    "genero" to genero,
                     "ispsicologo" to ispsicologo
             )
 
@@ -145,7 +211,7 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
     }
 
     private fun staractivity() {
-        val loginActivity = Intent(applicationContext, PrincipalActivity::class.java)
+        val loginActivity = Intent(applicationContext, HomeActivity::class.java)
         startActivity(loginActivity)
         savePrefsData()
         finish()
@@ -170,6 +236,9 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
         textViewDescripcion = findViewById(R.id.editTextDescripcionProfile)
         btnOmitir = findViewById(R.id.btnOmitir)
         btnGuardar = findViewById(R.id.btnGuardarDatos)
+        checkBoxH = findViewById(R.id.checkBoxH)
+        checkBoxM = findViewById(R.id.checkBoxM)
+        checkBoxO = findViewById(R.id.checkBoxO)
 
         imagenDefault = "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"
 

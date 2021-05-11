@@ -1,9 +1,11 @@
 package com.example.appclinica.ui.chat.controlador
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
 import com.example.appclinica.ui.chat.modelo.DatosMensaje
@@ -19,12 +21,8 @@ class MessageAdapter(val dataSet: MutableList<MessageReciver>) : RecyclerView.Ad
     var type_left :Int = 0
     var type_right :Int = 1
 
-    lateinit var auth: FirebaseAuth
+    lateinit var auth : FirebaseAuth
     lateinit var uid :String
-
-    //lateinit var firebaseUser: FirebaseUser
-
-    //var dataSet : MutableList<GetDatosMensaje> = mutableListOf()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EjercHolder {
@@ -40,6 +38,7 @@ class MessageAdapter(val dataSet: MutableList<MessageReciver>) : RecyclerView.Ad
 
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: EjercHolder, position: Int) {
         holder.render(dataSet[position])
 

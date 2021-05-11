@@ -1,4 +1,4 @@
-package com.example.appclinica.ui.chat.controlador
+package com.example.appclinica.ui.comunidad.controlador
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,6 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.ui.comunidad.ComentActivity
-import com.example.appclinica.ui.comunidad.controlador.TestAdapterComunidad
 import com.example.appclinica.ui.comunidad.model.SetPregunt
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,6 +23,9 @@ open class ReadPublicacionHistorial: Fragment(), TestAdapterComunidad.onClickLis
     val database = Firebase.database
     lateinit var adapter: TestAdapterComunidad
     lateinit var recyclerView: RecyclerView
+
+    val TOPIC = "/topics/myTopic2"
+
 
     fun readPublicaciones(fragmen:String, uid:String) {
         val mutableList: MutableList<SetPregunt> = mutableListOf()

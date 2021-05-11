@@ -1,4 +1,4 @@
-package com.example.appclinica.ui.ejercicio
+package com.example.appclinica.ui.exercise
 
 import android.media.MediaPlayer
 import android.net.Uri
@@ -109,9 +109,9 @@ class MultimediaActivity : AppCompatActivity() {
         var timeString = ""
         var secondString = ""
 
-        var hora = milesecond/(1000*60*60) as Int
-        var minute = (milesecond%(1000*60*60))/(1000*60) as Int
-        var second = (milesecond%(1000*60*60))%(1000*60)/1000 as Int
+        val hora = milesecond/(1000*60*60) as Int
+        val minute = (milesecond%(1000*60*60))/(1000*60) as Int
+        val second = (milesecond%(1000*60*60))%(1000*60)/1000 as Int
 
         if (hora>0){
             timeString = hora as String + ":"

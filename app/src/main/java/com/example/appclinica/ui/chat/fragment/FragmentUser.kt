@@ -1,26 +1,16 @@
 package com.example.appclinica.ui.chat.fragment
 
-import android.app.AlertDialog
-import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
-import com.example.appclinica.ui.chat.SalaDeChatActivity
-import com.example.appclinica.ui.chat.controlador.FirestoreAdapterUser
-import com.example.appclinica.ui.chat.controlador.TestDatosUsuarios
-import com.example.appclinica.ui.psicologo.DisplayPsicoActivity
-import com.example.appclinica.ui.psicologo.ViewPsiocologo
-import com.example.appclinica.ui.psicologo.GetDatosPsicologo
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.example.appclinica.ui.chat.controlador.ConnectionFireStore
+import com.google.firebase.iid.FirebaseInstanceId
 
-class FragmentUser :TestDatosUsuarios()  {
+class FragmentUser :ConnectionFireStore()  {
 
     //lateinit var adapterPsicologo: FirestoreAdapterUser
     //lateinit var mRecyclerView: RecyclerView
@@ -32,43 +22,22 @@ class FragmentUser :TestDatosUsuarios()  {
         mRecyclerView = view!!.findViewById(R.id.recyclerViewUser)
         mRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        /*val db = Firebase.firestore
-        userList = mutableListOf()
+        search = view!!.findViewById(R.id.searchUser)
+        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
-        db.collection("usuarios").get().addOnSuccessListener { document ->
-            for (getdatos in document) {
-
-                if (getdatos.getBoolean("ispsicologo") as Boolean){
-
-                    val nombre = getdatos.getString("nombre")
-                    val descripcion = getdatos.getString("descripcion")
-                    val titulo = getdatos.getString("titulo")
-                    val foto = getdatos.getString("foto")
-                    val id = getdatos.id
-
-                    val getDatos = GetDatosPsicologo(nombre!!,titulo!!,descripcion!!,foto!!,id!!)
-
-                    userList.add(getDatos)
-                }
-
+            override fun onQueryTextChange(qString: String): Boolean {
+                buscarUser(qString)
+                return true
             }
 
-
-            adapterPsicologo = FirestoreAdapterUser(userList,{
-                /*val intent = Intent(activity, SalaDeChatActivity::class.java)
-                intent.putExtra("id", it.id)
-                startActivity(intent)*/
-
-                option(it.id)
-
-            },false)
-            mRecyclerView.adapter = adapterPsicologo
-
-        }.addOnFailureListener { exception ->
-
-        }*/
+            override fun onQueryTextSubmit(qString: String): Boolean {
+                return false
+            }
+        })
 
         obtenerDatos()
+
+        updateToken(FirebaseInstanceId.getInstance().getToken()!!)
 
         return view
 

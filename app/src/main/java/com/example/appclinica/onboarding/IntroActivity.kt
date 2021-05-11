@@ -10,10 +10,15 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.appclinica.R
-import com.example.appclinica.ui.configuracion.ConfigurarPerfilActivity
 import com.example.appclinica.ui.login.LoginActivity
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout/**/
 
+/**
+ *@author David Aguinsaca
+ *El usuario descarga la aplicacion por primera vez muestra
+ *travez de un ViewPager y Fragment los servicios que ofrece la aplicacion
+ *
+ **/
 
 class IntroActivity : AppCompatActivity() {
 
@@ -24,7 +29,7 @@ class IntroActivity : AppCompatActivity() {
     lateinit var btnGetStarted: Button
     lateinit var btnAnim: Animation
     var position = 0
-    lateinit var tvSkip: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +46,7 @@ class IntroActivity : AppCompatActivity() {
 
     }
 
+    //Declaracion de valores
     private fun intro() {
 
         val mList: List<ScreenItem> = listOf(ScreenItem("Inteligencia Emocional", "En las últimas décadas en el ámbito de la psicología la inteligencia emocioanl tomado mucho relevancia", R.drawable.inteligenciaemocional),
@@ -55,7 +61,6 @@ class IntroActivity : AppCompatActivity() {
         tabIndicator.setupWithViewPager(screenPager)
 
         btnNext.setOnClickListener {
-
             position = screenPager.currentItem
             if (position < mList.size) {
                 position++
@@ -79,11 +84,14 @@ class IntroActivity : AppCompatActivity() {
         listenerTab(mList)
     }
 
+
+    //Implementacion de la clase SharedPreference para recuperar dato de si la aplicacion fue iniciada anteriormente
     private fun restorePrefData(): Boolean {
         val pref = applicationContext.getSharedPreferences("introConf", MODE_PRIVATE)
         return pref.getBoolean("isIntroOpnend", false)
     }
 
+    //Implementacion de la clase SharedPreference para guardar el inicio de la aplicacion
     private fun savePrefsData() {
         val pref = applicationContext.getSharedPreferences("introConf", MODE_PRIVATE)
         val editor = pref.edit()
@@ -91,6 +99,7 @@ class IntroActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    //Mostrar los Fragments
     private fun listenerTab(mList: List<ScreenItem>) {
         tabIndicator.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {

@@ -7,6 +7,12 @@ import com.example.appclinica.R
 import com.example.appclinica.ui.chat.controlador.FragmentAdapterChat
 import com.google.android.material.tabs.TabLayout
 
+/**
+ *@author David Aguinsaca
+ *Activity principal de de chat contiene fragmentos donde muestra a los psicologos y el historial de chat
+ *
+ **/
+
 class ChatActivity : AppCompatActivity() {
 
     lateinit var tabLayout : TabLayout

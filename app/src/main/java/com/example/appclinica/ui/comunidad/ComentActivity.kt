@@ -1,7 +1,10 @@
 package com.example.appclinica.ui.comunidad
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -9,11 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.appclinica.R
+import com.example.appclinica.ui.chat.ChatActivity
 import com.example.appclinica.ui.comunidad.controlador.TestAdapterComunidad
 import com.example.appclinica.ui.comunidad.model.SetPregunt
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
@@ -21,10 +26,11 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister {
+class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister, View.OnClickListener {
 
     lateinit var adapter: TestAdapterComunidad
     lateinit var btnenviar: ImageButton
+    lateinit var btnvolver: ImageButton
     lateinit var txtPregunta: TextView
     lateinit var viewName: TextView
     lateinit var imagenCircleImageView: CircleImageView
@@ -32,13 +38,15 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister {
     lateinit var txtComent:EditText
     val database = Firebase.database
     val db = Firebase.firestore
+    lateinit var idpublicacion :String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coment)
         getValores()
 
-        val idpublicacion = intent.extras!!.getString("id")
+        idpublicacion = intent.extras!!.getString("id")!!
         val pregunta = intent.extras!!.getString("pregunta")
         val nombre = intent.extras!!.getString("nombre")
         val foto = intent.extras!!.getString("foto")
@@ -48,18 +56,8 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister {
 
         Glide.with(this).load(foto).into(imagenCircleImageView)
 
-        val user = Firebase.auth.currentUser
 
-
-        btnenviar.setOnClickListener {
-            if(!txtComent.text.toString().isEmpty()){
-                sendComentario(idpublicacion.toString(),txtComent.text.toString(),user.uid)
-                txtComent.setText("")
-            }
-            
-        }
-
-        readComentarios(idpublicacion.toString())
+        readComentarios(idpublicacion)
 
     }
 
@@ -89,7 +87,7 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister {
 
     fun readComentarios(idpregunta: String){
 
-        var mutableList: MutableList<SetPregunt> = mutableListOf()
+        val mutableList: MutableList<SetPregunt> = mutableListOf()
 
         val myRef = database.getReference("publicacion").child(idpregunta).child("comentarios")
 
@@ -119,6 +117,7 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister {
         txtPregunta = findViewById(R.id.viewPreguntaComent)
         viewName = findViewById(R.id.viewNameComent)
         btnenviar = findViewById(R.id.btnSendComent)
+        btnvolver = findViewById(R.id.btnVolverComent)
         recyclerView = findViewById(R.id.recyclerComent)
         txtComent= findViewById(R.id.txtSendComent)
         imagenCircleImageView = findViewById(R.id.imgCircleComent)
@@ -137,5 +136,31 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister {
 
     override fun onBorrar(nombre: String) {
         TODO("Not yet implemented")
+    }
+
+    override fun onClick(v: View?) {
+        when(v!!.id){
+            R.id.btnSendComent ->{
+                if(!txtComent.text.toString().isEmpty()){
+                    sendComentario(idpublicacion.toString(),txtComent.text.toString(),uidShared())
+                    txtComent.setText("")
+                }
+            }R.id.btnVolverComent ->{
+                val intent = Intent(this, ComunidadActivity::class.java)
+                startActivity(intent)
+                finish()
+        }
+        }
+
+    }
+
+    fun uidShared(): String {
+        val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
+        return pref.getString("uid", "default")!!
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

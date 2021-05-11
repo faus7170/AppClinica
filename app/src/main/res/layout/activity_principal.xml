@@ -259,6 +259,12 @@
                     android:layout_margin="10dp"
                     android:background="@color/white"
                     android:text="Cerrar Sesión" />
+
+                <Button
+                    android:id="@+id/testNotification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Test notification" />
             </LinearLayout>
         </ScrollView>
 

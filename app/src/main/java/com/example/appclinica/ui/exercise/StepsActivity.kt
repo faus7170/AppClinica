@@ -1,4 +1,4 @@
-package com.example.appclinica.ui.ejercicio
+package com.example.appclinica.ui.exercise
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,18 +7,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
-import com.example.appclinica.ui.ejercicio.controlador.AdapterExercise
-import com.example.appclinica.ui.ejercicio.model.TestDatos
+import com.example.appclinica.ui.exercise.controlador.AdapterExercise
+import com.example.appclinica.ui.exercise.model.Exercise
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class PasosActivity : AppCompatActivity() {
+class StepsActivity : AppCompatActivity() {
 
     //lateinit var adapter: AdapterPasosExercise
     lateinit var adapter: AdapterExercise
     lateinit var mRecyclerView: RecyclerView
     //lateinit var userList: MutableList<GetDatosPasosExercise>
-    lateinit var userList: MutableList<TestDatos>
+    lateinit var userList: MutableList<Exercise>
     lateinit var textView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +40,8 @@ class PasosActivity : AppCompatActivity() {
 
     }
 
+
+
     private fun getDatosFirestore(dato: String?) {
         val db = Firebase.firestore
         userList = mutableListOf()
@@ -51,7 +53,7 @@ class PasosActivity : AppCompatActivity() {
                 val contenido = getdatos.getString("contenido")
                 val id = getdatos.id
 
-                val testDatos = TestDatos("null","null","null",ident!!,contenido!!)
+                val testDatos = Exercise("null","null","null",ident!!,contenido!!)
 
                 userList.add(testDatos)
 
