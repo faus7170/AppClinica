@@ -121,7 +121,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         val editor = pref.edit()
         editor.clear().apply()
     }
-    
+
     private fun findById() {
         cardViewEjercicio = findViewById(R.id.bankcardEjercicio)
         cardVieweAutohipnosis = findViewById(R.id.bankcardAutohipnosis)
