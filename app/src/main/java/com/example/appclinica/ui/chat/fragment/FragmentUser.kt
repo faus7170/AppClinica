@@ -1,5 +1,6 @@
 package com.example.appclinica.ui.chat.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appclinica.R
+import com.example.appclinica.ui.chat.ChatRoomActivity
 import com.example.appclinica.ui.chat.controlador.ConnectionFireStore
 import com.google.firebase.iid.FirebaseInstanceId
 
@@ -22,6 +24,14 @@ class FragmentUser :ConnectionFireStore()  {
 
         mRecyclerView = view!!.findViewById(R.id.recyclerViewUser)
         mRecyclerView.layoutManager = LinearLayoutManager(activity)
+
+        cardtest = view!!.findViewById(R.id.cardChatBot)
+
+        cardtest.setOnClickListener {
+            val intent = Intent(activity, ChatRoomActivity::class.java)
+            intent.putExtra("id", "chatBot")
+            startActivity(intent)
+        }
 
         search = view!!.findViewById(R.id.searchUser)
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

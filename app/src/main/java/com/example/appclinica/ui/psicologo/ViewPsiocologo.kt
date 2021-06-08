@@ -35,8 +35,9 @@ open class ViewPsiocologo: AppCompatActivity(){
                     txtDescripcion.text = document.getString("descripcion")
                     Glide.with(this).load(document.getString("foto")).into(imgProfile)
                 }else{
-                    Toast.makeText(applicationContext,"Clase no encontrada "+claseNombre, Toast.LENGTH_LONG).show()
-
+                    //Toast.makeText(applicationContext,"Clase no encontrada "+claseNombre, Toast.LENGTH_LONG).show()
+                    txtNombre.text = "Chatbot"
+                    Glide.with(this).load("https://i.pinimg.com/originals/fd/a1/3b/fda13b9d6d88f25a9d968901d319216a.jpg").into(imgProfile)
                 }
 
             } else {

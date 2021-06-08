@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.widget.SearchView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.ui.chat.ChatRoomActivity
@@ -27,6 +28,8 @@ open class ConnectionFireStore: Fragment() {
     val db = Firebase.firestore
     lateinit var search: SearchView
     lateinit var userList: MutableList<ChatsList>
+
+    lateinit var cardtest: CardView
 
 
     fun obtenerDatos(){
@@ -185,6 +188,10 @@ open class ConnectionFireStore: Fragment() {
          },false)
          mRecyclerView.adapter = adapter
 
+
+    }
+
+    fun cardChatBots(){
 
     }
 

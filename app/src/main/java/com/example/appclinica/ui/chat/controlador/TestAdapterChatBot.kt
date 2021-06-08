@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
+import com.example.appclinica.ui.chat.modelo.Message
 import com.example.appclinica.ui.chat.modelo.MessageReciver
+import com.example.appclinica.ui.chat.utils.Constants.SEND_ID
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import java.text.SimpleDateFormat
 import java.util.*
 
-class MessageAdapter(val dataSet: MutableList<MessageReciver>) : RecyclerView.Adapter<MessageAdapter.EjercHolder>() {
+
+class TestAdapterChatBot(val dataSet: MutableList<Message>) : RecyclerView.Adapter<TestAdapterChatBot.EjercHolder>() {
+
 
     var type_left :Int = 0
     var type_right :Int = 1
@@ -33,17 +36,11 @@ class MessageAdapter(val dataSet: MutableList<MessageReciver>) : RecyclerView.Ad
             return EjercHolder(layout.inflate(R.layout.chat_left,parent,false))
         }
 
-
     }
 
     @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: EjercHolder, position: Int) {
         holder.render(dataSet[position])
-
-        val longHora = dataSet[position].hora
-        val date = Date(longHora)
-        val simpleDateFormat = SimpleDateFormat ("HH:mm")
-        holder.txt_date.text = simpleDateFormat.format(date)
     }
 
 
@@ -53,10 +50,7 @@ class MessageAdapter(val dataSet: MutableList<MessageReciver>) : RecyclerView.Ad
 
         //val uid = Firebase.auth.currentUser
 
-        uid = Firebase.auth.currentUser.uid
-
-
-        if (dataSet.get(position).sender.equals(uid)){
+        if (dataSet.get(position).id.equals(SEND_ID)){
             return type_right
         }else
             return type_left
@@ -70,12 +64,14 @@ class MessageAdapter(val dataSet: MutableList<MessageReciver>) : RecyclerView.Ad
         var txt_date = view.findViewById(R.id.viewHora) as TextView
 
 
-        fun render (informacion: MessageReciver){
-            showmsm.text = informacion.msm
+        fun render (informacion: Message){
+            showmsm.text = informacion.message
+            txt_date.text = informacion.time
 
         }
 
     }
+
 
 
 }
