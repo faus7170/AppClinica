@@ -1,5 +1,6 @@
 package com.example.appclinica
 
+import android.animation.Animator
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -7,6 +8,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.example.appclinica.ui.autohipnosis.AutohipnosisActivity
 import com.example.appclinica.ui.chat.ChatActivity
 import com.example.appclinica.ui.comunidad.ComunidadActivity
@@ -20,7 +22,7 @@ import com.google.firebase.ktx.Firebase
 
 /**
  *@author David Aguinsaca
- * Menu principal de la aplicaccion contiene los servicios ofreccidos:
+ * Menu principal de la aplicaccion con los servicios ofreccidos:
  * Ejerccios, Autohipnosis, Chat, Configuracción y Comunidad
  **/
 
@@ -73,20 +75,24 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 }
     }
 
-    //Accion para accede a cada servicio con la clase onClick
+    //Accion para acceder a cada servicio con la clase onClick
     override fun onClick(v: View?) {
         when(v!!.id){
             R.id.bankcardEjercicio -> {
                 val intent = Intent(this, ExerciseActivity::class.java)
                 startActivity(intent)
+                Animatoo.animateSlideLeft(this)
             }
             R.id.bankcardAutohipnosis -> {
                 val intent = Intent(this, AutohipnosisActivity::class.java)
                 startActivity(intent)
+                Animatoo.animateSlideLeft(this)
+
             }
             R.id.bankcardChat -> {
                 val intent = Intent(this, ChatActivity::class.java)
                 startActivity(intent)
+                Animatoo.animateSlideLeft(this)
             }
             R.id.bankcardConfiguracion -> {
                 /*val intent = Intent(this, ConfigurarPerfilActivity::class.java)
@@ -97,18 +103,20 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             R.id.bankcardForo -> {
                 val intent = Intent(this, ComunidadActivity::class.java)
                 startActivity(intent)
+                Animatoo.animateSlideLeft(this)
             }
             R.id.btnCerrarSesion -> {
                 Firebase.auth.signOut()
                 clearData()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
+                Animatoo.animateSlideRight(this)
                 finish()
             }
-            /*R.id.testNotification ->{
+            R.id.testNotification ->{
                 val intent = Intent(this, TestNotificationActivity::class.java)
                 startActivity(intent)
-            }*/
+            }
         }
     }
 

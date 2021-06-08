@@ -188,6 +188,7 @@ open class ConnectionFireStore: Fragment() {
 
     }
 
+
 }
 
 

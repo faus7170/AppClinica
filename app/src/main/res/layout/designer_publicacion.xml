@@ -42,14 +42,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/viewNameIdUser"
+                    <android.widget.Toolbar
+                        android:id="@+id/toolbar2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="Nombre ..."
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:background="?attr/colorPrimary"
+                        android:minHeight="?attr/actionBarSize"
+                        android:theme="?attr/actionBarTheme"
+                        android:title="Nombre ..." />
 
                     <TextView
                         android:id="@+id/viewComentario"
@@ -58,7 +58,47 @@
                         android:layout_margin="5dp"
                         android:text="Pregunta ..."
                         android:textColor="@color/black"
-                        android:textSize="24sp" />
+                        android:textSize="24sp"
+                        android:visibility="visible" />
+
+                    <LinearLayout
+                        android:id="@+id/linerlayoutEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <EditText
+                            android:id="@+id/editPublicacion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:visibility="visible" />
+
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <Button
+                                android:id="@+id/btnActualizar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Listo" />
+
+                            <Button
+                                android:id="@+id/btnCancelarEdit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:text="Cancelar" />
+                        </LinearLayout>
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -95,31 +135,8 @@
                     android:drawableRight="@drawable/ic_comment"
                     android:gravity="left"
                     android:padding="5dp"
-                    android:text="Comentar"
+                    android:text="Ver comentarios"
                     android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/viewDelete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableRight="@drawable/ic_delete"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="Borrar"
-                    android:textSize="18sp"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_edit"
-                    android:gravity="center"
-                    android:padding="3dp"
-                    android:text="Editar"
-                    android:visibility="gone" />
 
             </LinearLayout>
         </LinearLayout>

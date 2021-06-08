@@ -31,4 +31,10 @@ class ChatActivity : AppCompatActivity() {
         tabLayout.setupWithViewPager(viewPager)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
+
 }

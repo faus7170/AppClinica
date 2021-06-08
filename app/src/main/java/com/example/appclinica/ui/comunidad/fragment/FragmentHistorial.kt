@@ -40,46 +40,4 @@ class FragmentHistorial : ReadPublicacionHistorial() {
     }
 
 
-    /*private fun readHistorial(uid:String) {
-        val mutableList: MutableList<SetPregunt> = mutableListOf()
-
-        val myRef = database.getReference("publicacion")
-
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                mutableList.clear()
-                for (postSnapshot in dataSnapshot.children) {
-                    val post = postSnapshot.getValue<SetPregunt>()
-                    if(uid.equals(post!!.uid)){
-                        val pregunta = post!!.pregunta
-                        val uid = post.uid
-                        val nombre = post.nombre
-                        val foto = post.foto
-                        val id = postSnapshot.key.toString()
-                        mutableList.add(SetPregunt(pregunta, nombre, foto, "2021", id,uid))
-                    }
-
-
-                }
-
-                mutableList.reverse()
-                adapter = TestAdapterComunidad(mutableList, true, this@FragmentHistorial)
-                recyclerView.adapter = adapter
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        })
-    }
-
-    override fun onComentar(id: String, nombre: String, pregunta: String, foto: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onBorrar(id: String) {
-        TODO("Not yet implemented")
-    }*/
-
 }

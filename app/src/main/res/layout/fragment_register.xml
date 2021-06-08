@@ -5,61 +5,110 @@
     android:layout_height="wrap_content"
     tools:context=".ui.login.fragment.RegisterFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
 
-
-        <EditText
-            android:id="@+id/txtCorreo"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/txt_edit"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/txtRegisterClave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/txt_edit"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            <EditText
+                android:id="@+id/txtCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/txt_edit"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
-        <EditText
-            android:id="@+id/txtConfirmarClave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/txt_edit"
-            android:hint="Confirmar clave"
-            android:inputType="textPassword"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            <EditText
+                android:id="@+id/txtRegisterClave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/txt_edit"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/txtConfirmarClave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/txt_edit"
+                android:hint="Confirmar clave"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Selcciona tu forma de pago"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <CheckBox
+                    android:id="@+id/checkBoxMes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="$ 6.00 Mensual" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxSemestral"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="$ 12.00 Semestral" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxAnual"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="$ 24.00 Anual" />
+
+            </LinearLayout>
 
 
-        <Button
-            android:id="@+id/btnRegistrarCorreo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/btn_login_register"
-            android:text="Registrar" />
+            <com.paymentez.android.view.CardMultilineWidget
+                android:id="@+id/card_multiline_widget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
 
-    </LinearLayout>
+            </com.paymentez.android.view.CardMultilineWidget>
+
+            <Button
+                android:id="@+id/btnRegistrarCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/btn_login_register"
+                android:text="Registrar" />
+        </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>

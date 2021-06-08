@@ -50,8 +50,7 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
         getfindViewBy()
 
         //Obtener y mostrar datos del recpetor
-        activityPerfile(iduser,"SalaDeChatActivity")
-
+        activityPerfile(iduser,"ChatRoomActivity")
 
         uid = uidShared()
 
@@ -133,7 +132,7 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
 
                     //Log.d("testKey","key: "+post!!.token)
 
-                    PushNotification(NotificationData(nombre, msm,reciver),post!!.token).also {
+                    PushNotification(NotificationData(nombreShared(), msm,uidShared()),post!!.token).also {
                         sendNotification(it)
                     }
                 }
@@ -153,7 +152,6 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -176,7 +174,6 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
 
             override fun onDataChange(snapshot: DataSnapshot) {
 

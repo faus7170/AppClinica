@@ -26,7 +26,7 @@ open class ViewPsiocologo: AppCompatActivity(){
         val docRef = db.collection("usuarios").document(valor)
         docRef.get().addOnSuccessListener { document ->
             if (document != null) {
-                if (claseNombre.equals("SalaDeChatActivity")){
+                if (claseNombre.equals("ChatRoomActivity")){
                     txtNombre.text = document.getString("nombre")
                     Glide.with(this).load(document.getString("foto")).into(imgProfile)
                 }else if (claseNombre.equals("DisplayPsicoActivity")){

@@ -2,25 +2,46 @@ package com.example.appclinica.ui.login.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.appclinica.R
+import com.example.appclinica.notification.Alert
+import com.example.appclinica.notification.Constants
+import com.example.appclinica.paymantel.BackendService
+import com.example.appclinica.paymantel.modelo.CreateChargeResponse
 import com.example.appclinica.ui.configuracion.ConfigurarPerfilActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.gson.GsonBuilder
+import com.paymentez.android.Paymentez
+import com.paymentez.android.model.Card
+import com.paymentez.android.rest.TokenCallback
+import com.paymentez.android.rest.model.ErrorResponse
+import com.paymentez.android.rest.model.PaymentezError
+import com.paymentez.android.view.CardMultilineWidget
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.IOException
+import java.text.DateFormat
 
+/**
+ *@author David Aguinsaca
+ * Fragmento de registro de un usuario
+ **/
 
-class RegisterFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+class RegisterFragment : Fragment(), View.OnClickListener {
 
     private lateinit var database: DatabaseReference
     lateinit var auth: FirebaseAuth
@@ -28,6 +49,13 @@ class RegisterFragment : Fragment() {
     lateinit var txtCorreo : EditText
     lateinit var txtClave : EditText
     lateinit var txtConfirmarClave : EditText
+    lateinit var cardWidget: CardMultilineWidget
+    lateinit var backendService: BackendService
+    lateinit var checkBoxMensual: CheckBox
+    lateinit var checkBoxSemestral: CheckBox
+    lateinit var checkBoxAnual: CheckBox
+    var valorPagar = 0.00
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +63,7 @@ class RegisterFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
     }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -44,6 +73,13 @@ class RegisterFragment : Fragment() {
         txtClave = view!!.findViewById(R.id.txtRegisterClave)
         txtConfirmarClave = view!!.findViewById(R.id.txtConfirmarClave)
         btnRegistarCorreo = view!!.findViewById(R.id.btnRegistrarCorreo)
+        checkBoxMensual = view.findViewById(R.id.checkBoxMes)
+        checkBoxSemestral = view.findViewById(R.id.checkBoxSemestral)
+        checkBoxAnual = view.findViewById(R.id.checkBoxAnual)
+
+        checkBoxMensual.setOnClickListener(this)
+        checkBoxSemestral.setOnClickListener(this)
+        checkBoxAnual.setOnClickListener(this)
 
 
         btnRegistarCorreo.setOnClickListener{
@@ -53,6 +89,160 @@ class RegisterFragment : Fragment() {
         return view
     }
 
+    override fun onClick(v: View?) {
+        when(v!!.id){
+            R.id.checkBoxMes -> {
+                valorPagar = 6.00
+                checkBoxSemestral.isChecked = false
+                checkBoxAnual.isChecked = false
+            }
+            R.id.checkBoxSemestral ->{
+                valorPagar = 12.00
+                checkBoxMensual.isChecked = false
+                checkBoxAnual.isChecked = false
+            }
+            R.id.checkBoxAnual ->{
+                valorPagar = 24.00
+                checkBoxMensual.isChecked = false
+                checkBoxSemestral.isChecked = false
+            }
+        }
+    }
+
+    fun addCard(){
+
+        val cardToSave = cardWidget.card
+
+        if (cardToSave == null) {
+            Alert.show(
+                    activity,
+                    "Error",
+                    "Tarjeta invalida"
+            )
+            return
+        } else {
+            Paymentez.addCard(activity, Constants.USER_ID, Constants.USER_EMAIL, cardToSave, object : TokenCallback {
+                override fun onSuccess(card: Card) {
+                    if (card.status == "valid") {
+
+                        pago(card.token)
+
+                        Alert.show(
+                                activity,
+                                "La tarjeta fue valida",
+                                "status: " + card.status + "\n" +
+                                        "Card Token: " + card.token + "\n" +
+                                        "transaction_reference: " + card.transactionReference
+                        )
+
+                    } else if ((card.status == "review")) {
+                        Alert.show(
+                                activity,
+                                "Tarjeta ya esta registrada",
+                                ("status: " + card.status + "\n" +
+                                        "Card Token: " + card.token + "\n" +
+                                        "transaction_reference: " + card.transactionReference)
+                        )
+                    } else {
+                        Alert.show(
+                                activity,
+                                "Error",
+                                ("status: " + card.status + "\n" +
+                                        "message: " + card.message)
+                        )
+                    }
+
+                    //TODO: Create charge or Save Token to your backend
+                }
+
+                override fun onError(error: PaymentezError) {
+                    //Log.d("test_TokenD","token"+error.type)
+                    Alert.show(
+                            activity,
+                            "Error",
+                            ("Type: " + error.type + "\n" +
+                                    "Help: " + error.help + "\n" +
+                                    "Description: " + error.description)
+                    )
+
+                }
+            })
+        }
+    }
+
+    fun pago(CARD_TOKEN: String){
+        Log.d("test_Token", "valor " + CARD_TOKEN)
+
+        if (CARD_TOKEN == "") {
+            Alert.show(
+                    activity,
+                    "Error",
+                    "Necesitas seleccionar una tarjeta"
+            )
+        } else {
+            val ORDER_AMOUNT = 10.5
+            //val ORDER_ID = "" + System.currentTimeMillis()
+            val ORDER_ID = "" + millisToDate(System.currentTimeMillis())
+            val ORDER_DESCRIPTION = "ORDER #$ORDER_ID"
+            backendService.createCharge(
+                    Constants.USER_ID, Paymentez.getSessionId(activity),
+                    CARD_TOKEN, ORDER_AMOUNT, ORDER_ID, ORDER_DESCRIPTION
+            )!!.enqueue(object : Callback<CreateChargeResponse?> {
+                override fun onResponse(
+                        call: Call<CreateChargeResponse?>,
+                        response: Response<CreateChargeResponse?>
+                ) {
+                    val createChargeResponse: CreateChargeResponse? = response.body()
+                    if (response.isSuccessful() && createChargeResponse != null && createChargeResponse.transaction != null) {
+                        /*Alert.show(
+                            this@MainActivity,
+                            "Successful Charge",
+                            """
+                            date: ${createChargeResponse.transaction.paymentDate.toString()}
+                            date metodo: ${ORDER_ID}
+                            status_detail: ${createChargeResponse.transaction.statusDetail.toString()}
+                            message: ${createChargeResponse.transaction.message.toString()}
+                            transaction_id:${createChargeResponse.transaction.id}
+                            """.trimIndent()
+                        )*/
+                            //sendMail(createChargeResponse.transaction.id, createChargeResponse.transaction.amount,
+                        //  ORDER_ID, createChargeResponse.transaction.status)
+                    } else {
+                        val gson = GsonBuilder().create()
+                        try {
+                            val errorResponse = gson.fromJson(
+                                    response.errorBody()!!.string(),
+                                    ErrorResponse::class.java
+                            )
+                            Alert.show(
+                                    activity,
+                                    "Error",
+                                    errorResponse.error.type
+                            )
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<CreateChargeResponse?>, e: Throwable) {
+                    Alert.show(
+                            activity,
+                            "Error",
+                            e.localizedMessage
+                    )
+                }
+            })
+        }
+    }
+
+    private fun millisToDate(millis: Long): String? {
+        return DateFormat.getDateInstance(DateFormat.SHORT).format(millis)
+        //You can use DateFormat.LONG instead of SHORT
+    }
+
+
+    //Verificar los campos de correo y password
     fun checkCredentials(email: String, password: String, passwordRepit: String): Boolean {
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(activity, "Llenar los campos", Toast.LENGTH_LONG).show()
@@ -68,6 +258,7 @@ class RegisterFragment : Fragment() {
         return true
     }
 
+    //Conexion con firebase para el registro de una nueva cuenta
     fun registerNewUser(email: String, password: String, passwordRepit: String) {
 
         if (checkCredentials(email,password,passwordRepit)){
@@ -91,6 +282,7 @@ class RegisterFragment : Fragment() {
 
     }
 
+    //Enviar un mensaje de verificacion para activiar la cuenta
     fun sendEmailVerification(user: FirebaseUser) {
         //Log.d(TAG, "started Verification")
 
@@ -106,6 +298,8 @@ class RegisterFragment : Fragment() {
                 }
     }
 
+    //Mostrar alerta
+
     fun showConfirmationDialog(title: Int, msg: String) {
         val dlg = AlertDialog.Builder(requireActivity())
         dlg.setMessage(msg)
@@ -115,32 +309,16 @@ class RegisterFragment : Fragment() {
 
     }
 
+    //Cargar el siguiente activity para la configuracion del perfil
     fun updateUI(currentUser: FirebaseUser?) { //send current user to next activity
         if (currentUser == null) return
         val intent = Intent(activity, ConfigurarPerfilActivity::class.java)
         startActivity(intent)
-        //finish()
+        requireActivity().finish()
     }
 
-    fun setDatos(uid:String){
 
-        val db = Firebase.firestore
 
-        val datos = hashMapOf(
-                "nombre" to "Anononimo",
-                "descripcion" to "default",
-                "titulo" to "defeult",
-                "foto" to "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png",
-                "ispsicologo" to false
-        )
-
-        db.collection("usuarios").document(uid).set(datos)
-                .addOnSuccessListener {
-                    Toast.makeText(activity,"Registro con exito",Toast.LENGTH_LONG).show()
-                }.addOnFailureListener {
-
-        }
-    }
 
 }
 

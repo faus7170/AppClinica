@@ -54,6 +54,7 @@ class ExerciseActivity : AppCompatActivity() {
 
     }
 
+    //Buscar un ejerccio en la base de datos
     private fun buscar(s: String){
 
         userListSearches = mutableListOf()
@@ -70,21 +71,7 @@ class ExerciseActivity : AppCompatActivity() {
 
 
     }
-
-    private fun adapter(muteable:MutableList<Exercise>) {
-        adapter = AdapterExercise(muteable, {
-            val extras = Bundle()
-            extras.putString("id", it.id)
-            extras.putString("nombre", it.nombre)
-
-            val intent = Intent(this, StepsActivity::class.java)
-            intent.putExtras(extras)
-            startActivity(intent)
-
-        }, true)
-        mRecyclerView.adapter = adapter
-    }
-
+    //Recuperar los ejerccicios de firestore
     private fun conexionFirestore() {
         userList = mutableListOf()
 
@@ -105,4 +92,26 @@ class ExerciseActivity : AppCompatActivity() {
 
         }
     }
+
+    //Mostrar los ejerccicios en el activty
+    private fun adapter(muteable:MutableList<Exercise>) {
+        adapter = AdapterExercise(muteable, {
+            val extras = Bundle()
+            extras.putString("id", it.id)
+            extras.putString("nombre", it.nombre)
+
+            val intent = Intent(this, StepsActivity::class.java)
+            intent.putExtras(extras)
+            startActivity(intent)
+
+        }, true)
+        mRecyclerView.adapter = adapter
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
+
 }

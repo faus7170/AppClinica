@@ -15,13 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_icono_principal_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".TestNotificationActivity"></activity>
+        <activity android:name=".ui.exercise.VideoActivity"></activity>
+        <activity android:name=".TestNotificationActivity" />
         <activity android:name=".ui.exercise.ExerciseActivity" />
         <activity android:name=".ui.configuracion.ConfigurarPerfilActivity" />
         <activity android:name=".ui.comunidad.ComentActivity" />
         <activity android:name=".ui.comunidad.ComunidadActivity" />
         <activity android:name=".ui.autohipnosis.AutohipnosisActivity" />
-        <activity android:name=".ui.exercise.MultimediaActivity" />
+        <activity android:name=".ui.exercise.AudioActivity" />
         <activity android:name=".ui.exercise.StepsActivity" />
         <activity android:name=".ui.psicologo.DisplayPsicoActivity" />
         <activity android:name=".ui.chat.ChatRoomActivity" />
@@ -37,6 +38,7 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/app_name" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
@@ -59,15 +61,14 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".notification.FirebaseService"
+        <service
+            android:name=".notification.FirebaseService"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-
-
     </application>
 
 </manifest>

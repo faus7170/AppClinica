@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appclinica.R
 import com.example.appclinica.ui.comunidad.controlador.ReadPublicacionHistorial
+import com.example.appclinica.ui.comunidad.model.SetPregunt
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
@@ -23,6 +24,7 @@ class FragmentPublicacion : ReadPublicacionHistorial() {
     val database = Firebase.database
     lateinit var adapter: TestAdapterComunidad
     lateinit var recyclerView: RecyclerView*/
+    //tools:context=".ui.comunidad.ComunidadActivity"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +41,6 @@ class FragmentPublicacion : ReadPublicacionHistorial() {
         val nombre = pref.getString("nombre", "default")!!
         val foto = pref.getString("foto", "default")!!
 
-
-
         findByid(view)
 
         //readPublicacion()
@@ -53,7 +53,7 @@ class FragmentPublicacion : ReadPublicacionHistorial() {
 
         }
 
-        readPublicaciones("publicacion","default")
+        readPublicaciones("publicacion",uid)
 
         return view
 
@@ -69,59 +69,12 @@ class FragmentPublicacion : ReadPublicacionHistorial() {
         hashMap.put("nombre", nombre)
         hashMap.put("foto", foto)
 
-        myRefprueba.push().setValue(hashMap)
+        //myRefprueba.push().setValue(hashMap)
+        myRefprueba.push().setValue(SetPregunt(question,nombre,foto,"2021","",uid))
+        //SetPregunt(pregunta, nombre, foto, "2021", id,uid)
 
 
     }
-
-
-
-    /*private fun readPublicaciones() {
-        val mutableList: MutableList<SetPregunt> = mutableListOf()
-
-        val myRef = database.getReference("publicacion")
-
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                mutableList.clear()
-                for (postSnapshot in dataSnapshot.children) {
-                    val post = postSnapshot.getValue<SetPregunt>()
-
-                    val pregunta = post!!.pregunta
-                    val uid = post.uid
-                    val nombre = post.nombre
-                    val foto = post.foto
-                    val id = postSnapshot.key.toString()
-
-                    mutableList.add(SetPregunt(pregunta, nombre, foto, "2021", id,uid))
-                }
-
-                mutableList.reverse()
-                adapter = TestAdapterComunidad(mutableList, true, this@FragmentPublicacion)
-                recyclerView.adapter = adapter
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        })
-    }
-
-    override fun onComentar(id: String, nombre: String, pregunta: String, foto: String) {
-        val extras = Bundle()
-        extras.putString("id", id)
-        extras.putString("pregunta",pregunta)
-        extras.putString("nombre", nombre)
-        extras.putString("foto", foto)
-        val intent = Intent(activity, ComentActivity::class.java)
-        intent.putExtras(extras)
-        startActivity(intent)
-    }
-
-    override fun onBorrar(id: String) {
-        database.getReference("publicacion").child(id).removeValue()
-    }*/
 
     private fun findByid(view: View) {
         textPregunta = view.findViewById(R.id.txtPregunta)
