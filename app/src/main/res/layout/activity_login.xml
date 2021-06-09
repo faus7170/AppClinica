@@ -14,7 +14,7 @@
         android:layout_height="300dp"
         android:background="@color/white"
         android:padding="15dp"
-        app:srcCompat="@drawable/app_psico_icono" />
+        app:srcCompat="@drawable/ic_icono_clinica_hipnosis" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -62,6 +62,17 @@ object BotResponse {
                 }
             }
 
+            message.contains("problema") -> {
+                when (random) {
+                    0 -> "¿Me puedes contar que te paso?"
+                    1 -> "Recuerda que estoy aqui contigo"
+                    2 -> "Sigue adelante, siempre busca una solucción"
+                    else -> "error"
+                }
+            }
+
+
+
             //What time is it?
             message.contains("time") && message.contains("?")-> {
                 val timeStamp = Timestamp(System.currentTimeMillis())
@@ -84,9 +95,9 @@ object BotResponse {
             //When the programme doesn't understand...
             else -> {
                 when (random) {
-                    0 -> "I don't understand..."
-                    1 -> "Try asking me something different"
-                    2 -> "Idk"
+                    0 -> "Puedes darme un poco mas de informacion"
+                    1 -> "Intenta con otra pregunta"
+                    2 -> "Prodias volver repetir pero con otras palabras"
                     else -> "error"
                 }
             }

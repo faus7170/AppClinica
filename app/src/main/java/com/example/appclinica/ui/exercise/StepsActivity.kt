@@ -29,7 +29,7 @@ class StepsActivity : AppCompatActivity(){
     lateinit var textView: TextView
     //lateinit var runnable: Runnable
     //var handler: Handler = Handler()
-    private var mProgressDialog: ProgressDialog? = null
+    lateinit var progressDialog: ProgressDialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +40,8 @@ class StepsActivity : AppCompatActivity(){
         val dato = bundle?.getString("id")
         val nombre = bundle?.getString("nombre")
 
+
+        progressDialog = ProgressDialog(this)
         mRecyclerView = findViewById(R.id.recyclerViewPasos)
         textView = findViewById(R.id.textViewNamePaso)
 
@@ -56,16 +58,17 @@ class StepsActivity : AppCompatActivity(){
         val db = Firebase.firestore
         userList = mutableListOf()
 
-        var ischeck = false
+        //var ischeck = false
 
         db.collection("ejercicios").document(dato.toString()).collection("pasos").get().addOnSuccessListener { document ->
             for (getdatos in document) {
 
                 val ident = getdatos.getString("identificador")
                 val contenido = getdatos.getString("contenido")
+                val tipo= getdatos.getString("otro")
                 val id = getdatos.id
 
-                val testDatos = Exercise("null","null","null",ident!!,contenido!!)
+                val testDatos = Exercise("null","null","null",ident!!,contenido!!, tipo!!)
 
                 userList.add(testDatos)
 
@@ -84,11 +87,17 @@ class StepsActivity : AppCompatActivity(){
                     }
                 }*/
 
-
-                val intent = Intent(this, VideoActivity::class.java)
-                //intent.putExtra("url", it.contenido)
-                startActivity(intent)
-
+                if (it.otro.equals("video")){
+                    val intent = Intent(this, VideoActivity::class.java)
+                    intent.putExtra("url", it.contenido)
+                    carga()
+                    startActivity(intent)
+                }else if (it.otro.equals("audio")){
+                    val intent = Intent(this, AudioActivity::class.java)
+                    intent.putExtra("url", it.contenido)
+                    carga()
+                    startActivity(intent)
+                }
 
             },false)
             mRecyclerView.adapter = adapter
@@ -97,15 +106,30 @@ class StepsActivity : AppCompatActivity(){
         }
     }
 
+    fun carga(){
+        /*progressDialog!!.setTitle("Cargando")
+        progressDialog!!.setMessage("Espere un momento ...")
+        progressDialog!!.show()*/
+
+        progressDialog.setTitle("Cargando")
+        progressDialog.setMessage("Espere un momento ...")
+        progressDialog.show()
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
     }
 
-    override fun onPrepareDialog(id: Int, dialog: Dialog?) {
-        super.onPrepareDialog(id, dialog)
+    override fun onResume() {
+        super.onResume()
+        progressDialog!!.dismiss()
     }
 
+    override fun onPause() {
+        super.onPause()
+        //progressDialog!!.dismiss()
+    }
 
 
 }

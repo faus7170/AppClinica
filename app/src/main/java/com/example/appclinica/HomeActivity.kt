@@ -44,8 +44,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
 
+        //setTheme(R.style.Theme_AppCompat_Light_NoActionBar)
+
         findById()
         getDatosUser()
+        //android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
     }
 
