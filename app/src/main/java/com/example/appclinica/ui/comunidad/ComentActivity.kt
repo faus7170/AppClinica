@@ -74,8 +74,9 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister, 
             hashMap.put("pregunta", question)
             hashMap.put("nombre", nombre!!)
             hashMap.put("foto", foto!!)
+            hashMap.put("uid",uid)
 
-            myRefprueba.push().setValue(hashMap)
+            myRefprueba.push().setValue(SetPregunt(question,nombre,foto,"2021",idpublicacion,uid))
 
 
         }.addOnFailureListener { exception ->
@@ -97,11 +98,18 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister, 
                 for (postSnapshot in dataSnapshot.children) {
                     val post = postSnapshot.getValue<SetPregunt>()
 
-                    mutableList.add(post!!)
+                    val pregunta = post!!.pregunta
+                    val uid = post.uid
+                    val nombre = post.nombre
+                    val foto = post.foto
+                    val id = postSnapshot.key.toString()
+
+                    mutableList.add(SetPregunt(pregunta, nombre, foto, idpublicacion, id,uid))
+                    //mutableList.add(post!!)
 
                 }
 
-                adapter = TestAdapterComunidad(mutableList,false,this@ComentActivity)
+                adapter = TestAdapterComunidad(mutableList,true,this@ComentActivity, uidShared(),"comentario")
                 recyclerView.adapter = adapter
 
             }
@@ -110,6 +118,7 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister, 
 
             }
         })
+        
 
     }
 
@@ -121,6 +130,7 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister, 
         recyclerView = findViewById(R.id.recyclerComent)
         txtComent= findViewById(R.id.txtSendComent)
         imagenCircleImageView = findViewById(R.id.imgCircleComent)
+        btnenviar.setOnClickListener(this)
 
         recyclerView.setHasFixedSize(true)
 
@@ -142,14 +152,14 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister, 
         when(v!!.id){
             R.id.btnSendComent ->{
                 if(!txtComent.text.toString().isEmpty()){
-                    sendComentario(idpublicacion.toString(),txtComent.text.toString(),uidShared())
+                    sendComentario(idpublicacion,txtComent.text.toString(),uidShared())
                     txtComent.setText("")
                 }
             }R.id.btnVolverComent ->{
                 val intent = Intent(this, ComunidadActivity::class.java)
                 startActivity(intent)
                 finish()
-        }
+            }
         }
 
     }

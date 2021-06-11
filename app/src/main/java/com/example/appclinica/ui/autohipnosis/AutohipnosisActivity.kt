@@ -20,7 +20,6 @@ class AutohipnosisActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var userListAdicciones: MutableList<GetDatosAutohipnosis>
     lateinit var userListDormir: MutableList<GetDatosAutohipnosis>
     lateinit var txtDeporte:TextView
-    lateinit var textView: TextView
     lateinit var txtAdicciones:TextView
     lateinit var txtDormir:TextView
     var isclick :Boolean = true
@@ -31,13 +30,6 @@ class AutohipnosisActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_autohipnosis)
 
         getValores()
-        textView = findViewById(R.id.textView2test)
-
-        val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
-
-        textView.text = pref.getString("nombre","null")+" "+pref.getString("descripcion","null")
-
-
 
         txtDeporte.setOnClickListener(this)
         txtAdicciones.setOnClickListener(this)

@@ -24,7 +24,7 @@ open class ReadPublicacionHistorial: Fragment(), TestAdapterComunidad.onClickLis
     lateinit var adapter: TestAdapterComunidad
     lateinit var recyclerView: RecyclerView
 
-    val TOPIC = "/topics/myTopic2"
+    //val TOPIC = "/topics/myTopic2"
 
 
     fun readPublicaciones(fragmen:String, uid:String) {
@@ -58,14 +58,14 @@ open class ReadPublicacionHistorial: Fragment(), TestAdapterComunidad.onClickLis
 
 
                     }else{
-                        Log.d("Conexion","Clase no encontrada")
+                        Log.d("Error","Clase no encontrada")
                     }
 
 
                 }
 
                 mutableList.reverse()
-                adapter = TestAdapterComunidad(mutableList, true, this@ReadPublicacionHistorial)
+                adapter = TestAdapterComunidad(mutableList, true, this@ReadPublicacionHistorial, uid,fragmen)
                 recyclerView.adapter = adapter
 
             }
@@ -75,6 +75,12 @@ open class ReadPublicacionHistorial: Fragment(), TestAdapterComunidad.onClickLis
             }
         })
     }
+
+
+    /*fun uidShared(): String {
+        val pref = applicationContext.getSharedPreferences("dateUser", AppCompatActivity.MODE_PRIVATE)
+        return pref.getString("uid", "default")!!
+    }*/
 
 
 
@@ -90,6 +96,29 @@ open class ReadPublicacionHistorial: Fragment(), TestAdapterComunidad.onClickLis
     }
 
     override fun onBorrar(id: String) {
-        database.getReference("publicacion").child(id).removeValue()
+
     }
+
+    fun delate(id:String,testClase: String, key: String){
+
+        if (testClase.equals("publicacion") || testClase.equals("historial")){
+            database.getReference("publicacion").child(id).removeValue()
+        }else{
+            database.getReference("publicacion").child(key).child("comentarios").child(id).removeValue()
+        }
+    }
+
+    fun editPublicacion(id: String, newValor: String, testClase: String, key: String){
+
+        Log.d("testEdit","id "+id+" "+testClase)
+        if (testClase.equals("publicacion") || testClase.equals("historial")){
+            database.getReference("publicacion").child(id).child("pregunta").setValue(newValor)
+        }else{
+            database.getReference("publicacion").child(key).child("comentarios").child(id).child("pregunta").setValue(newValor)
+        }
+
+    }
+
+
+
 }

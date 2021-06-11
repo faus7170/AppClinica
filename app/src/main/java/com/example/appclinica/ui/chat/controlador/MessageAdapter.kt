@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
-import com.example.appclinica.ui.chat.modelo.DatosMensaje
 import com.example.appclinica.ui.chat.modelo.MessageReciver
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -44,7 +42,7 @@ class MessageAdapter(val dataSet: MutableList<MessageReciver>) : RecyclerView.Ad
 
         val longHora = dataSet[position].hora
         val date = Date(longHora)
-        val simpleDateFormat = SimpleDateFormat ("hh:mm a")
+        val simpleDateFormat = SimpleDateFormat ("HH:mm")
         holder.txt_date.text = simpleDateFormat.format(date)
     }
 
@@ -72,7 +70,7 @@ class MessageAdapter(val dataSet: MutableList<MessageReciver>) : RecyclerView.Ad
         var txt_date = view.findViewById(R.id.viewHora) as TextView
 
 
-        fun render (informacion: DatosMensaje){
+        fun render (informacion: MessageReciver){
             showmsm.text = informacion.msm
 
         }

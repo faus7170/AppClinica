@@ -1,4 +1,4 @@
-package com.example.appclinica.ui.login
+package com.example.appclinica.ui.login.controlador
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

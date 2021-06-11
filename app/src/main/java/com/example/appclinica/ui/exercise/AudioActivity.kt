@@ -11,7 +11,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import com.example.appclinica.R
 
-class MultimediaActivity : AppCompatActivity() {
+class AudioActivity : AppCompatActivity() {
 
     lateinit var txtCurrenTime: TextView
     lateinit var txtTotalTime: TextView
@@ -37,7 +37,7 @@ class MultimediaActivity : AppCompatActivity() {
         }
 
 
-        var uri = Uri.parse(dato.toString())
+        val uri = Uri.parse(dato.toString())
         mediaPlayer = MediaPlayer.create(this,uri)
 
         mRunnable = object : Runnable {
@@ -86,8 +86,6 @@ class MultimediaActivity : AppCompatActivity() {
             imgPlayPause.setImageResource(R.drawable.ic_baseline_play_circle_outline_24)
             mediaPlayer.seekTo(0)
         }
-
-
 
     }
 

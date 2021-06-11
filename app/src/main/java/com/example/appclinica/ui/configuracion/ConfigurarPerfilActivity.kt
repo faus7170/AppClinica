@@ -7,6 +7,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -20,7 +21,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ConfigurarPerfilActivity : AppCompatActivity() {
+class ConfigurarPerfilActivity : AppCompatActivity(), View.OnClickListener {
 
     lateinit var imagenCircleImageView: CircleImageView
     lateinit var textViewNombre: EditText
@@ -28,73 +29,74 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
     lateinit var textViewDescripcion: EditText
     lateinit var btnOmitir:Button
     lateinit var btnGuardar:Button
-    val user = Firebase.auth.currentUser
     lateinit var checkBoxH: CheckBox
     lateinit var checkBoxM: CheckBox
     lateinit var checkBoxO: CheckBox
-
     lateinit var uri:Uri
     lateinit var imagenDefault: String
     lateinit var genero: String
+    lateinit var uid : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_configurar_perfil)
 
-
-        if (true) {
+        if (restorePrefData()) {
             staractivity()
         }
 
         findViewbyid()
-        val uid = user.uid
 
+        val user = Firebase.auth.currentUser
+        uid = user.uid
 
-        uri = Uri.parse(imagenDefault.toString())
+        //checkValidacion()
 
-
-        checkValidacion()
-
-        imagenCircleImageView.setOnClickListener {
-            viewimg()
-        }
-
-        btnGuardar.setOnClickListener {
-            if (!textViewNombre.text.isEmpty() || !textViewApellido.text.isEmpty()){
-                if (!checkBoxH.isChecked && !checkBoxM.isChecked && !checkBoxO.isChecked){
-                    Toast.makeText(this,"Seleccionar el genero",Toast.LENGTH_LONG).show()
-                }else{
-                    guardarDatos(uid, genero)
-                }
-
-            }else{
-                Toast.makeText(this,"Campos vacios",Toast.LENGTH_LONG).show()
-            }
-        }
-
-        btnOmitir.setOnClickListener {
-
-            setDatos(uid,"Anonimo","default","default",imagenDefault,"default",false)
-        }
 
     }
 
-    fun checkValidacion(){
+    override fun onClick(v: View?) {
 
-        /*checkBoxH.setOnCheckedChangeListener { compoundButton, b ->
-            checkBoxO.isSelected = false
-            checkBoxH.isSelected = false
+        when(v!!.id){
+            R.id.btnGuardarDatos->{
+                if (!textViewNombre.text.isEmpty() || !textViewApellido.text.isEmpty()){
+                    if (!checkBoxH.isChecked && !checkBoxM.isChecked && !checkBoxO.isChecked){
+                        Toast.makeText(this,"Seleccionar el genero",Toast.LENGTH_LONG).show()
+                    }else{
+                        guardarDatos(uid, genero)
+                    }
+
+                }else{
+                    Toast.makeText(this,"Campos vacios",Toast.LENGTH_LONG).show()
+                }
+            }
+            R.id.btnOmitir->{
+                setDatos(uid,"Anonimo","default","default",imagenDefault,"default",false)
+
+            }
+            R.id.editImagenProfile ->{
+                viewimg()
+
+            }
+            R.id.checkBoxM -> {
+                genero = "Mujer"
+                checkBoxO.isChecked = false
+                checkBoxH.isChecked = false
+            }
+            R.id.checkBoxH ->{
+                genero = "Hombre"
+                checkBoxO.isChecked = false
+                checkBoxM.isChecked = false
+            }
+            R.id.checkBoxO ->{
+                genero = "Otro"
+                checkBoxH.isChecked = false
+                checkBoxM.isChecked = false
+            }
         }
+    }
 
-        checkBoxM.setOnCheckedChangeListener { compoundButton, b ->
-            checkBoxO.isSelected = false
-            checkBoxH.isSelected = false
-        }
-
-        checkBoxO.setOnCheckedChangeListener { compoundButton, b ->
-            checkBoxO.isSelected = false
-            checkBoxH.isSelected = false
-        }*/
+    /*fun checkValidacion(){
 
         checkBoxM.setOnClickListener {
             genero = "Mujer"
@@ -114,25 +116,9 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
             checkBoxM.isChecked = false
         }
 
-        /*if (checkBoxM.isChecked){
-            genero = "Mujer"
-            checkBoxO.isChecked = false
-            checkBoxH.isChecked = false
+    }*/
 
-        } else if (checkBoxH.isSelected){
-            genero = "Hombre"
-            checkBoxO.isChecked = false
-            checkBoxM.isChecked = false
-            //checkBoxH.isSelected = true
-        }else if (checkBoxO.isSelected){
-            genero = "Otro"
-            checkBoxH.isChecked = false
-            checkBoxM.isChecked = false
-            //checkBoxH.isSelected = false
-        }*/
-
-    }
-
+    //Accion del boton guardar datos
 
     fun guardarDatos(uid:String, genero: String){
 
@@ -172,6 +158,7 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
 
     }
 
+    //Abrir la galaria para la selccion de imagen
     fun viewimg(){
         val intent = Intent()
         intent.type = "image/*"
@@ -179,6 +166,7 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
         startActivityForResult(intent,1)
     }
 
+    //Envia informacion del usuario para guardar en firstore
     fun setDatos(uid: String, nombre: String, descripcion: String, titulo: String, foto: String, genero:String, ispsicologo: Boolean){
 
         val db = Firebase.firestore
@@ -200,6 +188,7 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
                 }
     }
 
+    //Cargar la imagen seleccionada al activity
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -210,6 +199,7 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
         }
     }
 
+    //Cargar el siguiente activity para la configuracion del perfil
     private fun staractivity() {
         val loginActivity = Intent(applicationContext, HomeActivity::class.java)
         startActivity(loginActivity)
@@ -240,7 +230,18 @@ class ConfigurarPerfilActivity : AppCompatActivity() {
         checkBoxM = findViewById(R.id.checkBoxM)
         checkBoxO = findViewById(R.id.checkBoxO)
 
+        btnGuardar.setOnClickListener(this)
+        btnOmitir.setOnClickListener(this)
+        imagenCircleImageView.setOnClickListener(this)
+        checkBoxM.setOnClickListener(this)
+        checkBoxH.setOnClickListener(this)
+        checkBoxO.setOnClickListener(this)
+
         imagenDefault = "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"
 
+        uri = Uri.parse(imagenDefault)
+
     }
+
+
 }

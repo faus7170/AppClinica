@@ -13,12 +13,14 @@
         android:layout_margin="10dp"
         android:background="@color/deeppurple">
 
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/idToolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:title="Mensajes"></androidx.appcompat.widget.Toolbar>
+            app:title="Mensajes" />
+
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/idTabLayoutChat"

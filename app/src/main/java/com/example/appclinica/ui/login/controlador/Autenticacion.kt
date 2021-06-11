@@ -30,8 +30,6 @@ open class Autenticacion : AppCompatActivity() {
     var callbackManager = CallbackManager.Factory.create()
     val RC_SIGN_IN = 123
     lateinit var auth: FirebaseAuth
-
-
     lateinit var txt_dialogo_correo_reset: EditText
     lateinit var btn_resetPassword: Button
 
@@ -170,7 +168,7 @@ open class Autenticacion : AppCompatActivity() {
         if (currentUser == null) return
         val intent = Intent(this, ConfigurarPerfilActivity::class.java)
         startActivity(intent)
-        //finish()
+        finish()
     }
 
     //Ingresar con correo

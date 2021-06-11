@@ -8,11 +8,13 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.appclinica.HomeActivity
 import com.example.appclinica.R
+import com.example.appclinica.ui.chat.ChatRoomActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -43,6 +45,7 @@ class FirebaseService() : FirebaseMessagingService() {
         updateToken(token.toString())
     }
 
+
     fun updateToken(refresToken: String){
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         val reference : DatabaseReference = FirebaseDatabase.getInstance().getReference("Tokens")
@@ -55,15 +58,17 @@ class FirebaseService() : FirebaseMessagingService() {
         super.onMessageReceived(message)
 
         val user: String = message.data.get("iduser")!!
-        val j = user.replace("[^\\d]".toRegex(), "").toInt()
+        val idNotificacion = user.replace("[^\\d]".toRegex(), "").toInt()
 
+        //Log.d("testMensajeReciver","numeros de iduser "+j)
 
-        Log.d("testMensajeReciver","numeros de iduser "+j)
-
-        val intent = Intent(this, HomeActivity::class.java)
+        val intent = Intent(this, ChatRoomActivity::class.java)
+        val bundle = Bundle()
+        bundle.putString("id",user)
+        intent.putExtras(bundle)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         //val notificationID = Random.nextInt()
-        val notificationID = j
+        val notificationID = idNotificacion
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(notificationManager)

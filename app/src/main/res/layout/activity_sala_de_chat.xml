@@ -65,7 +65,9 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Mensaje"
-                android:inputType="textPersonName" />
+                android:inputType="textCapSentences"
+                android:singleLine="true"
+                android:imeOptions="actionSend" />
 
             <ImageButton
                 android:id="@+id/btnSendMensaje"
