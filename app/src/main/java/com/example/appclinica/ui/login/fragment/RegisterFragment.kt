@@ -12,15 +12,14 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.example.appclinica.HomeActivity
 import com.example.appclinica.R
 import com.example.appclinica.notification.Alert
 import com.example.appclinica.notification.Constants
 import com.example.appclinica.paymantel.BackendService
 import com.example.appclinica.paymantel.modelo.CreateChargeResponse
-import com.example.appclinica.ui.configuracion.ConfigurarPerfilActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.GsonBuilder
@@ -43,7 +42,7 @@ import java.text.DateFormat
 
 class RegisterFragment : Fragment(), View.OnClickListener {
 
-    private lateinit var database: DatabaseReference
+    lateinit var imagenDefault: String
     lateinit var auth: FirebaseAuth
     lateinit var btnRegistarCorreo: Button
     lateinit var txtCorreo : EditText
@@ -59,9 +58,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         auth = FirebaseAuth.getInstance()
-
     }
 
 
@@ -81,6 +78,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         checkBoxSemestral.setOnClickListener(this)
         checkBoxAnual.setOnClickListener(this)
 
+        imagenDefault = "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"
 
         btnRegistarCorreo.setOnClickListener{
             registerNewUser(txtCorreo.text.toString(),txtClave.text.toString(),txtConfirmarClave.text.toString())
@@ -267,10 +265,8 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             val user = auth.currentUser
-
                             //setDatos(user.uid)
-
-                            updateUI(user)
+                            updateUI(user,user.uid)
                             //sendEmailVerification(user)
                         } else {
                             Toast.makeText(activity, "Authentication failed.", Toast.LENGTH_SHORT).show()
@@ -285,7 +281,6 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     //Enviar un mensaje de verificacion para activiar la cuenta
     fun sendEmailVerification(user: FirebaseUser) {
         //Log.d(TAG, "started Verification")
-
         user!!.sendEmailVerification()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -299,7 +294,6 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     }
 
     //Mostrar alerta
-
     fun showConfirmationDialog(title: Int, msg: String) {
         val dlg = AlertDialog.Builder(requireActivity())
         dlg.setMessage(msg)
@@ -310,12 +304,35 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     }
 
     //Cargar el siguiente activity para la configuracion del perfil
-    fun updateUI(currentUser: FirebaseUser?) { //send current user to next activity
+    fun updateUI(currentUser: FirebaseUser?, uid:String) { //send current user to next activity
         if (currentUser == null) return
-        val intent = Intent(activity, ConfigurarPerfilActivity::class.java)
+        val intent = Intent(activity, HomeActivity::class.java)
+        setDatos(uid,"Anonimo","default","default",imagenDefault,"default",false)
         startActivity(intent)
         requireActivity().finish()
     }
+
+    fun setDatos(uid: String, nombre: String, descripcion: String, titulo: String, foto: String, genero:String, ispsicologo: Boolean){
+
+        val db = Firebase.firestore
+
+        val datos = hashMapOf(
+                "nombre" to nombre,
+                "descripcion" to descripcion,
+                "titulo" to titulo,
+                "foto" to foto,
+                "genero" to genero,
+                "ispsicologo" to ispsicologo
+        )
+
+        db.collection("usuarios").document(uid).set(datos)
+                .addOnSuccessListener {
+                    Toast.makeText(requireActivity(),"Usuario registrado con exito",Toast.LENGTH_LONG).show()
+                }.addOnFailureListener {
+
+                }
+    }
+
 
 
 

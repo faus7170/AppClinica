@@ -15,10 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_icono_principal_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ui.exercise.VideoActivity"></activity>
+        <activity android:name=".ui.configuracion.ConfiguracionActivity"></activity>
+        <activity android:name=".ui.exercise.VideoActivity" />
         <activity android:name=".TestNotificationActivity" />
         <activity android:name=".ui.exercise.ExerciseActivity" />
-        <activity android:name=".ui.configuracion.ConfigurarPerfilActivity" />
         <activity android:name=".ui.comunidad.ComentActivity" />
         <activity android:name=".ui.comunidad.ComunidadActivity" />
         <activity android:name=".ui.autohipnosis.AutohipnosisActivity" />
@@ -27,8 +27,8 @@
         <activity android:name=".ui.psicologo.DisplayPsicoActivity" />
         <activity android:name=".ui.chat.ChatRoomActivity" />
         <activity android:name=".ui.chat.ChatActivity" />
-
-        <activity android:name=".onboarding.IntroActivity"
+        <activity
+            android:name=".onboarding.IntroActivity"
             android:theme="@style/SplahTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,13 +36,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.login.LoginActivity"/>
-
+        <activity android:name=".ui.login.LoginActivity" />
         <activity
             android:name=".HomeActivity"
-            android:label="@string/app_name"
-            />
+            android:label="@string/app_name" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

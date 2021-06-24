@@ -98,7 +98,7 @@ open class ConnectionFireStore: Fragment() {
     fun updateToken(token:String){
 
         val firebaseUser  = FirebaseAuth.getInstance().currentUser
-        val reference : DatabaseReference = FirebaseDatabase.getInstance().getReference("Tokens")
+        val reference : DatabaseReference = FirebaseDatabase.getInstance().getReference("tokens")
         val tokenl = Token(token)
         reference.child(firebaseUser.uid).setValue(tokenl)
 

@@ -6,8 +6,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.appclinica.HomeActivity
 import com.example.appclinica.R
-import com.example.appclinica.ui.configuracion.ConfigurarPerfilActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -166,7 +166,7 @@ open class Autenticacion : AppCompatActivity() {
 
     fun updateUI(currentUser: FirebaseUser?) { //send current user to next activity
         if (currentUser == null) return
-        val intent = Intent(this, ConfigurarPerfilActivity::class.java)
+        val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
     }

@@ -7,7 +7,7 @@
     android:layout_margin="10dp"
     android:gravity="center|top"
     android:orientation="vertical"
-    tools:context=".ui.configuracion.ConfigurarPerfilActivity">
+    tools:context=".ui.configuracion.ConfiguracionActivity">
 
     <ScrollView
         android:layout_width="match_parent"

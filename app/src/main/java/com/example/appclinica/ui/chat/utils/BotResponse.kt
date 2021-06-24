@@ -61,17 +61,7 @@ object BotResponse {
                     else -> "error"
                 }
             }
-
-            message.contains("problema") -> {
-                when (random) {
-                    0 -> "¿Me puedes contar que te paso?"
-                    1 -> "Recuerda que estoy aqui contigo"
-                    2 -> "Sigue adelante, siempre busca una solucción"
-                    else -> "error"
-                }
-            }
-
-
+            
 
             //What time is it?
             message.contains("time") && message.contains("?")-> {

@@ -1,18 +1,16 @@
 package com.example.appclinica
 
-import android.animation.Animator
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.example.appclinica.ui.autohipnosis.AutohipnosisActivity
 import com.example.appclinica.ui.chat.ChatActivity
 import com.example.appclinica.ui.comunidad.ComunidadActivity
-import com.example.appclinica.ui.configuracion.ConfigurarPerfilActivity
+import com.example.appclinica.ui.configuracion.ConfiguracionActivity
 import com.example.appclinica.ui.exercise.ExerciseActivity
 import com.example.appclinica.ui.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -51,7 +49,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         //android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
     }
-
 
     //Obtener datos del usuario en la base de datos y guardar en la clase SharedPreferences
     private fun getDatosUser() {
@@ -98,9 +95,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 Animatoo.animateSlideLeft(this)
             }
             R.id.bankcardConfiguracion -> {
-                /*val intent = Intent(this, ConfigurarPerfilActivity::class.java)
-                startActivity(intent)*/
-                Toast.makeText(applicationContext,"En proceso ...",Toast.LENGTH_LONG).show()
+                val intent = Intent(this, ConfiguracionActivity::class.java)
+                startActivity(intent)
+                //Toast.makeText(applicationContext,"En proceso ...",Toast.LENGTH_LONG).show()
 
             }
             R.id.bankcardForo -> {
@@ -127,7 +124,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     private fun clearData() {
         val preftest = applicationContext.getSharedPreferences("introConf", MODE_PRIVATE)
         preftest.edit().remove("isConfiguracion").apply()
-
         val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
         val editor = pref.edit()
         editor.clear().apply()

@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.appclinica.R
 import com.example.appclinica.ui.login.LoginActivity
-import com.google.android.material.tabs.TabLayout/**/
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.BaseOnTabSelectedListener
+
 
 /**
  *@author David Aguinsaca
@@ -26,81 +28,61 @@ class IntroActivity : AppCompatActivity() {
     lateinit var introViewPagerAdapter: IntroViewPagerAdapter
     lateinit var tabIndicator: TabLayout
     lateinit var btnNext: Button
+    var position = 0
     lateinit var btnGetStarted: Button
     lateinit var btnAnim: Animation
-    var position = 0
-
+    lateinit var tvSkip: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        // when this activity is about to be launch we need to check if its openened before or not
+        if (restorePrefData()) {
+            val mainActivity = Intent(applicationContext, LoginActivity::class.java)
+            startActivity(mainActivity)
+            finish()
+        }
         setContentView(R.layout.activity_intro)
 
-        if (restorePrefData()) {
-            val loginActivity = Intent(applicationContext, LoginActivity::class.java)
-            startActivity(loginActivity)
-            finish()
-        }
-        findById()
 
-        intro()
+        // ini views
+        btnNext = findViewById(R.id.btn_next)
+        btnGetStarted = findViewById(R.id.btn_get_started)
+        tabIndicator = findViewById(R.id.tab_indicator)
+        btnAnim = AnimationUtils.loadAnimation(applicationContext, R.anim.button_animation)
 
-    }
+        // fill list screen
+        val mList: MutableList<ScreenItem> = ArrayList()
+        mList.add(ScreenItem("Fresh Food", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit", R.drawable.chat))
+        mList.add(ScreenItem("Fast Delivery", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit", R.drawable.yoga))
+        mList.add(ScreenItem("Easy Payment", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit", R.drawable.comunidad))
 
-    //Declaracion de valores
-    private fun intro() {
-
-        val mList: List<ScreenItem> = listOf(ScreenItem("Inteligencia Emocional", "En las últimas décadas en el ámbito de la psicología la inteligencia emocioanl tomado mucho relevancia", R.drawable.inteligenciaemocional),
-                ScreenItem("Autohipnosis", "Activar tu capacidad de curación, regulación y confianza, resolver conflictos internos y mejorar tu bienestar, o conseguir soluciones creativas a cosas del día a día", R.drawable.yoga),
-                ScreenItem("Chat", "Comunicación en tiempo real con psicolgos profesionales y entre varios usuarios ", R.drawable.chat),
-                ScreenItem("Comunidad", "Espacio de comunicación asíncrona en el que los personas de un tema en específico", R.drawable.comunidad))
-
-
+        // setup viewpager
+        screenPager = findViewById(R.id.screen_viewpager)
         introViewPagerAdapter = IntroViewPagerAdapter(this, mList)
-        screenPager.adapter = introViewPagerAdapter
+        screenPager.setAdapter(introViewPagerAdapter)
 
+        // setup tablayout with viewpager
         tabIndicator.setupWithViewPager(screenPager)
 
-        btnNext.setOnClickListener {
-            position = screenPager.currentItem
+        // next button click Listner
+        btnNext.setOnClickListener(View.OnClickListener {
+            position = screenPager.getCurrentItem()
             if (position < mList.size) {
                 position++
-                screenPager.currentItem = position
+                screenPager.setCurrentItem(position)
             }
+            if (position == mList.size - 1) { // when we rech to the last screen
 
-            if (position == mList.size - 1) {
+                // TODO : show the GETSTARTED Button and hide the indicator and the next button
                 loaddLastScreen()
             }
-        }
+        })
 
-        btnGetStarted.setOnClickListener {
-
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            savePrefsData()
-            finish()
-        }
+        // tablayout add change listener
 
 
-        listenerTab(mList)
-    }
-
-
-    //Implementacion de la clase SharedPreference para recuperar dato de si la aplicacion fue iniciada anteriormente
-    private fun restorePrefData(): Boolean {
-        val pref = applicationContext.getSharedPreferences("introConf", MODE_PRIVATE)
-        return pref.getBoolean("isIntroOpnend", false)
-    }
-
-    //Implementacion de la clase SharedPreference para guardar el inicio de la aplicacion
-    private fun savePrefsData() {
-        val pref = applicationContext.getSharedPreferences("introConf", MODE_PRIVATE)
-        val editor = pref.edit()
-        editor.putBoolean("isIntroOpnend", true)
-        editor.apply()
-    }
-
-    //Mostrar los Fragments
-    private fun listenerTab(mList: List<ScreenItem>) {
         tabIndicator.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
 
@@ -120,22 +102,42 @@ class IntroActivity : AppCompatActivity() {
             }
 
         })
+
+
+
+        // Get Started button click listener
+        btnGetStarted.setOnClickListener(View.OnClickListener { //open main activity
+            val mainActivity = Intent(applicationContext, LoginActivity::class.java)
+            startActivity(mainActivity)
+            // also we need to save a boolean value to storage so next time when the user run the app
+            // we could know that he is already checked the intro screen activity
+            // i'm going to use shared preferences to that process
+            savePrefsData()
+            finish()
+        })
+
+        // skip button click listener
     }
 
+    private fun restorePrefData(): Boolean {
+        val pref = applicationContext.getSharedPreferences("myPrefs", MODE_PRIVATE)
+        return pref.getBoolean("isIntroOpnend", false)
+    }
+
+    private fun savePrefsData() {
+        val pref = applicationContext.getSharedPreferences("myPrefs", MODE_PRIVATE)
+        val editor = pref.edit()
+        editor.putBoolean("isIntroOpnend", true)
+        editor.commit()
+    }
+
+    // show the GETSTARTED Button and hide the indicator and the next button
     private fun loaddLastScreen() {
-        btnNext.visibility = View.INVISIBLE
-        btnGetStarted.visibility = View.VISIBLE
-        //tvSkip.visibility = View.INVISIBLE
-        tabIndicator.visibility = View.INVISIBLE
-        btnGetStarted.animation = btnAnim
-    }
-
-    fun findById(){
-        screenPager = findViewById(R.id.screen_viewpager)
-        tabIndicator = findViewById(R.id.tab_indicator)
-        btnNext = findViewById(R.id.btn_next)
-        btnGetStarted = findViewById(R.id.btn_get_started)
-        btnAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_animation);
-        //tvSkip = findViewById(R.id.tv_skip)
+        btnNext!!.visibility = View.INVISIBLE
+        btnGetStarted!!.visibility = View.VISIBLE
+        tabIndicator!!.visibility = View.INVISIBLE
+        // TODO : ADD an animation the getstarted button
+        // setup animation
+        btnGetStarted!!.animation = btnAnim
     }
 }

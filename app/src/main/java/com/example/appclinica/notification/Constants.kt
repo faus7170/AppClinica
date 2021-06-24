@@ -4,9 +4,9 @@ class Constants {
 
     companion object {
         //MessagingService
-        const val BASE_URL = "default"
-        const val SERVER_KEY = "default"
-        const val CONTENT_TYPE = "default"
+        const val BASE_URL = "https://fcm.googleapis.com/"
+        const val SERVER_KEY = "AAAA7xQUEHE:APA91bHRe27BMYWP5POyzyVynlxi-o6rKK8e_-NEy25q1UgV3iAIXFKPXf_nq-JRO_9pYt30w0orntnZfrNSXzg8oucKhKE0RlAgZW6A7YCW7fXiq3DnV1NWFfj1eLRk828apsG5ejEH"
+        const val CONTENT_TYPE = "application/json"
 
         //Paymantel
         const val USER_ID = "uid12345"
@@ -21,7 +21,6 @@ class Constants {
 
         const val BACKEND_URL = "https://example-paymentez-backend.herokuapp.com"
         //const val BACKEND_URL = "https://appclinicadesarollo.herokuapp.com/"
-
 
     }
 

@@ -191,7 +191,6 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
         notify = false*/
 
 
-
     }
 
     private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
@@ -206,6 +205,7 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
             }
         } catch(e: Exception) {
             Log.e(TAG, e.toString())
+            Log.d("sendNotification","Error")
         }
     }
 
@@ -215,7 +215,9 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
             sendNotification(it)
         }*/
 
-        val tokens = database.getReference("Tokens")
+        val toketest = "cRL43T5XTLeTuCVpbOdi_W:APA91bHFVtmy7ilpenX1NbLxQx6lalNud9tgtuZ8bYRHo2yJdWp02QKb0KHo008_jKK-ENgznPtBDDyy6iP-VDiEsnwPxTND5MCRAdCMNzd2k-fYERNSLpwrvwee9vs-9MQ90yRyhEY9"
+
+        val tokens = database.getReference("tokens")
 
         val query:Query = tokens.orderByKey().equalTo(reciver)
 
@@ -224,9 +226,9 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
                 for (postSnapshot in snapshot.children) {
                     val post = postSnapshot.getValue<Token>()
 
-                    //Log.d("testKey","key: "+post!!.token)
+                    Log.d("testKey","key: "+post!!.token)
 
-                    PushNotification(NotificationData(nombreShared(), msm,uidShared()),post!!.token).also {
+                    PushNotification(NotificationData(nombreShared(), msm,uidShared()),post.token).also {
                         sendNotification(it)
                     }
                 }

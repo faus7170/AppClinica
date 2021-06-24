@@ -35,6 +35,7 @@ class FirebaseService() : FirebaseMessagingService() {
             set(value) {
                 sharedPref?.edit()?.putString("token", value)?.apply()
             }
+
     }
 
 
@@ -42,17 +43,17 @@ class FirebaseService() : FirebaseMessagingService() {
         super.onNewToken(newToken)
         token = newToken
 
-        updateToken(token.toString())
+//        updateToken(token.toString())
     }
 
 
-    fun updateToken(refresToken: String){
+    /*fun updateToken(refresToken: String){
         val firebaseUser = FirebaseAuth.getInstance().currentUser
-        val reference : DatabaseReference = FirebaseDatabase.getInstance().getReference("Tokens")
+        val reference : DatabaseReference = FirebaseDatabase.getInstance().getReference("tokens")
         val token = Token(refresToken)
         reference.child(firebaseUser.uid).setValue(token)
 
-    }
+    }*/
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)

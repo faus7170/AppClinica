@@ -63,6 +63,6 @@
         app:layout_constraintBottom_toTopOf="@+id/intro_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:src="@drawable/app_psico_icono" />
+        android:src="@drawable/ic_icono_clinica_hipnosis" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

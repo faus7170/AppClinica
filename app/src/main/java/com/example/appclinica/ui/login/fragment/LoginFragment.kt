@@ -31,7 +31,6 @@ class LoginFragment : Fragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         auth = FirebaseAuth.getInstance()
 
     }
@@ -95,18 +94,18 @@ class LoginFragment : Fragment(){
         if (currentUser == null) return
         val intent = Intent(activity, HomeActivity::class.java)
         startActivity(intent)
-        savePrefsData()
+        //savePrefsData()
         requireActivity().finish()
     }
 
-    private fun savePrefsData() {
+    /*private fun savePrefsData() {
         val pref = requireActivity().getSharedPreferences("introConf",
             AppCompatActivity.MODE_PRIVATE
         )
         val editor = pref.edit()
         editor.putBoolean("isConfiguracion", true)
         editor.apply()
-    }
+    }*/
 
 
 

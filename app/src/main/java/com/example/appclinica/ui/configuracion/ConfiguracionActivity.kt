@@ -12,46 +12,38 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
-import com.example.appclinica.R
 import com.example.appclinica.HomeActivity
-import com.google.firebase.auth.ktx.auth
+import com.example.appclinica.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ConfigurarPerfilActivity : AppCompatActivity(), View.OnClickListener {
+class ConfiguracionActivity : AppCompatActivity(), View.OnClickListener {
 
     lateinit var imagenCircleImageView: CircleImageView
     lateinit var textViewNombre: EditText
     lateinit var textViewApellido: EditText
     lateinit var textViewDescripcion: EditText
-    lateinit var btnOmitir:Button
-    lateinit var btnGuardar:Button
+    lateinit var btnOmitir: Button
+    lateinit var btnGuardar: Button
     lateinit var checkBoxH: CheckBox
     lateinit var checkBoxM: CheckBox
     lateinit var checkBoxO: CheckBox
-    lateinit var uri:Uri
+    lateinit var uri: Uri
     lateinit var imagenDefault: String
     lateinit var genero: String
     lateinit var uid : String
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_configurar_perfil)
-
-        if (restorePrefData()) {
-            staractivity()
-        }
+        setContentView(R.layout.activity_configuracion)
 
         findViewbyid()
 
-        val user = Firebase.auth.currentUser
-        uid = user.uid
-
-        //checkValidacion()
-
+        uid = uidShared()
 
     }
 
@@ -61,17 +53,18 @@ class ConfigurarPerfilActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnGuardarDatos->{
                 if (!textViewNombre.text.isEmpty() || !textViewApellido.text.isEmpty()){
                     if (!checkBoxH.isChecked && !checkBoxM.isChecked && !checkBoxO.isChecked){
-                        Toast.makeText(this,"Seleccionar el genero",Toast.LENGTH_LONG).show()
+                        Toast.makeText(this,"Seleccionar el genero", Toast.LENGTH_LONG).show()
                     }else{
                         guardarDatos(uid, genero)
                     }
 
                 }else{
-                    Toast.makeText(this,"Campos vacios",Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,"Campos vacios", Toast.LENGTH_LONG).show()
                 }
             }
             R.id.btnOmitir->{
-                setDatos(uid,"Anonimo","default","default",imagenDefault,"default",false)
+                //setDatos(uid,"Anonimo","default","default",imagenDefault,"default",false)
+                staractivity()
 
             }
             R.id.editImagenProfile ->{
@@ -96,30 +89,6 @@ class ConfigurarPerfilActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    /*fun checkValidacion(){
-
-        checkBoxM.setOnClickListener {
-            genero = "Mujer"
-            checkBoxO.isChecked = false
-            checkBoxH.isChecked = false
-        }
-
-        checkBoxH.setOnClickListener {
-            genero = "Hombre"
-            checkBoxO.isChecked = false
-            checkBoxM.isChecked = false
-        }
-
-        checkBoxO.setOnClickListener {
-            genero = "Otro"
-            checkBoxH.isChecked = false
-            checkBoxM.isChecked = false
-        }
-
-    }*/
-
-    //Accion del boton guardar datos
-
     fun guardarDatos(uid:String, genero: String){
 
         val pd = ProgressDialog(this)
@@ -129,8 +98,7 @@ class ConfigurarPerfilActivity : AppCompatActivity(), View.OnClickListener {
         imageRef.putFile(uri)
                 .addOnFailureListener {
                     pd.dismiss()
-
-                // Toast.makeText(this,"Error al guardar",Toast.LENGTH_LONG).show()
+                    // Toast.makeText(this,"Error al guardar",Toast.LENGTH_LONG).show()
                 }.addOnSuccessListener { taskSnapshot ->
                     pd.dismiss()
                 }.continueWithTask { task ->
@@ -158,27 +126,18 @@ class ConfigurarPerfilActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    //Abrir la galaria para la selccion de imagen
-    fun viewimg(){
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent,1)
-    }
-
-    //Envia informacion del usuario para guardar en firstore
     fun setDatos(uid: String, nombre: String, descripcion: String, titulo: String, foto: String, genero:String, ispsicologo: Boolean){
 
         val db = Firebase.firestore
 
         val datos = hashMapOf(
-                    "nombre" to nombre,
-                    "descripcion" to descripcion,
-                    "titulo" to titulo,
-                    "foto" to foto,
-                    "genero" to genero,
-                    "ispsicologo" to ispsicologo
-            )
+                "nombre" to nombre,
+                "descripcion" to descripcion,
+                "titulo" to titulo,
+                "foto" to foto,
+                "genero" to genero,
+                "ispsicologo" to ispsicologo
+        )
 
         db.collection("usuarios").document(uid).set(datos)
                 .addOnSuccessListener {
@@ -186,6 +145,13 @@ class ConfigurarPerfilActivity : AppCompatActivity(), View.OnClickListener {
                 }.addOnFailureListener {
 
                 }
+    }
+
+    fun viewimg(){
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent,1)
     }
 
     //Cargar la imagen seleccionada al activity
@@ -203,20 +169,14 @@ class ConfigurarPerfilActivity : AppCompatActivity(), View.OnClickListener {
     private fun staractivity() {
         val loginActivity = Intent(applicationContext, HomeActivity::class.java)
         startActivity(loginActivity)
-        savePrefsData()
         finish()
     }
 
-    private fun restorePrefData(): Boolean {
-        val pref = applicationContext.getSharedPreferences("introConf", MODE_PRIVATE)
-        return pref.getBoolean("isConfiguracion", false)
-    }
 
-    private fun savePrefsData() {
-        val pref = applicationContext.getSharedPreferences("introConf", MODE_PRIVATE)
-        val editor = pref.edit()
-        editor.putBoolean("isConfiguracion", true)
-        editor.apply()
+
+    fun uidShared(): String {
+        val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
+        return pref.getString("uid", "default")!!
     }
 
     fun findViewbyid(){
@@ -242,6 +202,7 @@ class ConfigurarPerfilActivity : AppCompatActivity(), View.OnClickListener {
         uri = Uri.parse(imagenDefault)
 
     }
+
 
 
 }
