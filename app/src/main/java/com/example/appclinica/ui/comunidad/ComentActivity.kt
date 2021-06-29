@@ -1,10 +1,10 @@
 package com.example.appclinica.ui.comunidad
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -12,13 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.appclinica.R
-import com.example.appclinica.ui.chat.ChatActivity
 import com.example.appclinica.ui.comunidad.controlador.TestAdapterComunidad
 import com.example.appclinica.ui.comunidad.model.SetPregunt
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
@@ -109,7 +106,7 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister, 
 
                 }
 
-                adapter = TestAdapterComunidad(mutableList,true,this@ComentActivity, uidShared(),"comentario")
+                adapter = TestAdapterComunidad(mutableList, true, this@ComentActivity, uidShared(), "comentario" )
                 recyclerView.adapter = adapter
 
             }

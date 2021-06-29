@@ -1,7 +1,6 @@
 package com.example.appclinica.ui.comunidad.controlador
 
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,14 +15,13 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 
 class TestAdapterComunidad(var dataSet: MutableList<SetPregunt>, var isPublicacion: Boolean,
-                           var itemOnclicklister: onClickLister, var uidt:String,var testClase:String) : RecyclerView.Adapter<TestAdapterComunidad.EjercHolder>() {
+                           var itemOnclicklister: onClickLister, var uidt: String, var testClase: String) : RecyclerView.Adapter<TestAdapterComunidad.EjercHolder>() {
 
     //, var item: (SetPregunt)-> Unit
     //var dataSet : MutableList<SetPregunt> = mutableListOf()
     lateinit var auth: FirebaseAuth
     lateinit var uid:String
     //lateinit var itemClickListener: OnItemClickListener
-
 
     fun addMensaje(msm: SetPregunt){
         dataSet.add(msm)
@@ -47,8 +45,6 @@ class TestAdapterComunidad(var dataSet: MutableList<SetPregunt>, var isPublicaci
     }
 
     override fun getItemCount(): Int = dataSet.size
-
-
 
 
     inner class EjercHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -106,9 +102,11 @@ class TestAdapterComunidad(var dataSet: MutableList<SetPregunt>, var isPublicaci
                                 linearLayoutEdit.visibility = View.VISIBLE
                                 editTextPublicacion.setText(informacion.pregunta)
 
+
                             }
                             R.id.action_option2 -> {
-                                Log.d("Test_menu", "option1" + informacion.id)
+                                //Log.d("Test_menu", "option1" + informacion.id)
+
                                 val readPublicacionHistorial = ReadPublicacionHistorial()
                                 readPublicacionHistorial.delate(informacion.id, testClase, informacion.key)
                             }

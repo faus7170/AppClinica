@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appclinica.R
@@ -83,6 +84,7 @@ class FragmentPublicacion : ReadPublicacionHistorial() {
         recyclerView.setHasFixedSize(true)
         val linerLinearLayoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = linerLinearLayoutManager
+
     }
 
 }

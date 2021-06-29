@@ -215,8 +215,6 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
             sendNotification(it)
         }*/
 
-        val toketest = "cRL43T5XTLeTuCVpbOdi_W:APA91bHFVtmy7ilpenX1NbLxQx6lalNud9tgtuZ8bYRHo2yJdWp02QKb0KHo008_jKK-ENgznPtBDDyy6iP-VDiEsnwPxTND5MCRAdCMNzd2k-fYERNSLpwrvwee9vs-9MQ90yRyhEY9"
-
         val tokens = database.getReference("tokens")
 
         val query:Query = tokens.orderByKey().equalTo(reciver)
@@ -228,7 +226,7 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
 
                     Log.d("testKey","key: "+post!!.token)
 
-                    PushNotification(NotificationData(nombreShared(), msm,uidShared()),post.token).also {
+                    PushNotification(NotificationData(nombreShared(), msm,uidShared(),fotoShared()),post.token).also {
                         sendNotification(it)
                     }
                 }
@@ -318,6 +316,26 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
 
     }
 
+    fun currentUser(userid: String){
+        val pref = applicationContext.getSharedPreferences("notification", MODE_PRIVATE)
+        val edit = pref.edit()
+        edit.putString("notiuser",userid)
+        edit.apply()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        currentUser(iduser)
+        Log.d("onTestResume",iduser)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        currentUser("none")
+        Log.d("onTestPause","none")
+
+    }
+
     fun uidShared(): String {
         val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
         return pref.getString("uid", "default")!!
@@ -326,6 +344,11 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
     fun nombreShared(): String {
         val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
         return pref.getString("nombre", "default")!!
+    }
+
+    fun fotoShared(): String {
+        val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
+        return pref.getString("foto", "default")!!
     }
 
     private fun getfindViewBy() {

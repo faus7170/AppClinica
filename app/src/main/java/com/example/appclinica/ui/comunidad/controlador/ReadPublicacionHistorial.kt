@@ -1,5 +1,7 @@
 package com.example.appclinica.ui.comunidad.controlador
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -65,7 +67,8 @@ open class ReadPublicacionHistorial: Fragment(), TestAdapterComunidad.onClickLis
                 }
 
                 mutableList.reverse()
-                adapter = TestAdapterComunidad(mutableList, true, this@ReadPublicacionHistorial, uid,fragmen)
+                adapter = TestAdapterComunidad(mutableList, true, this@ReadPublicacionHistorial,
+                        uid,fragmen)
                 recyclerView.adapter = adapter
 
             }
@@ -100,17 +103,29 @@ open class ReadPublicacionHistorial: Fragment(), TestAdapterComunidad.onClickLis
     }
 
     fun delate(id:String,testClase: String, key: String){
+        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
+        builder.setTitle("Seguro")
+        builder.setMessage("¿Quieres eliminar?")
 
-        if (testClase.equals("publicacion") || testClase.equals("historial")){
-            database.getReference("publicacion").child(id).removeValue()
-        }else{
-            database.getReference("publicacion").child(key).child("comentarios").child(id).removeValue()
-        }
+        builder.setPositiveButton("Eliminar", DialogInterface.OnClickListener { dialog, which ->
+            if (testClase.equals("publicacion") || testClase.equals("historial")){
+                database.getReference("publicacion").child(id).removeValue()
+            }else{
+                database.getReference("publicacion").child(key).child("comentarios").child(id).removeValue()
+            }
+
+        })
+
+        builder.setNegativeButton("Cancelar", DialogInterface.OnClickListener { dialog, which ->
+
+
+        })
+
     }
 
     fun editPublicacion(id: String, newValor: String, testClase: String, key: String){
 
-        Log.d("testEdit","id "+id+" "+testClase)
+        //Log.d("testEdit","id "+id+" "+testClase)
         if (testClase.equals("publicacion") || testClase.equals("historial")){
             database.getReference("publicacion").child(id).child("pregunta").setValue(newValor)
         }else{
