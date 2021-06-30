@@ -2,15 +2,16 @@ package com.example.appclinica.ui.chat
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toolbar
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.appclinica.HomeActivity
 import com.example.appclinica.R
 import com.example.appclinica.notification.NotificationData
 import com.example.appclinica.notification.PushNotification
@@ -18,7 +19,7 @@ import com.example.appclinica.notification.RetrofitInstance
 import com.example.appclinica.notification.Token
 import com.example.appclinica.ui.chat.controlador.MessageAdapter
 import com.example.appclinica.ui.chat.controlador.TestAdapterChatBot
-import com.example.appclinica.ui.chat.modelo.Message
+import com.example.appclinica.ui.chat.modelo.MessageBot
 import com.example.appclinica.ui.chat.modelo.MessageReciver
 import com.example.appclinica.ui.chat.modelo.MessageSender
 import com.example.appclinica.ui.chat.utils.BotResponse
@@ -27,13 +28,15 @@ import com.example.appclinica.ui.chat.utils.Constants.OPEN_SEARCH
 import com.example.appclinica.ui.chat.utils.Constants.RECEIVE_ID
 import com.example.appclinica.ui.chat.utils.Constants.SEND_ID
 import com.example.appclinica.ui.chat.utils.Time
-import com.example.appclinica.ui.comunidad.ComunidadActivity
+import com.example.appclinica.ui.comunidad.controlador.ReadPublicacionHistorial
+import com.example.appclinica.ui.psicologo.DisplayPsicoActivity
 import com.example.appclinica.ui.psicologo.ViewPsiocologo
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
+
 
 class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
 
@@ -47,37 +50,42 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
     val database = Firebase.database
     //var notify = false
     val TAG = "MainActivity"
-    val messagesList = mutableListOf<Message>()
+    val messagesList = mutableListOf<MessageBot>()
     private lateinit var adapter: TestAdapterChatBot
+    lateinit var seenListener :ValueEventListener
 
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sala_de_chat)
 
+        getfindViewBy()
+
         iduser = intent.extras!!.getString("id").toString()
 
         if (iduser.equals("chatBot")){
-            activityPerfile(iduser,"ChatBot")
+            activityPerfile(iduser, "ChatBot")
             customBotMessage("Hola ${nombreShared()} soy una inteligencia programada para ayudarte")
         }else{
-            activityPerfile(iduser,"ChatRoomActivity")
+            activityPerfile(iduser, "ChatRoomActivity")
             uid = uidShared()
-            readMessege(uid,iduser)
+            readMessege(uid, iduser)
+            menu(iduser)
         }
 
-        getfindViewBy()
 
-        //Obtener y mostrar datos del recpetor
+        seenMessege()
 
     }
 
     //Mensaje con chatbot
-    private fun sendMessage(message:String) {
+    private fun sendMessage(message: String) {
         val timeStamp = Time.timeStamp()
 
         if (message.isNotEmpty()) {
             //Adds it to our local list
-            messagesList.add(Message(message, SEND_ID, timeStamp))
+            messagesList.add(MessageBot(message, SEND_ID, timeStamp))
 
             //adapter.insertMessage(Message(message, SEND_ID, timeStamp))
             //rv_messages.scrollToPosition(adapter.itemCount - 1)
@@ -101,7 +109,7 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
 
 
                 //Adds it to our local list
-                messagesList.add(Message(response, RECEIVE_ID, timeStamp))
+                messagesList.add(MessageBot(response, RECEIVE_ID, timeStamp))
 
                 //Inserts our message into the adapter
                 //adapter.insertMessage(Message(response, RECEIVE_ID, timeStamp))
@@ -136,7 +144,7 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
             delay(1000)
             withContext(Dispatchers.Main) {
                 val timeStamp = Time.timeStamp()
-                messagesList.add(Message(message, RECEIVE_ID, timeStamp))
+                messagesList.add(MessageBot(message, RECEIVE_ID, timeStamp))
                 adapter = TestAdapterChatBot(messagesList)
                 recyclerView.adapter = adapter
                 //rv_messages.scrollToPosition(adapter.itemCount - 1)
@@ -148,18 +156,19 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v!!.id){
-            R.id.btnSendMensaje ->{
-                if (!txt_mensaje.text.toString().isEmpty()){
-                    if (iduser.equals("chatBot")){
+            R.id.btnSendMensaje -> {
+                if (!txt_mensaje.text.toString().isEmpty()) {
+                    if (iduser.equals("chatBot")) {
                         sendMessage(txt_mensaje.text.toString())
 
-                    }else{
-                        sendMessege(uid,iduser,txt_mensaje.text.toString(), ServerValue.TIMESTAMP)
+                    } else {
+                        sendMessege(uid, iduser, txt_mensaje.text.toString(), ServerValue.TIMESTAMP)
                     }
 
                     txt_mensaje.setText("")
                 }
-            }R.id.btnVolverSalaChat ->{
+            }
+            R.id.btnVolverSalaChat -> {
                 val intent = Intent(this, ChatActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -168,23 +177,18 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
 
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
-    }
-
     fun sendMessege(sender: String, reciver: String, msm: String, timestamp: MutableMap<String, String>){
 
         val myRefprueba = database.getReference("chats")
 
-        myRefprueba.push().setValue(MessageSender(sender,reciver,msm,timestamp))
+        myRefprueba.push().setValue(MessageSender(sender, reciver, msm, false, timestamp))
 
         contactSender(database)
         contactrReciver(database)
 
         val msg = msm
 
-        senderNotification(reciver,nombreShared(),msg)
+        //senderNotification(reciver, nombreShared(), msg)
         /*if(notify){
             senderNotification(reciver, nombreShared(),msg)
         }
@@ -193,23 +197,50 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
 
     }
 
+    fun seenMessege(){
+
+        //val database = Firebase.database
+        val myRef = database.getReference("chats")
+        //reference = FirebaseDatabase.getInstance().getReference("chats")
+
+        seenListener = myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (postSnapshot in dataSnapshot.children) {
+                    val post = postSnapshot.getValue<MessageReciver>()
+                    if (post!!.reciver.equals(uidShared()) && post.sender.equals(iduser)) {
+                        val hashMap: HashMap<String, Any> = HashMap()
+                        hashMap["seen"] = true
+                        postSnapshot.ref.updateChildren(hashMap)
+                    }
+
+                }
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        })
+
+    }
+
     private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
         try {
             val response = RetrofitInstance.api.postNotification(notification)
             if(response.isSuccessful) {
                 //Log.d(TAG, "Response: ${Gson().toJson(response)}")
-                Log.d("sendNotification","Correcto")
+                Log.d("sendNotification", "Correcto")
             } else {
                 //Log.e(TAG, response.errorBody().toString())
-                Log.d("sendNotification","Error")
+                Log.d("sendNotification", "Error")
             }
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             Log.e(TAG, e.toString())
-            Log.d("sendNotification","Error")
+            Log.d("sendNotification", "Error")
         }
     }
 
-    fun senderNotification(reciver: String, nombre:String,msm:String){
+    fun senderNotification(reciver: String, nombre: String, msm: String){
 
         /*PushNotification(NotificationData(nombre, msm,reciver),myTokenPhone).also {
             sendNotification(it)
@@ -219,18 +250,19 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
 
         val query:Query = tokens.orderByKey().equalTo(reciver)
 
-        query.addValueEventListener(object : ValueEventListener{
+        query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (postSnapshot in snapshot.children) {
                     val post = postSnapshot.getValue<Token>()
 
-                    Log.d("testKey","key: "+post!!.token)
+                    Log.d("testKey", "key: " + post!!.token)
 
-                    PushNotification(NotificationData(nombreShared(), msm,uidShared(),fotoShared()),post.token).also {
+                    PushNotification(NotificationData(nombreShared(), msm, uidShared(), fotoShared()), post.token).also {
                         sendNotification(it)
                     }
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
             }
 
@@ -280,7 +312,7 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
         })
     }
 
-    fun readMessege(myid:String,userid:String){
+    fun readMessege(myid: String, userid: String){
 
         //var mutableList: MutableList<DatosMensaje>
         val mutableList: MutableList<MessageReciver>
@@ -296,8 +328,8 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
                 for (postSnapshot in dataSnapshot.children) {
                     val post = postSnapshot.getValue<MessageReciver>()
 
-                    if (post!!.reciver.equals(myid) && post!!.sender.equals(userid)||
-                        post!!.reciver.equals(userid) && post!!.sender.equals(myid)){
+                    if (post!!.reciver.equals(myid) && post!!.sender.equals(userid) ||
+                            post!!.reciver.equals(userid) && post!!.sender.equals(myid)) {
 
                         mutableList.add(post)
                     }
@@ -316,25 +348,30 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
 
     }
 
+
+
     fun currentUser(userid: String){
         val pref = applicationContext.getSharedPreferences("notification", MODE_PRIVATE)
         val edit = pref.edit()
-        edit.putString("notiuser",userid)
+        edit.putString("notiuser", userid)
         edit.apply()
     }
 
     override fun onResume() {
         super.onResume()
         currentUser(iduser)
-        Log.d("onTestResume",iduser)
+        Log.d("onTestResume", iduser)
     }
 
     override fun onPause() {
         super.onPause()
         currentUser("none")
-        Log.d("onTestPause","none")
+        database.reference.child("chats").removeEventListener(seenListener)
+        //reference!!.removeEventListener(seenListener);
+        //Log.d("onTestPause", "none"+ seenListener)
 
     }
+
 
     fun uidShared(): String {
         val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
@@ -351,13 +388,20 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
         return pref.getString("foto", "default")!!
     }
 
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        //finish()
+    }
+
     private fun getfindViewBy() {
         txt_mensaje = findViewById(R.id.txtSendMensaje)
-        txtNombre = findViewById(R.id.viewNameSalaChat)
         btnenviar = findViewById(R.id.btnSendMensaje)
         recyclerView = findViewById(R.id.recyclerSalaChat)
         imgProfile = findViewById(R.id.imgCircleSalaChat)
         btnVolver = findViewById(R.id.btnVolverSalaChat)
+        toolbar = findViewById(R.id.toolbar4)
+
         btnVolver.setOnClickListener(this)
         btnenviar.setOnClickListener(this)
 
@@ -365,6 +409,7 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
         val linerLinearLayoutManager = LinearLayoutManager(this)
         linerLinearLayoutManager.stackFromEnd = true
         recyclerView.layoutManager = linerLinearLayoutManager
+
     }
 
 

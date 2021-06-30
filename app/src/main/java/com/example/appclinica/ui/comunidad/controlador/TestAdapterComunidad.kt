@@ -124,7 +124,6 @@ class TestAdapterComunidad(var dataSet: MutableList<SetPregunt>, var isPublicaci
         private fun getBy() {
             viewComentario = itemView.findViewById(R.id.viewComentario) as TextView
             imagenCircle = itemView.findViewById(R.id.viewCirclePersonComent) as CircleImageView
-            txtLike = itemView.findViewById(R.id.viewLike) as TextView
             txtComent = itemView.findViewById(R.id.viewComent) as TextView
             linearLayout = itemView.findViewById(R.id.linerLayoutLikeComentar) as LinearLayout
             linearLayoutEdit = itemView.findViewById(R.id.linerlayoutEdit) as LinearLayout

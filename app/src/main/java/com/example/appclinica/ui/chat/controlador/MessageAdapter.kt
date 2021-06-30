@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
 import com.example.appclinica.ui.chat.modelo.MessageReciver
@@ -44,6 +45,17 @@ class MessageAdapter(val dataSet: MutableList<MessageReciver>) : RecyclerView.Ad
         val date = Date(longHora)
         val simpleDateFormat = SimpleDateFormat ("HH:mm")
         holder.txt_date.text = simpleDateFormat.format(date)
+
+        if (position == dataSet.size-1){
+            if (dataSet[position].seen){
+                holder.showvisto.text = "Visto"
+            } else {
+                //holder.txt_seen.setText("Delivered");
+                holder.showvisto.text = "No leído"
+            }
+        } else {
+            holder.showvisto.setVisibility(View.GONE);
+        }
     }
 
 
@@ -61,6 +73,8 @@ class MessageAdapter(val dataSet: MutableList<MessageReciver>) : RecyclerView.Ad
         }else
             return type_left
 
+
+
     }
 
 
@@ -68,7 +82,7 @@ class MessageAdapter(val dataSet: MutableList<MessageReciver>) : RecyclerView.Ad
 
         var showmsm = view.findViewById(R.id.showMessege) as TextView
         var txt_date = view.findViewById(R.id.viewHora) as TextView
-
+        var showvisto = view.findViewById(R.id.txt_visto) as TextView
 
         fun render (informacion: MessageReciver){
             showmsm.text = informacion.msm

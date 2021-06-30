@@ -7,16 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
-import com.example.appclinica.ui.chat.modelo.Message
-import com.example.appclinica.ui.chat.modelo.MessageReciver
+import com.example.appclinica.ui.chat.modelo.MessageBot
 import com.example.appclinica.ui.chat.utils.Constants.SEND_ID
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import java.util.*
 
 
-class TestAdapterChatBot(val dataSet: MutableList<Message>) : RecyclerView.Adapter<TestAdapterChatBot.EjercHolder>() {
+class TestAdapterChatBot(val dataSet: MutableList<MessageBot>) : RecyclerView.Adapter<TestAdapterChatBot.EjercHolder>() {
 
 
     var type_left :Int = 0
@@ -41,6 +37,7 @@ class TestAdapterChatBot(val dataSet: MutableList<Message>) : RecyclerView.Adapt
     @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: EjercHolder, position: Int) {
         holder.render(dataSet[position])
+        holder.showvisto.visibility = View.GONE
     }
 
 
@@ -52,8 +49,10 @@ class TestAdapterChatBot(val dataSet: MutableList<Message>) : RecyclerView.Adapt
 
         if (dataSet.get(position).id.equals(SEND_ID)){
             return type_right
-        }else
+        }else {
             return type_left
+        }
+
 
     }
 
@@ -62,16 +61,14 @@ class TestAdapterChatBot(val dataSet: MutableList<Message>) : RecyclerView.Adapt
 
         var showmsm = view.findViewById(R.id.showMessege) as TextView
         var txt_date = view.findViewById(R.id.viewHora) as TextView
+        var showvisto = view.findViewById(R.id.txt_visto) as TextView
 
-
-        fun render (informacion: Message){
+        fun render (informacion: MessageBot){
             showmsm.text = informacion.message
             txt_date.text = informacion.time
+        }
+
 
         }
 
     }
-
-
-
-}
