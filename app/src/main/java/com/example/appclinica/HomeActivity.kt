@@ -32,7 +32,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var cardVieweChat: CardView
     lateinit var cardVieweConfiguracion: CardView
     lateinit var cardVieweForo: CardView
-    lateinit var btnCerrarSesion: Button
     lateinit var btnTestNotification: Button
     lateinit var auth: FirebaseAuth
     val db = Firebase.firestore
@@ -41,13 +40,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
-
         //setTheme(R.style.Theme_AppCompat_Light_NoActionBar)
-
         findById()
         getDatosUser()
         //android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
     }
 
     //Obtener datos del usuario en la base de datos y guardar en la clase SharedPreferences
@@ -98,6 +94,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, ConfiguracionActivity::class.java)
                 startActivity(intent)
                 //Toast.makeText(applicationContext,"En proceso ...",Toast.LENGTH_LONG).show()
+                finish()
 
             }
             R.id.bankcardForo -> {
@@ -105,14 +102,14 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
                 Animatoo.animateSlideLeft(this)
             }
-            R.id.btnCerrarSesion -> {
+            /*R.id.btnCerrarSesion -> {
                 Firebase.auth.signOut()
                 clearData()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 Animatoo.animateSlideRight(this)
                 finish()
-            }
+            }*/
             R.id.testNotification ->{
                 val intent = Intent(this, TestNotificationActivity::class.java)
                 startActivity(intent)
@@ -135,7 +132,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         cardVieweChat = findViewById(R.id.bankcardChat)
         cardVieweConfiguracion = findViewById(R.id.bankcardConfiguracion)
         cardVieweForo = findViewById(R.id.bankcardForo)
-        btnCerrarSesion = findViewById(R.id.btnCerrarSesion)
+        //btnCerrarSesion = findViewById(R.id.btnCerrarSesion)
         btnTestNotification = findViewById(R.id.testNotification)
 
         cardViewEjercicio.setOnClickListener(this)
@@ -143,7 +140,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         cardVieweChat.setOnClickListener(this)
         cardVieweConfiguracion.setOnClickListener(this)
         cardVieweForo.setOnClickListener(this)
-        btnCerrarSesion.setOnClickListener(this)
+        //btnCerrarSesion.setOnClickListener(this)
         btnTestNotification.setOnClickListener(this)
     }
 

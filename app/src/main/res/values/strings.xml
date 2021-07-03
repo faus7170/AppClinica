@@ -1,17 +1,16 @@
 <resources>
     <string name="app_name">Tu clínica</string>
     <!-- Strings related to login -->
-    <string name="prompt_email">Correo</string>
-    <string name="prompt_password">Clave</string>
-    <string name="action_sign_in">Ingresar o Registrar</string>
-    <string name="action_sign_in_short">Ingresar</string>
+    <string name="email">Correo</string>
+    <string name="password">Clave</string>
+    <string name="action_register">Registrar</string>
+    <string name="action_sign">Ingresar</string>
     <string name="welcome">"Vienvenido !"</string>
     <string name="invalid_username">El usuario no se ha encontrado</string>
     <string name="invalid_password">La contraseña debe tener almenos 5 caracteres</string>
     <string name="login_failed">"Fallo el ingreso"</string>
     <string name="ok">Ok</string>
-    <string name="confirm_email">Confirmar el correo</string>
-    <string name="please_confirm_email">Confirme su correo electrónico (% s) para crear una cuenta</string>
+    <string name="confirm_password">Confirmar la clave</string>
     <string name="facebook_app_id">241605911000791</string>
     <string name="fb_login_protocol_scheme">fb241605911000791</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -25,4 +24,9 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="clave">Clave</string>
+    <string name="option_mensual">$ 6.00 Mensual</string>
+    <string name="option_semestral">$ 12.00 Semestral</string>
+    <string name="option_anual">$ 24.00 Anual</string>
+    <string name="mensaje">Mensaje</string>
 </resources>

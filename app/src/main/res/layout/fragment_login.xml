@@ -7,6 +7,7 @@
     tools:context=".ui.login.fragment.LoginFragment">
 
     <ScrollView
+        android:id="@+id/idScrollViewLogin"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -18,39 +19,46 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-
-            <EditText
-                android:id="@+id/txtCorreo"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/txt_edit"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:layout_margin="5dp">
 
-            <EditText
-                android:id="@+id/txtClave"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtCorreo"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/txt_edit"
-                android:hint="Contraseña"
+                android:layout_margin="5dp"
                 android:inputType="textPassword"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                app:endIconMode="password_toggle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtClave"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="@string/clave"
+                    android:inputType="textPassword"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <Button
                 android:id="@+id/btnIngresarCorreo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/btn_login_register"
-                android:text="Ingresar" />
+                android:text="@string/action_sign" />
 
 
         </LinearLayout>

@@ -8,11 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.PersistableBundle
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.HandlerCompat.postDelayed
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
+import com.example.appclinica.HomeActivity
 import com.example.appclinica.R
 import com.example.appclinica.ui.exercise.controlador.AdapterExercise
 import com.example.appclinica.ui.exercise.model.Exercise
@@ -27,8 +30,7 @@ class StepsActivity : AppCompatActivity(){
     //lateinit var userList: MutableList<GetDatosPasosExercise>
     lateinit var userList: MutableList<Exercise>
     lateinit var textView: TextView
-    //lateinit var runnable: Runnable
-    //var handler: Handler = Handler()
+    lateinit var imageButton: ImageButton
     lateinit var progressDialog: ProgressDialog
 
 
@@ -44,6 +46,12 @@ class StepsActivity : AppCompatActivity(){
         progressDialog = ProgressDialog(this)
         mRecyclerView = findViewById(R.id.recyclerViewPasos)
         textView = findViewById(R.id.textViewNamePaso)
+        imageButton = findViewById(R.id.btnVolverSteps)
+
+        imageButton.setOnClickListener {
+            finish()
+        }
+
 
         textView.text = nombre
 

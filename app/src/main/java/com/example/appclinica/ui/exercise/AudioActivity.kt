@@ -1,14 +1,13 @@
 package com.example.appclinica.ui.exercise
 
+import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.SeekBar
-import android.widget.TextView
+import android.widget.*
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.example.appclinica.R
 
 class AudioActivity : AppCompatActivity() {
@@ -18,7 +17,7 @@ class AudioActivity : AppCompatActivity() {
     lateinit var seekBar: SeekBar
     lateinit var imgPlayPause: ImageView
     lateinit var btnback: Button
-
+    lateinit var imageButton: ImageButton
     var handler: Handler = Handler()
     lateinit var mediaPlayer: MediaPlayer
     lateinit var mRunnable: Runnable
@@ -27,12 +26,20 @@ class AudioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_multimedia)
 
+        imageButton = findViewById(R.id.btnVolverAudio)
+
         val bundle = intent.extras
         val dato = bundle?.getString("url")
 
         getValores()
 
+        imageButton.setOnClickListener {
+            //Animatoo.animateSlideRight(this)
+            finish()
+        }
+
         btnback.setOnClickListener{
+            Animatoo.animateSlideRight(this)
             finish()
         }
 

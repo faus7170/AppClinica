@@ -31,8 +31,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgCircleFragmentUser"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:src="@drawable/ic_baseline_insert_emoticon_24" />
 
             <LinearLayout
@@ -44,6 +44,7 @@
                     android:id="@+id/viewNameChatBots"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:paddingLeft="20dp"
                     android:text="ChatBots"
                     android:textColor="@color/black"
@@ -55,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingLeft="20dp"
-                    android:text="Ultimo mensaje ..."
+                    android:text="Inteligencia artificial"
                     android:textSize="18sp" />
             </LinearLayout>
 

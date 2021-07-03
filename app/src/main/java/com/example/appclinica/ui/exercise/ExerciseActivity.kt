@@ -2,10 +2,13 @@ package com.example.appclinica.ui.exercise
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
+import com.example.appclinica.HomeActivity
 import com.example.appclinica.R
 import com.example.appclinica.ui.exercise.controlador.AdapterExercise
 import com.example.appclinica.ui.exercise.model.Exercise
@@ -24,6 +27,7 @@ class ExerciseActivity : AppCompatActivity() {
     lateinit var userList: MutableList<Exercise>
     lateinit var userListSearches: MutableList<Exercise>
     lateinit var search:SearchView
+    lateinit var imageButton: ImageButton
     //lateinit var database: FirebaseFirestore
     val database = Firebase.firestore
 
@@ -34,8 +38,13 @@ class ExerciseActivity : AppCompatActivity() {
 
         search = findViewById(R.id.searchViewEjerc)
         mRecyclerView = findViewById(R.id.recyclerViewEjercicio)
+        imageButton = findViewById(R.id.btnVolverExercise)
         mRecyclerView.layoutManager = LinearLayoutManager(this)
 
+        imageButton.setOnClickListener {
+            finish()
+
+        }
         //database = Firebase.firestore
         conexionFirestore()
 

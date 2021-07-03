@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.example.appclinica.ui.comunidad.ComentActivity
 import com.example.appclinica.ui.comunidad.model.SetPregunt
 import com.google.firebase.database.DataSnapshot
@@ -96,6 +97,7 @@ open class ReadPublicacionHistorial: Fragment(), TestAdapterComunidad.onClickLis
         val intent = Intent(activity, ComentActivity::class.java)
         intent.putExtras(extras)
         startActivity(intent)
+        Animatoo.animateSlideUp(activity)
     }
 
     override fun onBorrar(id: String) {
@@ -103,23 +105,11 @@ open class ReadPublicacionHistorial: Fragment(), TestAdapterComunidad.onClickLis
     }
 
     fun delate(id:String,testClase: String, key: String){
-        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
-        builder.setTitle("Seguro")
-        builder.setMessage("¿Quieres eliminar?")
-
-        builder.setPositiveButton("Eliminar", DialogInterface.OnClickListener { dialog, which ->
-            if (testClase.equals("publicacion") || testClase.equals("historial")){
-                database.getReference("publicacion").child(id).removeValue()
-            }else{
-                database.getReference("publicacion").child(key).child("comentarios").child(id).removeValue()
-            }
-
-        })
-
-        builder.setNegativeButton("Cancelar", DialogInterface.OnClickListener { dialog, which ->
-
-
-        })
+        if (testClase.equals("publicacion") || testClase.equals("historial")){
+            database.getReference("publicacion").child(id).removeValue()
+        }else{
+            database.getReference("publicacion").child(key).child("comentarios").child(id).removeValue()
+        }
 
     }
 

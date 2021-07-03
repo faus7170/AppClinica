@@ -128,6 +128,7 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister, 
         txtComent= findViewById(R.id.txtSendComent)
         imagenCircleImageView = findViewById(R.id.imgCircleComent)
         btnenviar.setOnClickListener(this)
+        btnvolver.setOnClickListener(this)
 
         recyclerView.setHasFixedSize(true)
 
@@ -153,8 +154,6 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister, 
                     txtComent.setText("")
                 }
             }R.id.btnVolverComent ->{
-                val intent = Intent(this, ComunidadActivity::class.java)
-                startActivity(intent)
                 finish()
             }
         }

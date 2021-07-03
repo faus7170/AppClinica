@@ -15,11 +15,28 @@
         android:layout_margin="5dp"
         android:background="@color/orangebg">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:title="Clinica hipnosis" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnVolverExercise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/orangebg"
+                android:contentDescription="button_volver"
+                android:padding="5dp"
+                android:src="@drawable/ic_baseline_arrow_back_24" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:title="Clinica hipnosis" />
+        </LinearLayout>
 
         <SearchView
             android:id="@+id/searchViewEjerc"
@@ -34,6 +51,8 @@
         android:id="@+id/recyclerViewEjercicio"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp" >
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

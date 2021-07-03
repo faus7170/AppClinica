@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.appclinica.HomeActivity
 import com.example.appclinica.R
 import com.example.appclinica.ui.comunidad.model.SetPregunt
+import com.example.appclinica.ui.login.LoginActivity
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -36,6 +38,7 @@ class ConfiguracionActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var btnOmitir: Button
     lateinit var btnGuardar: Button
     lateinit var btnTest: Button
+    lateinit var btnCerrarSesion: Button
     lateinit var checkBoxH: CheckBox
     lateinit var checkBoxM: CheckBox
     lateinit var checkBoxO: CheckBox
@@ -83,6 +86,12 @@ class ConfiguracionActivity : AppCompatActivity(), View.OnClickListener {
                 //setDatos(uid,"Anonimo","default","default",imagenDefault,"default",false)
                 staractivity()
 
+            }
+            R.id.btnCerrarSesion->{
+                Firebase.auth.signOut()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
             }
             R.id.editImagenProfile -> {
                 viewimg()
@@ -308,8 +317,10 @@ class ConfiguracionActivity : AppCompatActivity(), View.OnClickListener {
         checkBoxH = findViewById(R.id.checkBoxH)
         checkBoxM = findViewById(R.id.checkBoxM)
         checkBoxO = findViewById(R.id.checkBoxO)
+        btnCerrarSesion = findViewById(R.id.btnCerrarSesion)
 
         btnGuardar.setOnClickListener(this)
+        btnCerrarSesion.setOnClickListener(this)
         btnOmitir.setOnClickListener(this)
         imagenCircleImageView.setOnClickListener(this)
         checkBoxM.setOnClickListener(this)

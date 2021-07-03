@@ -1,5 +1,6 @@
 package com.example.appclinica.notification
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -12,6 +13,7 @@ import android.icu.text.CaseMap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -20,6 +22,8 @@ import com.example.appclinica.ui.chat.ChatRoomActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
+import java.util.*
 
 private const val CHANNEL_ID = "my_channel"
 
@@ -73,12 +77,17 @@ class FirebaseService() : FirebaseMessagingService() {
         val user: String = message.data.get("iduser")!!
         val idNotificacion = user.replace("[^\\d]".toRegex(), "").toInt()
 
+
         val notificationLayout = RemoteViews(packageName, R.layout.notification_msm)
         notificationLayout.setTextViewText(R.id.notificacionName,message.data["title"])
         notificationLayout.setTextViewText(R.id.notificacionMsm,message.data["message"])
 
         val bitmap :Bitmap = Picasso.get().load(message.data["imagen"]).get()
         notificationLayout.setImageViewBitmap(R.id.notificacionImagen,bitmap)
+
+        val horaActuual = SimpleDateFormat("HH:mm")
+        val hora = horaActuual.format(Date())
+        notificationLayout.setTextViewText(R.id.notificacionHora,hora)
 
         val intent = Intent(this, ChatRoomActivity::class.java)
         val bundle = Bundle()

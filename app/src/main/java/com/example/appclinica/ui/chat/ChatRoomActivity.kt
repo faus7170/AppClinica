@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.Toolbar
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,8 +27,6 @@ import com.example.appclinica.ui.chat.utils.Constants.OPEN_SEARCH
 import com.example.appclinica.ui.chat.utils.Constants.RECEIVE_ID
 import com.example.appclinica.ui.chat.utils.Constants.SEND_ID
 import com.example.appclinica.ui.chat.utils.Time
-import com.example.appclinica.ui.comunidad.controlador.ReadPublicacionHistorial
-import com.example.appclinica.ui.psicologo.DisplayPsicoActivity
 import com.example.appclinica.ui.psicologo.ViewPsiocologo
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -152,7 +149,7 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
         }
     }
 
-    //Mensajes con psicologo
+    //Mensajes con persona
 
     override fun onClick(v: View?) {
         when(v!!.id){
@@ -169,8 +166,6 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
                 }
             }
             R.id.btnVolverSalaChat -> {
-                val intent = Intent(this, ChatActivity::class.java)
-                startActivity(intent)
                 finish()
             }
         }
@@ -188,13 +183,11 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
 
         val msg = msm
 
-        //senderNotification(reciver, nombreShared(), msg)
+        senderNotification(reciver, nombreShared(), msg, timestamp )
         /*if(notify){
             senderNotification(reciver, nombreShared(),msg)
         }
         notify = false*/
-
-
     }
 
     fun seenMessege(){
@@ -236,11 +229,10 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
             }
         } catch (e: Exception) {
             Log.e(TAG, e.toString())
-            Log.d("sendNotification", "Error")
         }
     }
 
-    fun senderNotification(reciver: String, nombre: String, msm: String){
+    fun senderNotification(reciver: String, nombre: String, msm: String, timestamp: MutableMap<String, String>){
 
         /*PushNotification(NotificationData(nombre, msm,reciver),myTokenPhone).also {
             sendNotification(it)
@@ -360,7 +352,7 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
         currentUser(iduser)
-        Log.d("onTestResume", iduser)
+        //Log.d("onTestResume", iduser)
     }
 
     override fun onPause() {
@@ -368,7 +360,7 @@ class ChatRoomActivity : ViewPsiocologo(), View.OnClickListener {
         currentUser("none")
         database.reference.child("chats").removeEventListener(seenListener)
         //reference!!.removeEventListener(seenListener);
-        //Log.d("onTestPause", "none"+ seenListener)
+        //Log.d("onTestPause", "none")
 
     }
 
