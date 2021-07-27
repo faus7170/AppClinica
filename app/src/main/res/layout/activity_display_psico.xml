@@ -14,7 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:gravity="center"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -73,6 +74,7 @@
                                 android:textSize="20sp" />
 
                             <TextView
+                                android:id="@+id/viewCalificacion"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="10dp"
@@ -97,6 +99,7 @@
                                 android:textSize="20sp" />
 
                             <TextView
+                                android:id="@+id/viewSeguidores"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="10dp"
@@ -112,7 +115,7 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:layout_width="360dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
@@ -188,9 +191,9 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btnEnviarMensaje"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="35dp"
                 android:background="@drawable/buttonstyle"
                 android:text="Enviar un mensaje"

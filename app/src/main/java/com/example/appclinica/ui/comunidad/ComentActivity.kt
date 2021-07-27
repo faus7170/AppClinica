@@ -1,12 +1,11 @@
 package com.example.appclinica.ui.comunidad
 
-import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -106,7 +105,7 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister, 
 
                 }
 
-                adapter = TestAdapterComunidad(mutableList, true, this@ComentActivity, uidShared(), "comentario" )
+                adapter = TestAdapterComunidad(mutableList, true, this@ComentActivity, uidShared(), "comentario")
                 recyclerView.adapter = adapter
 
             }
@@ -143,6 +142,10 @@ class ComentActivity : AppCompatActivity(), TestAdapterComunidad.onClickLister, 
     }
 
     override fun onBorrar(nombre: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onlike(txtLike: ImageView, id: String, uid: String) {
         TODO("Not yet implemented")
     }
 

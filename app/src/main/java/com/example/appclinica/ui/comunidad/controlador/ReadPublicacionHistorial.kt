@@ -1,15 +1,15 @@
 package com.example.appclinica.ui.comunidad.controlador
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
+import com.example.appclinica.R
 import com.example.appclinica.ui.comunidad.ComentActivity
 import com.example.appclinica.ui.comunidad.model.SetPregunt
 import com.google.firebase.database.DataSnapshot
@@ -28,7 +28,6 @@ open class ReadPublicacionHistorial: Fragment(), TestAdapterComunidad.onClickLis
     lateinit var recyclerView: RecyclerView
 
     //val TOPIC = "/topics/myTopic2"
-
 
     fun readPublicaciones(fragmen:String, uid:String) {
         val mutableList: MutableList<SetPregunt> = mutableListOf()
@@ -63,7 +62,6 @@ open class ReadPublicacionHistorial: Fragment(), TestAdapterComunidad.onClickLis
                     }else{
                         Log.d("Error","Clase no encontrada")
                     }
-
 
                 }
 
@@ -104,7 +102,46 @@ open class ReadPublicacionHistorial: Fragment(), TestAdapterComunidad.onClickLis
 
     }
 
+    override fun onlike(txtLike: ImageView, id: String, uid: String) {
+        database.getReference("like").child(id).child(id).addValueEventListener(
+                object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+
+
+                        /*if (snapshot.child(uid).exists()){
+                            txtLike.setImageResource(R.drawable.ic_like)
+                            txtLike.setTag("like")
+                        }else{
+                            txtLike.setImageResource(R.drawable.ic_liked)
+                            txtLike.setTag("liked")
+                        }*/
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                }
+        )
+    }
+
     fun delate(id:String,testClase: String, key: String){
+
+        /*val alertDialog: AlertDialog? = activity?.let {
+            val builder = AlertDialog.Builder(it)
+            builder.apply {
+                setPositiveButton("Si",DialogInterface.OnClickListener { dialog, id ->
+                            // User clicked OK button
+                        })
+                setNegativeButton("No",
+                        DialogInterface.OnClickListener { dialog, id ->
+                            // User cancelled the dialog
+                        })
+            }
+            // Create the AlertDialog
+            builder.create()
+        }*/
+
         if (testClase.equals("publicacion") || testClase.equals("historial")){
             database.getReference("publicacion").child(id).removeValue()
         }else{

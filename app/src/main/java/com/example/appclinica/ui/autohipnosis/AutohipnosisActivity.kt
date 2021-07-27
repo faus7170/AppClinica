@@ -1,144 +1,70 @@
+
+
 package com.example.appclinica.ui.autohipnosis
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
-import com.example.appclinica.ui.autohipnosis.model.GetDatosAutohipnosis
+import com.example.appclinica.ui.autohipnosis.activity.ActivityAudio
+import com.example.appclinica.ui.autohipnosis.activity.ActivityPasosHipnoHacking
+import com.example.appclinica.ui.autohipnosis.activity.ActivityPlantilla
+import com.example.appclinica.ui.autohipnosis.controlador.AdapterHipnoHacking
+import com.example.appclinica.ui.autohipnosis.modelo.GetHipnoHacking
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
-class AutohipnosisActivity : AppCompatActivity(), View.OnClickListener {
+class AutohipnosisActivity : AppCompatActivity(){
 
-    lateinit var adapter: AdapterTes
-    lateinit var mRecyclerViewDeporte: RecyclerView
-    lateinit var mRecyclerViewAdicciones: RecyclerView
-    lateinit var mRecyclerViewDormir: RecyclerView
-    lateinit var userListDeporte: MutableList<GetDatosAutohipnosis>
-    lateinit var userListAdicciones: MutableList<GetDatosAutohipnosis>
-    lateinit var userListDormir: MutableList<GetDatosAutohipnosis>
-    lateinit var txtDeporte:TextView
-    lateinit var txtAdicciones:TextView
-    lateinit var txtDormir:TextView
-    var isclick :Boolean = true
-
+    lateinit var adapter: AdapterHipnoHacking
+    lateinit var mRecyclerView: RecyclerView
+    lateinit var userList: MutableList<GetHipnoHacking>
+    val database = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_autohipnosis)
 
-        getValores()
+        mRecyclerView = findViewById(R.id.recyclerViewHipnoHacking)
+        mRecyclerView.layoutManager = LinearLayoutManager(this)
+        conexionFirestore()
 
-        txtDeporte.setOnClickListener(this)
-        txtAdicciones.setOnClickListener(this)
-        txtDormir.setOnClickListener(this)
 
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
-    }
+    private fun conexionFirestore() {
+        userList = mutableListOf()
 
-    private fun adapterdormir() {
+        database.collection("hipnohacking").get().addOnSuccessListener { document ->
+            userList.clear()
+            for (getdatos in document) {
+                val paso = getdatos.getString("paso")
+                val contenido = getdatos.getString("contenido")
+                val key = getdatos.id
+                val testDatos = GetHipnoHacking(paso!!,contenido!!,"null",key)
 
-        userListDormir = mutableListOf(
-                GetDatosAutohipnosis("Duerme con Hipnosis", "Comienza hoy mismo a utilizar la auto hipnosis y visualízate ejercitando tú cuerpo"),
-                GetDatosAutohipnosis("Duerme con Hipnosis", "Comienza hoy mismo a utilizar la auto hipnosis y visualízate ejercitando tú cuerpo"),
-                GetDatosAutohipnosis("Duerme con Hipnosis", "Comienza hoy mismo a utilizar la auto hipnosis y visualízate ejercitando tú cuerpo"),
-                GetDatosAutohipnosis("Duerme con Hipnosis", "Comienza hoy mismo a utilizar la auto hipnosis y visualízate ejercitando tú cuerpo"),
-                GetDatosAutohipnosis("Duerme con Hipnosis", "Comienza hoy mismo a utilizar la auto hipnosis y visualízate ejercitando tú cuerpo")
-        )
-        mRecyclerViewDormir.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
-                false)
-        adapter = AdapterTes(userListDormir) {
-
-        }
-        mRecyclerViewDormir.adapter = adapter
-    }
-
-    private fun adapteradicciones() {
-        userListAdicciones = mutableListOf(
-                GetDatosAutohipnosis("Rompe tus adicciones con Hipnosis", "Comienza hoy mismo a utilizar la auto hipnosis y visualízate ejercitando tú cuerpo"),
-                GetDatosAutohipnosis("Rompe tus adicciones con Hipnosis", "Comienza hoy mismo a utilizar la auto hipnosis y visualízate ejercitando tú cuerpo"),
-                GetDatosAutohipnosis("Rompe tus adicciones con Hipnosis", "Comienza hoy mismo a utilizar la auto hipnosis y visualízate ejercitando tú cuerpo")
-        )
-        mRecyclerViewAdicciones.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
-                false)
-        adapter = AdapterTes(userListAdicciones) {
-
-        }
-        mRecyclerViewAdicciones.adapter = adapter
-    }
-
-    private fun adapterDeporte() {
-        userListDeporte = mutableListOf(
-                GetDatosAutohipnosis("Ejercítate con Hipnosis", "Comienza hoy mismo a utilizar la auto hipnosis y visualízate ejercitando tú cuerpo"),
-                GetDatosAutohipnosis("Ejercítate con Hipnosis", "Comienza hoy mismo a utilizar la auto hipnosis y visualízate ejercitando tú cuerpo"),
-                GetDatosAutohipnosis("Ejercítate con Hipnosis", "Comienza hoy mismo a utilizar la auto hipnosis y visualízate ejercitando tú cuerpo"),
-                GetDatosAutohipnosis("Ejercítate con Hipnosis", "Comienza hoy mismo a utilizar la auto hipnosis y visualízate ejercitando tú cuerpo"),
-                GetDatosAutohipnosis("Ejercítate con Hipnosis", "Comienza hoy mismo a utilizar la auto hipnosis y visualízate ejercitando tú cuerpo")
-        )
-        mRecyclerViewDeporte.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
-                false)
-        adapter = AdapterTes(userListDeporte) {
-
-        }
-        mRecyclerViewDeporte.adapter = adapter
-    }
-
-    private fun getValores() {
-        mRecyclerViewDeporte = findViewById(R.id.hipnosisDeporte)
-        mRecyclerViewAdicciones = findViewById(R.id.hipnosisAdicciones)
-        mRecyclerViewDormir = findViewById(R.id.hipnosisDormir)
-        txtDeporte = findViewById(R.id.txtViewHipnosisDeporte)
-        txtAdicciones = findViewById(R.id.txtViewHipnosisAdicciones)
-        txtDormir = findViewById(R.id.txtViewHipnosisDormir)
-    }
-
-    override fun onClick(p0: View?) {
-        when(p0!!.id){
-            R.id.txtViewHipnosisDeporte -> {
-                if (isclick){
-                    mRecyclerViewDeporte.visibility = View.VISIBLE
-                    mRecyclerViewAdicciones.visibility = View.GONE
-                    mRecyclerViewDormir.visibility = View.GONE
-                    isclick = false
-                    adapterDeporte()
-                }else{
-                    mRecyclerViewDeporte.visibility = View.GONE
-                    isclick = true
-                }
-
+                userList.add(testDatos)
             }
-            R.id.txtViewHipnosisAdicciones -> {
-                if (isclick){
-                    mRecyclerViewDeporte.visibility = View.GONE
-                    mRecyclerViewAdicciones.visibility = View.VISIBLE
-                    mRecyclerViewDormir.visibility = View.GONE
-                    adapteradicciones()
-                    isclick = false
-                }else{
-                    mRecyclerViewAdicciones.visibility = View.GONE
-                    isclick = true
-                }
 
+            adapter = AdapterHipnoHacking(userList) {
+                //Toast.makeText(this, "key: " + it.key, Toast.LENGTH_LONG).show()
+                /*val bundle = Bundle()
+                bundle.putString("key",it.key)
+                bundle.putString("cont",it.contenido)*/
+                val intent = Intent(this,ActivityPasosHipnoHacking::class.java)
+                intent.putExtra("key",it.key)
+                startActivity(intent)
             }
-            R.id.txtViewHipnosisDormir -> {
-                if (isclick){
-                    mRecyclerViewDeporte.visibility = View.GONE
-                    mRecyclerViewAdicciones.visibility = View.GONE
-                    mRecyclerViewDormir.visibility = View.VISIBLE
-                    adapterdormir()
-                    isclick = false
-                }else{
-                    mRecyclerViewDormir.visibility = View.GONE
-                    isclick = true
-                }
+            mRecyclerView.adapter = adapter
 
-            }
+        }.addOnFailureListener { exception ->
+
         }
     }
+
+
 }

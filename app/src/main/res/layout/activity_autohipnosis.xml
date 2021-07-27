@@ -1,108 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ui.autohipnosis.AutohipnosisActivity">
+    tools:context=".ui.exercise.ExerciseActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
 
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:background="@color/colorAccent">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-            app:toolbarId="@+id/toolbar">
-
+            <ImageButton
+                android:id="@+id/btnVolverExercise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:contentDescription="button_volver"
+                android:padding="5dp"
+                android:src="@drawable/ic_baseline_arrow_back_24" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:title="Autohipnosis" />
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="125dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txtViewHipnosisDeporte"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:drawableBottom="@drawable/ic_arrow_down"
-                android:gravity="center"
-                android:padding="20dp"
-                android:text="Hipnosis en el deporte"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/hipnosisDeporte"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/txtViewHipnosisAdicciones"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:drawableBottom="@drawable/ic_arrow_down"
-                android:gravity="center"
-                android:padding="20dp"
-                android:text="Hipnosis en las adicciones"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/hipnosisAdicciones"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <TextView
-                android:id="@+id/txtViewHipnosisDormir"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:drawableBottom="@drawable/ic_arrow_down"
-                android:gravity="center"
-                android:padding="20dp"
-                android:text="Hipnosis para dormir"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/hipnosisDormir"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
+                android:layout_weight="1"
+                app:title="Hipno Hacking" />
 
         </LinearLayout>
-    </ScrollView>
 
+    </com.google.android.material.appbar.AppBarLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:text="¡Este programa es solo para personas que están comprometidas y convencidas de que quieren un cambio en su vida y van a enfocarse en alcanzar el éxito!"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Llenar plantilla de conducta (opcional)" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewHipnoHacking"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

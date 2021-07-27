@@ -80,6 +80,7 @@ class ExerciseActivity : AppCompatActivity() {
 
 
     }
+
     //Recuperar los ejerccicios de firestore
     private fun conexionFirestore() {
         userList = mutableListOf()

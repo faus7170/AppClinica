@@ -15,7 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_icono_principal_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ui.configuracion.ConfiguracionActivity"></activity>
+        <activity android:name=".ui.autohipnosis.activity.ActivityPasosHipnoHacking"></activity>
+        <activity android:name=".ui.autohipnosis.activity.ActivityAudio" />
+        <activity android:name=".ui.autohipnosis.activity.ActivityPlantilla" />
+        <activity android:name=".ui.configuracion.ConfiguracionActivity" />
         <activity android:name=".ui.exercise.VideoActivity" />
         <activity android:name=".TestNotificationActivity" />
         <activity android:name=".ui.exercise.ExerciseActivity" />

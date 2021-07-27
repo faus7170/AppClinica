@@ -18,9 +18,52 @@
         app:cardCornerRadius="2dp">
 
         <LinearLayout
+            android:id="@+id/linearLayoutBorrar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:text="¿Seguro quieres eliminar?"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnborrarSi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:text="Si" />
+
+                <Button
+                    android:id="@+id/btnborrarNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:text="No" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutPublicacion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,6 +129,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:background="@color/white"
                                 android:text="Listo" />
 
                             <Button
@@ -93,6 +137,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:background="@color/white"
                                 android:text="Cancelar" />
                         </LinearLayout>
                     </LinearLayout>
@@ -106,26 +151,58 @@
                 android:id="@+id/linerLayoutLikeComentar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:orientation="horizontal"
-                android:visibility="visible">
+                android:padding="5dp">
 
-                <TextView
-                    android:id="@+id/viewComent"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableRight="@drawable/ic_comment"
-                    android:gravity="left"
-                    android:padding="5dp"
-                    android:text="Ver comentarios"
-                    android:textSize="18sp" />
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
+                    <ImageView
+                        android:id="@+id/viewLike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_liked"
+                        android:tag="liked" />
+
+                    <TextView
+                        android:id="@+id/cantLike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/viewComent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_comment" />
+
+                    <TextView
+                        android:id="@+id/cantComent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0" />
+                </LinearLayout>
             </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
