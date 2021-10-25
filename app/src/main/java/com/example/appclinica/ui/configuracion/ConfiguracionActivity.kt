@@ -2,17 +2,19 @@ package com.example.appclinica.ui.configuracion
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.appclinica.HomeActivity
 import com.example.appclinica.R
 import com.example.appclinica.ui.comunidad.model.SetPregunt
@@ -46,17 +48,28 @@ class ConfiguracionActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var imagenDefault: String
     lateinit var genero: String
     lateinit var uid : String
+    lateinit var switch: Switch
     val database = Firebase.database
+    lateinit var sharedPreferences: SharedPreferences
 
-
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_configuracion)
 
+        sharedPreferences = getSharedPreferences("theme" , Context.MODE_PRIVATE)
+        val modo = sharedPreferences.getBoolean("n",false)
+
+
+        /*if (switch.isChecked){
+            modoObscuro(1)
+        }else{
+            modoObscuro(0)
+        }*/
+
         findViewbyid()
-
+        switch.isChecked = modo
         uid = uidShared()
-
         btnTest = findViewById(R.id.btnTestActualizar)
 
         btnTest.setOnClickListener {
@@ -67,6 +80,7 @@ class ConfiguracionActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     override fun onClick(v: View?) {
 
         when(v!!.id){
@@ -111,6 +125,13 @@ class ConfiguracionActivity : AppCompatActivity(), View.OnClickListener {
                 genero = "Otro"
                 checkBoxH.isChecked = false
                 checkBoxM.isChecked = false
+            }
+            R.id.switch1->{
+                if (switch.isChecked){
+                    modoObscuro(1)
+                }else{
+                    modoObscuro(0)
+                }
             }
         }
     }
@@ -302,6 +323,27 @@ class ConfiguracionActivity : AppCompatActivity(), View.OnClickListener {
         finish()
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private fun modoObscuro(mode: Int){
+
+        val edit = sharedPreferences.edit()
+
+        if(mode==0){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) //modo claro
+            edit.putBoolean("n",false)
+            //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) //modo obscuro
+            edit.putBoolean("n",true)
+            //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+
+        edit.apply()
+        edit.commit()
+    }
+
     fun uidShared(): String {
         val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
         return pref.getString("uid", "default")!!
@@ -318,6 +360,7 @@ class ConfiguracionActivity : AppCompatActivity(), View.OnClickListener {
         checkBoxM = findViewById(R.id.checkBoxM)
         checkBoxO = findViewById(R.id.checkBoxO)
         btnCerrarSesion = findViewById(R.id.btnCerrarSesion)
+        switch = findViewById(R.id.switch1)
 
         btnGuardar.setOnClickListener(this)
         btnCerrarSesion.setOnClickListener(this)
@@ -326,11 +369,19 @@ class ConfiguracionActivity : AppCompatActivity(), View.OnClickListener {
         checkBoxM.setOnClickListener(this)
         checkBoxH.setOnClickListener(this)
         checkBoxO.setOnClickListener(this)
+        switch.setOnClickListener(this)
 
         imagenDefault = "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"
 
         uri = Uri.parse(imagenDefault)
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val loginActivity = Intent(applicationContext, HomeActivity::class.java)
+        startActivity(loginActivity)
+        finish()
     }
 
 

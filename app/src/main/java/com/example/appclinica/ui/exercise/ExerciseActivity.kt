@@ -29,12 +29,13 @@ class ExerciseActivity : AppCompatActivity() {
     lateinit var search:SearchView
     lateinit var imageButton: ImageButton
     //lateinit var database: FirebaseFirestore
-    val database = Firebase.firestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ejercicio)
+
+        conexionFirestore()
 
         search = findViewById(R.id.searchViewEjerc)
         mRecyclerView = findViewById(R.id.recyclerViewEjercicio)
@@ -43,10 +44,9 @@ class ExerciseActivity : AppCompatActivity() {
 
         imageButton.setOnClickListener {
             finish()
-
         }
         //database = Firebase.firestore
-        conexionFirestore()
+
 
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
@@ -83,6 +83,8 @@ class ExerciseActivity : AppCompatActivity() {
 
     //Recuperar los ejerccicios de firestore
     private fun conexionFirestore() {
+        val database = Firebase.firestore
+
         userList = mutableListOf()
 
         database.collection("ejercicios").get().addOnSuccessListener { document ->
@@ -92,12 +94,9 @@ class ExerciseActivity : AppCompatActivity() {
                 val descripcion = getdatos.getString("descripcion")
                 val id = getdatos.id
                 val testDatos = Exercise(descripcion!!, nombre!!, id)
-
                 userList.add(testDatos)
             }
-
             adapter(userList)
-
         }.addOnFailureListener { exception ->
 
         }
@@ -109,8 +108,9 @@ class ExerciseActivity : AppCompatActivity() {
             val extras = Bundle()
             extras.putString("id", it.id)
             extras.putString("nombre", it.nombre)
+            //extras.putString("url", it.contenido)
 
-            val intent = Intent(this, StepsActivity::class.java)
+            val intent = Intent(this, VideoEjercicioActivity::class.java)
             intent.putExtras(extras)
             startActivity(intent)
 

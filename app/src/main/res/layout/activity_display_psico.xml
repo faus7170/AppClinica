@@ -33,7 +33,7 @@
                         android:layout_height="150dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="45dp"
-                        android:src="@drawable/ic_baseline_insert_emoticon_24" />
+                        android:src="@drawable/ic_insert_emoticon" />
 
                     <TextView
                         android:id="@+id/viewNameProfile"
@@ -130,7 +130,7 @@
                     <ImageView
                         android:layout_width="36dp"
                         android:layout_height="36dp"
-                        android:src="@drawable/ic_baseline_local_library_24" />
+                        android:src="@drawable/ic_local_library" />
 
                     <TextView
                         android:id="@+id/viewTitleProfile"
@@ -152,7 +152,7 @@
                     <ImageView
                         android:layout_width="36dp"
                         android:layout_height="36dp"
-                        android:src="@drawable/ic_baseline_description_24" />
+                        android:src="@drawable/ic_description" />
 
                     <TextView
                         android:id="@+id/viewDescriptionProfile"
@@ -175,7 +175,7 @@
                     <ImageView
                         android:layout_width="36dp"
                         android:layout_height="36dp"
-                        android:src="@drawable/ic_baseline_group_24" />
+                        android:src="@drawable/ic_group" />
 
                     <TextView
                         android:id="@+id/viewGrupProfile"

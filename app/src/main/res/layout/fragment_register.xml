@@ -7,7 +7,7 @@
     tools:context=".ui.login.fragment.RegisterFragment">
 
     <ScrollView
-        android:id="@+id/idScrollViewRegister"
+        android:id="@+id/scrollRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
@@ -16,13 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <com.paymentez.android.view.CardMultilineWidget
-                android:id="@+id/card_multiline_widget"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </com.paymentez.android.view.CardMultilineWidget>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,9 +53,9 @@
                 android:layout_margin="5dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtCorreo"
+                    android:id="@+id/editEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
                     android:paddingLeft="5dp"
@@ -79,7 +72,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtRegisterClave"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:hint="@string/clave"
                     android:inputType="textPassword"
                     android:paddingLeft="5dp"
@@ -96,13 +89,20 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtConfirmarClave"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:hint="@string/confirm_password"
                     android:inputType="textPassword"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
+            <com.paymentez.android.view.CardMultilineWidget
+                android:id="@+id/card_multiline_widget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.paymentez.android.view.CardMultilineWidget>
 
             <Button
                 android:id="@+id/btnRegistrarCorreo"

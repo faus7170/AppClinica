@@ -14,8 +14,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_icono_principal_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ui.autohipnosis.activity.ActivityPasosHipnoHacking"></activity>
+        android:theme="@style/Theme.AppClinica">
+        <activity android:name=".ui.exercise.VideoEjercicioActivity"></activity>
+        <activity android:name=".ui.autohipnosis.activity.ActivityPasosHipnoHacking" />
         <activity android:name=".ui.autohipnosis.activity.ActivityAudio" />
         <activity android:name=".ui.autohipnosis.activity.ActivityPlantilla" />
         <activity android:name=".ui.configuracion.ConfiguracionActivity" />
@@ -31,7 +32,8 @@
         <activity android:name=".ui.chat.ChatRoomActivity" />
         <activity android:name=".ui.chat.ChatActivity" />
         <activity
-            android:name=".onboarding.IntroActivity"
+            android:name=".ui.onboarding.IntroActivity"
+            android:configChanges="uiMode"
             android:theme="@style/SplahTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

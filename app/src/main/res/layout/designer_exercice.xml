@@ -13,39 +13,30 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="125dp"
-            android:background="@drawable/test_xml"
-            android:gravity="center|left"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_ejercicio"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/viewNameExercise"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:orientation="vertical">
+                android:layout_margin="5dp"
+                android:text="Nombre ejercicio ..."
+                android:textColor="@color/black"
+                android:textSize="24sp" />
 
-                <TextView
-                    android:id="@+id/viewNameExercise"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
-                    android:text="Nombre ejercicio ..."
-                    android:textColor="@color/black"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/viewDescriptionExercise"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingLeft="20dp"
-                    android:text="Descripcion  ..."
-                    android:textSize="18sp" />
-            </LinearLayout>
-
+            <TextView
+                android:id="@+id/viewDescriptionExercise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:text="Descripcion  ..."
+                android:textSize="18sp" />
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
 </FrameLayout>

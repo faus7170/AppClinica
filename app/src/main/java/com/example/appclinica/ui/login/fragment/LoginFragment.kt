@@ -8,25 +8,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
 import com.example.appclinica.R
 import com.example.appclinica.HomeActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
 
 /**
  *@author David Aguinsaca
  * Fragmento de autenticacion de usuario con un correo y clave
  **/
 
-class LoginFragment : Fragment(){
+class LoginFragment : Fragment(), View.OnClickListener{
 
     lateinit var auth: FirebaseAuth
-    lateinit var btnIngresrCorreo: Button
-    lateinit var txtCorreo : EditText
-    lateinit var txtClave : EditText
+    lateinit var btnLoginEmail: Button
+    lateinit var editEmail : EditText
+    lateinit var editPassword : EditText
+    lateinit var recoverPassword : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,25 +39,43 @@ class LoginFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
 
-        txtCorreo = view!!.findViewById(R.id.txtCorreo)
-        txtClave = view!!.findViewById(R.id.txtClave)
-        btnIngresrCorreo = view!!.findViewById(R.id.btnIngresarCorreo)
+        elementsById(view)
 
-        btnIngresrCorreo.setOnClickListener{
-            loginUser(txtCorreo.text.toString(),txtClave.text.toString())
-        }
+
 
         return view
     }
 
+    override fun onClick(v: View?) {
+        when(v!!.id){
+            R.id.btnSignUp ->{
+                loginUser(editEmail.text.toString(),editPassword.text.toString())
+            }
+            R.id.textRecoverPassword ->{
+                showDialogResetPassword()
+            }
+        }
+    }
+
+
+    private fun elementsById(view: View) {
+        editEmail = view.findViewById(R.id.editEmail)
+        editPassword = view.findViewById(R.id.editPass)
+        recoverPassword = view.findViewById(R.id.textRecoverPassword)
+        btnLoginEmail = view.findViewById(R.id.btnSignUp)
+
+        btnLoginEmail.setOnClickListener(this)
+        recoverPassword.setOnClickListener(this)
+    }
+
     //Verificar los campos de correo y password
 
-    fun checkCredentials(email: String, password: String): Boolean {
+    private fun checkCredentials(email: String, password: String): Boolean {
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(activity, "Llenar los campos", Toast.LENGTH_LONG).show()
             return false
         }else if (!email.contains("@") || email.length < 6) {
-            Toast.makeText(activity, "Verificar que el correo", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "Verificar que el correo contenga @", Toast.LENGTH_LONG).show()
             return false
         }
 
@@ -64,7 +83,7 @@ class LoginFragment : Fragment(){
     }
 
     //Conexion con firebase para validar si la cuenta existe en caso de que si verifica que el correo y la clave concidadan
-    fun loginUser(email: String, password: String) {
+    private fun loginUser(email: String, password: String) {
 
         if (checkCredentials(email, password)) {
 
@@ -88,9 +107,9 @@ class LoginFragment : Fragment(){
 
     }
 
-    //Cargar el siguiente activity para la configuracion del perfil
+    //Cargar el siguiente activity
 
-    fun updateUI(currentUser: FirebaseUser?) { //send current user to next activity
+    private fun updateUI(currentUser: FirebaseUser?) { //send current user to next activity
         if (currentUser == null) return
         val intent = Intent(activity, HomeActivity::class.java)
         startActivity(intent)
@@ -98,15 +117,43 @@ class LoginFragment : Fragment(){
         requireActivity().finish()
     }
 
-    /*private fun savePrefsData() {
-        val pref = requireActivity().getSharedPreferences("introConf",
-            AppCompatActivity.MODE_PRIVATE
-        )
-        val editor = pref.edit()
-        editor.putBoolean("isConfiguracion", true)
-        editor.apply()
-    }*/
+    private fun showDialogResetPassword() {
+
+        var edit_correoReset: EditText
+        val btn_resetPassword: Button
+
+        val dlg = AlertDialog.Builder(requireActivity())
+        val inflater = layoutInflater
+        val view = inflater.inflate(R.layout.dialog_resetpassword, null)
+        dlg.setView(view)
+
+        val alertDialog = dlg.create()
+        alertDialog.show()
+
+        btn_resetPassword = view.findViewById(R.id.btnSendRecover)
+        edit_correoReset = view.findViewById(R.id.editRecoverEmail)
 
 
+        btn_resetPassword.setOnClickListener {
+
+            if(!edit_correoReset.text.isEmpty()){
+                resetPasword(edit_correoReset.text.toString())
+            }else{
+                Toast.makeText(activity, "Llenar el campo", Toast.LENGTH_SHORT).show()
+
+            }
+        }
+    }
+
+
+    private fun resetPasword(emailAddress:String){
+        auth.sendPasswordResetEmail(emailAddress).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(activity, "Mensaje enviado", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(activity, "Correo no registrado", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
 }

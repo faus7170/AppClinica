@@ -24,18 +24,16 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
 
-open class Autenticacion : AppCompatActivity() {
+open class Authentication : AppCompatActivity() {
 
     lateinit var mGoogleSignInClient: GoogleSignInClient
     var callbackManager = CallbackManager.Factory.create()
     val RC_SIGN_IN = 123
     lateinit var auth: FirebaseAuth
-    lateinit var txt_dialogo_correo_reset: EditText
+    lateinit var edit_correoReset: EditText
     lateinit var btn_resetPassword: Button
 
-
     //Registrar con facebook
-
     fun loginWithFacebook() {
         LoginManager.getInstance().logInWithReadPermissions(this, listOf("email"))
         LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
@@ -183,7 +181,7 @@ open class Autenticacion : AppCompatActivity() {
 
     }
 
-    fun showConfirmationDialogPersonalisadoResetPassword() {
+    fun showDialogResetPassword() {
         val dlg = AlertDialog.Builder(this)
         val inflater = layoutInflater
         val view = inflater.inflate(R.layout.dialog_resetpassword, null)
@@ -192,14 +190,14 @@ open class Autenticacion : AppCompatActivity() {
         val alertDialog = dlg.create()
         alertDialog.show()
 
-        btn_resetPassword = view.findViewById(R.id.btnComprobar)
-        txt_dialogo_correo_reset = view.findViewById(R.id.txtCorreoResetPassword)
+        btn_resetPassword = view.findViewById(R.id.btnSendRecover)
+        edit_correoReset = view.findViewById(R.id.editRecoverEmail)
 
 
         btn_resetPassword.setOnClickListener {
 
-            if(!txt_dialogo_correo_reset.text.isEmpty()){
-                resetPasword(txt_dialogo_correo_reset.text.toString())
+            if(!edit_correoReset.text.isEmpty()){
+                resetPasword(edit_correoReset.text.toString())
             }else{
                 Toast.makeText(applicationContext, "Llenar el campo", Toast.LENGTH_SHORT).show()
 
@@ -209,13 +207,13 @@ open class Autenticacion : AppCompatActivity() {
 
 
     fun resetPasword(emailAddress:String){
-
-        auth.sendPasswordResetEmail(emailAddress)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(applicationContext, "Mensaje enviado", Toast.LENGTH_SHORT).show()
-                    }
-                }
+        auth.sendPasswordResetEmail(emailAddress).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(applicationContext, "Mensaje enviado", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(applicationContext, "Correo no registrado", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 

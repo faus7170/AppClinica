@@ -13,7 +13,6 @@
     <string name="confirm_password">Confirmar la clave</string>
     <string name="facebook_app_id">241605911000791</string>
     <string name="fb_login_protocol_scheme">fb241605911000791</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_exercise">ExerciseActivity</string>
     <!-- Strings used for fragments for navigation -->
@@ -29,4 +28,19 @@
     <string name="option_semestral">$ 12.00 Semestral</string>
     <string name="option_anual">$ 24.00 Anual</string>
     <string name="mensaje">Mensaje</string>
+    <string name="clinica_hipnosis">Clinica hipnosis</string>
+    <string name="ejercicios">Ejercicios</string>
+    <string name="comunidad">Comunidad</string>
+    <string name="autohipnosis">Autohipnosis</string>
+    <string name="todo">TODO</string>
+    <string name="todo2">TODO</string>
+    <string name="cerrar_sesi_n">Cerrar sesión</string>
+    <string name="todo3">TODO</string>
+    <string name="configuracio_n">Configuración</string>
+    <string name="chat">Chat</string>
+    <string name="todo4">TODO</string>
+    <string name="todo5">TODO</string>
+    <string name="todo6">TODO</string>
+    <string name="todo7">TODO</string>
+    <string name="button_volver">button_volver</string>
 </resources>

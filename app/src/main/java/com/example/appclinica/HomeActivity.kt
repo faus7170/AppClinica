@@ -1,10 +1,14 @@
 package com.example.appclinica
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.example.appclinica.ui.autohipnosis.AutohipnosisActivity
@@ -31,23 +35,34 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var cardVieweAutohipnosis: CardView
     lateinit var cardVieweChat: CardView
     lateinit var cardVieweConfiguracion: CardView
+    lateinit var cardViewSignUp: CardView
     lateinit var cardVieweForo: CardView
     lateinit var btnTestNotification: Button
     lateinit var auth: FirebaseAuth
-    val db = Firebase.firestore
-    val user = Firebase.auth.currentUser
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
         //setTheme(R.style.Theme_AppCompat_Light_NoActionBar)
-        findById()
+
+        val sharedPreferences: SharedPreferences = getSharedPreferences("theme" , Context.MODE_PRIVATE)
+        val modo = sharedPreferences.getBoolean("n",false)
+
+        if (modo==false){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+
+        elementsById()
         getDatosUser()
-        //android:theme="@style/Theme.AppCompat.Light.NoActionBar">
     }
 
     //Obtener datos del usuario en la base de datos y guardar en la clase SharedPreferences
     private fun getDatosUser() {
+        val db = Firebase.firestore
+        val user = Firebase.auth.currentUser
 
         val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
         val editor = pref.edit()
@@ -74,7 +89,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     //Accion para acceder a cada servicio con la clase onClick
     override fun onClick(v: View?) {
         when(v!!.id){
-            R.id.bankcardEjercicio -> {
+            R.id.bankcardExercice -> {
                 val intent = Intent(this, ExerciseActivity::class.java)
                 startActivity(intent)
                 Animatoo.animateSlideLeft(this)
@@ -90,7 +105,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
                 Animatoo.animateSlideLeft(this)
             }
-            R.id.bankcardConfiguracion -> {
+            R.id.bankcardConfiguracion-> {
                 val intent = Intent(this, ConfiguracionActivity::class.java)
                 startActivity(intent)
                 //Toast.makeText(applicationContext,"En proceso ...",Toast.LENGTH_LONG).show()
@@ -102,14 +117,13 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
                 Animatoo.animateSlideLeft(this)
             }
-            /*R.id.btnCerrarSesion -> {
+            R.id.bankcardSignUp -> {
                 Firebase.auth.signOut()
-                clearData()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 Animatoo.animateSlideRight(this)
                 finish()
-            }*/
+            }
             R.id.testNotification ->{
                 val intent = Intent(this, TestNotificationActivity::class.java)
                 startActivity(intent)
@@ -117,30 +131,22 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    //Limpiar la clase SharedPrefernces para cuando el usuario de en el boton "cerrar sesion"
-    private fun clearData() {
-        val preftest = applicationContext.getSharedPreferences("introConf", MODE_PRIVATE)
-        preftest.edit().remove("isConfiguracion").apply()
-        val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
-        val editor = pref.edit()
-        editor.clear().apply()
-    }
 
-    private fun findById() {
-        cardViewEjercicio = findViewById(R.id.bankcardEjercicio)
+    private fun elementsById() {
+        cardViewEjercicio = findViewById(R.id.bankcardExercice)
         cardVieweAutohipnosis = findViewById(R.id.bankcardAutohipnosis)
         cardVieweChat = findViewById(R.id.bankcardChat)
         cardVieweConfiguracion = findViewById(R.id.bankcardConfiguracion)
+        cardViewSignUp= findViewById(R.id.bankcardSignUp)
         cardVieweForo = findViewById(R.id.bankcardForo)
-        //btnCerrarSesion = findViewById(R.id.btnCerrarSesion)
         btnTestNotification = findViewById(R.id.testNotification)
 
         cardViewEjercicio.setOnClickListener(this)
         cardVieweAutohipnosis.setOnClickListener(this)
         cardVieweChat.setOnClickListener(this)
         cardVieweConfiguracion.setOnClickListener(this)
+        cardViewSignUp.setOnClickListener(this)
         cardVieweForo.setOnClickListener(this)
-        //btnCerrarSesion.setOnClickListener(this)
         btnTestNotification.setOnClickListener(this)
     }
 

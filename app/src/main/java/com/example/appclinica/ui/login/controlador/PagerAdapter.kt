@@ -6,15 +6,13 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.example.appclinica.ui.login.fragment.LoginFragment
 import com.example.appclinica.ui.login.fragment.RegisterFragment
 
-class PageAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
-
+class PagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
 
     override fun getCount(): Int {
         return 2
     }
 
     override fun getItem(position: Int): Fragment {
-
         when(position){
             0 -> {
                 return LoginFragment()

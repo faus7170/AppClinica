@@ -23,7 +23,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edita tu perfil"
+                android:text="@string/configuracio_n"
                 android:textColor="@color/black"
                 android:textSize="36sp" />
 
@@ -33,6 +33,15 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:src="@drawable/ic_add_photo_alternate" />
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:text="Modo obscuro"
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/editTextNombreProfile"
@@ -110,13 +119,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@color/white"
                 android:text="Cancelar" />
 
             <Button
                 android:id="@+id/btnCerrarSesion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:text="Cerrar sesión" />
 
             <Button

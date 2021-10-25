@@ -29,7 +29,7 @@
                 android:background="@color/colorAccent"
                 android:contentDescription="button_volver"
                 android:padding="5dp"
-                android:src="@drawable/ic_baseline_arrow_back_24" />
+                android:src="@drawable/ic_arrow_back" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:src="@drawable/ic_baseline_play_circle_outline_24" />
+            android:src="@drawable/ic_play_circle_outline" />
 
         <Button
             android:id="@+id/button3"

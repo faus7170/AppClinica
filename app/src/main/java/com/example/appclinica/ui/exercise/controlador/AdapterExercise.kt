@@ -8,17 +8,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appclinica.R
 import com.example.appclinica.ui.exercise.model.Exercise
 
-class AdapterExercise(val dataSet: MutableList<Exercise>, val listener: (Exercise) -> Unit, var isExercise:Boolean) : RecyclerView.Adapter<AdapterExercise.Holder>() {
+class AdapterExercise(val dataSet: MutableList<Exercise>, val listener: (Exercise) -> Unit, var isExercise:Boolean)
+    : RecyclerView.Adapter<AdapterExercise.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
 
-        if (isExercise){
+        return if (isExercise){
             val view: View = LayoutInflater.from(parent.context).inflate(R.layout.designer_exercice,parent,false)
-            return Holder(view)
+            Holder(view)
 
         }else{
             val view: View = LayoutInflater.from(parent.context).inflate(R.layout.designer_pasos,parent,false)
-            return Holder(view)
+            Holder(view)
         }
 
     }
@@ -32,7 +33,6 @@ class AdapterExercise(val dataSet: MutableList<Exercise>, val listener: (Exercis
     override fun getItemCount(): Int = dataSet.size
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
-
 
         lateinit var viewNombreEjerccio : TextView
         lateinit var viewDescripcionEjercicio :TextView
@@ -48,7 +48,6 @@ class AdapterExercise(val dataSet: MutableList<Exercise>, val listener: (Exercis
                 viewDescripcionEjercicio.text = informacion.descripcion
 
             }else{
-
                 viewPaso = itemView.findViewById(R.id.viewNamePaso)
                 viewPaso.text = informacion.identificador
             }

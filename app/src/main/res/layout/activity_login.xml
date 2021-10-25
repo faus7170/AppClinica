@@ -28,7 +28,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.tabs.TabLayout
-                android:id="@+id/idTabLayoutExercise"
+                android:id="@+id/tabLayoutLogin"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 app:tabTextColor="@color/black">
@@ -36,7 +36,7 @@
             </com.google.android.material.tabs.TabLayout>
 
             <androidx.viewpager.widget.ViewPager
-                android:id="@+id/idViewPagerExercise"
+                android:id="@+id/viewPagerLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">

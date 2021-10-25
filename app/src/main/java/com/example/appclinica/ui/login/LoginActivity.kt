@@ -5,8 +5,8 @@ import android.view.View
 import android.widget.*
 import androidx.viewpager.widget.ViewPager
 import com.example.appclinica.R
-import com.example.appclinica.ui.login.controlador.Autenticacion
-import com.example.appclinica.ui.login.controlador.PageAdapter
+import com.example.appclinica.ui.login.controlador.Authentication
+import com.example.appclinica.ui.login.controlador.PagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.*
 import com.google.firebase.database.DatabaseReference
@@ -18,7 +18,7 @@ import com.google.firebase.ktx.Firebase
  * Activity donde contiene fragmento del registro y de autenticacion
  **/
 
-class LoginActivity : Autenticacion(), View.OnClickListener {
+class LoginActivity : Authentication(), View.OnClickListener {
 
     private lateinit var database: DatabaseReference
 
@@ -32,7 +32,7 @@ class LoginActivity : Autenticacion(), View.OnClickListener {
         setContentView(R.layout.activity_login)
 
         initGoogleClient()
-        declarValores()
+        elementById()
 
         
     }
@@ -57,11 +57,11 @@ class LoginActivity : Autenticacion(), View.OnClickListener {
         }
     }
 
-    private fun declarValores() {
+    private fun elementById() {
         btnIngresarFacebook = findViewById(R.id.btnLoginFacebook)
         btnIngresarGoogle = findViewById(R.id.btnLoginGoogle)
-        tabLayout = findViewById(R.id.idTabLayoutExercise)
-        viewPager = findViewById(R.id.idViewPagerExercise)
+        tabLayout = findViewById(R.id.tabLayoutLogin)
+        viewPager = findViewById(R.id.viewPagerLogin)
 
         auth = FirebaseAuth.getInstance()
         database = Firebase.database.reference
@@ -69,7 +69,7 @@ class LoginActivity : Autenticacion(), View.OnClickListener {
         btnIngresarFacebook.setOnClickListener(this)
         btnIngresarGoogle.setOnClickListener(this)
 
-        val pageAdapter = PageAdapter(supportFragmentManager)
+        val pageAdapter = PagerAdapter(supportFragmentManager)
         viewPager.adapter = pageAdapter
 
         tabLayout.setupWithViewPager(viewPager)

@@ -43,11 +43,11 @@ import java.text.DateFormat
 class RegisterFragment : Fragment(), View.OnClickListener {
 
     lateinit var imagenDefault: String
-    lateinit var auth: FirebaseAuth
-    lateinit var btnRegistarCorreo: Button
-    lateinit var txtCorreo : EditText
-    lateinit var txtClave : EditText
-    lateinit var txtConfirmarClave : EditText
+
+    lateinit var btnRegisterUser: Button
+    lateinit var editEmail : EditText
+    lateinit var editPass : EditText
+    lateinit var editRepitPass: EditText
     lateinit var cardWidget: CardMultilineWidget
     lateinit var backendService: BackendService
     lateinit var checkBoxMensual: CheckBox
@@ -58,37 +58,22 @@ class RegisterFragment : Fragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        auth = FirebaseAuth.getInstance()
-    }
 
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_register, container, false)
-
-        txtCorreo = view!!.findViewById(R.id.txtCorreo)
-        txtClave = view!!.findViewById(R.id.txtRegisterClave)
-        txtConfirmarClave = view!!.findViewById(R.id.txtConfirmarClave)
-        btnRegistarCorreo = view!!.findViewById(R.id.btnRegistrarCorreo)
-        checkBoxMensual = view.findViewById(R.id.checkBoxMes)
-        checkBoxSemestral = view.findViewById(R.id.checkBoxSemestral)
-        checkBoxAnual = view.findViewById(R.id.checkBoxAnual)
-
-        checkBoxMensual.setOnClickListener(this)
-        checkBoxSemestral.setOnClickListener(this)
-        checkBoxAnual.setOnClickListener(this)
-
-        imagenDefault = "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"
-
-        btnRegistarCorreo.setOnClickListener{
-            registerNewUser(txtCorreo.text.toString(),txtClave.text.toString(),txtConfirmarClave.text.toString())
-        }
+        elementsById(view)
 
         return view
     }
 
     override fun onClick(v: View?) {
         when(v!!.id){
+            R.id.btnRegistrarCorreo ->{
+                registerNewUser(editEmail.text.toString(),editPass.text.toString(),editRepitPass.text.toString())
+            }
             R.id.checkBoxMes -> {
                 valorPagar = 6.00
                 checkBoxSemestral.isChecked = false
@@ -239,7 +224,6 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         //You can use DateFormat.LONG instead of SHORT
     }
 
-
     //Verificar los campos de correo y password
     fun checkCredentials(email: String, password: String, passwordRepit: String): Boolean {
         if (email.isEmpty() || password.isEmpty()) {
@@ -258,6 +242,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
 
     //Conexion con firebase para el registro de una nueva cuenta
     fun registerNewUser(email: String, password: String, passwordRepit: String) {
+        val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
         if (checkCredentials(email,password,passwordRepit)){
             auth.createUserWithEmailAndPassword(email, password)
@@ -313,9 +298,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     }
 
     fun setDatos(uid: String, nombre: String, descripcion: String, titulo: String, foto: String, genero:String, ispsicologo: Boolean){
-
         val db = Firebase.firestore
-
         val datos = hashMapOf(
                 "nombre" to nombre,
                 "descripcion" to descripcion,
@@ -331,6 +314,22 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                 }.addOnFailureListener {
 
                 }
+    }
+
+    private fun elementsById(view: View) {
+        editEmail = view.findViewById(R.id.editEmail)
+        editPass = view.findViewById(R.id.txtRegisterClave)
+        editRepitPass = view.findViewById(R.id.txtConfirmarClave)
+        btnRegisterUser = view.findViewById(R.id.btnRegistrarCorreo)
+        checkBoxMensual = view.findViewById(R.id.checkBoxMes)
+        checkBoxSemestral = view.findViewById(R.id.checkBoxSemestral)
+        checkBoxAnual = view.findViewById(R.id.checkBoxAnual)
+
+        checkBoxMensual.setOnClickListener(this)
+        checkBoxSemestral.setOnClickListener(this)
+        checkBoxAnual.setOnClickListener(this)
+
+        imagenDefault = "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"
     }
 
 

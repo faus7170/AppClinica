@@ -25,9 +25,9 @@
                 android:layout_margin="5dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtCorreo"
+                    android:id="@+id/editEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
                     android:paddingLeft="5dp"
@@ -42,9 +42,9 @@
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtClave"
+                    android:id="@+id/editPass"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:hint="@string/clave"
                     android:inputType="textPassword"
                     android:paddingLeft="5dp"
@@ -52,8 +52,15 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
+            <TextView
+                android:id="@+id/textRecoverPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="¿Olvidaste tu clave?" />
+
             <Button
-                android:id="@+id/btnIngresarCorreo"
+                android:id="@+id/btnSignUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

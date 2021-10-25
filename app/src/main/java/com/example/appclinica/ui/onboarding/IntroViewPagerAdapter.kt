@@ -1,4 +1,4 @@
-package com.example.appclinica.onboarding
+package com.example.appclinica.ui.onboarding
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -21,9 +21,9 @@ class IntroViewPagerAdapter(var mContext: Context,var mListScreen: List<ScreenIt
         val title = layoutScreen.findViewById<TextView>(R.id.intro_title)
         val description = layoutScreen.findViewById<TextView>(R.id.intro_description)
 
-        title.setText(mListScreen.get(position).titulo)
-        description.setText(mListScreen.get(position).descripcion)
-        imgSlide.setImageResource(mListScreen.get(position).screenImg)
+        title.setText(mListScreen.get(position).title)
+        description.setText(mListScreen.get(position).description)
+        imgSlide.setImageResource(mListScreen.get(position).img)
         container.addView(layoutScreen)
 
         return layoutScreen

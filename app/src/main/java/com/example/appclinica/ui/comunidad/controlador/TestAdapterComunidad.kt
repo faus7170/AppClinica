@@ -88,7 +88,7 @@ class TestAdapterComunidad(var dataSet: MutableList<SetPregunt>, var isPublicaci
             getCantlike(informacion.id)
 
             txtLike.setOnClickListener {
-                Log.d("onlike","id "+informacion.id)
+                //Log.d("onlike","id "+informacion.id)
                 if (txtLike.tag.equals("liked")){
                     database.getReference("likes").child(informacion.id).child(uid).setValue(true)
                 }else{

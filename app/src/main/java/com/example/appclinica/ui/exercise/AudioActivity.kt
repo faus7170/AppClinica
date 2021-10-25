@@ -1,6 +1,5 @@
 package com.example.appclinica.ui.exercise
 
-import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -64,7 +63,7 @@ class AudioActivity : AppCompatActivity() {
             if (mediaPlayer.isPlaying){
                 mediaPlayer.pause()
                 handler.removeCallbacks(mRunnable)
-                imgPlayPause.setImageResource(R.drawable.ic_baseline_play_circle_outline_24)
+                imgPlayPause.setImageResource(R.drawable.ic_play_circle_outline)
             }else{
                 mediaPlayer.start()
                 seekBar.max = mediaPlayer.duration
@@ -90,7 +89,7 @@ class AudioActivity : AppCompatActivity() {
         })
 
         mediaPlayer.setOnCompletionListener{
-            imgPlayPause.setImageResource(R.drawable.ic_baseline_play_circle_outline_24)
+            imgPlayPause.setImageResource(R.drawable.ic_play_circle_outline)
             mediaPlayer.seekTo(0)
         }
 

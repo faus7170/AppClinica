@@ -114,7 +114,7 @@ class ActivityPasosHipnoHacking : AppCompatActivity() {
             if (mediaPlayer.isPlaying){
                 mediaPlayer.pause()
                 handler.removeCallbacks(mRunnable)
-                imgPlayPause.setImageResource(R.drawable.ic_baseline_play_circle_outline_24)
+                imgPlayPause.setImageResource(R.drawable.ic_play_circle_outline)
             }else{
                 mediaPlayer.start()
                 seekBar.max = mediaPlayer.duration
@@ -140,7 +140,7 @@ class ActivityPasosHipnoHacking : AppCompatActivity() {
         })
 
         mediaPlayer.setOnCompletionListener{
-            imgPlayPause.setImageResource(R.drawable.ic_baseline_play_circle_outline_24)
+            imgPlayPause.setImageResource(R.drawable.ic_play_circle_outline)
             mediaPlayer.seekTo(0)
         }
     }
