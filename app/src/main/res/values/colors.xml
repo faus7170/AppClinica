@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF6200EE</color>
@@ -51,6 +52,8 @@
     <color name="grey_900">#252525</color>
 
     <color name="cyan_500">#00bcd4</color>
+    <color name="colofondo">#4d81a2</color>
+    <color name="azulprincipal">#4d81a2</color>
 
 
 </resources>

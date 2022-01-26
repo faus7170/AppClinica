@@ -2,6 +2,9 @@ package com.example.appclinica.ui.exercise
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.ImageButton
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
@@ -62,7 +65,26 @@ class ExerciseActivity : AppCompatActivity() {
 
 
     }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_app, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
 
+        return when (item.itemId) {
+            R.id.men_config -> {
+                //newGame()
+                true
+            }
+            R.id.men_salir -> {
+                //showHelp()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
     //Buscar un ejerccio en la base de datos
     private fun buscar(s: String){
 

@@ -38,11 +38,7 @@ class LoginFragment : Fragment(), View.OnClickListener{
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
-
         elementsById(view)
-
-
-
         return view
     }
 
@@ -78,15 +74,11 @@ class LoginFragment : Fragment(), View.OnClickListener{
             Toast.makeText(activity, "Verificar que el correo contenga @", Toast.LENGTH_LONG).show()
             return false
         }
-
         return true
     }
-
     //Conexion con firebase para validar si la cuenta existe en caso de que si verifica que el correo y la clave concidadan
     private fun loginUser(email: String, password: String) {
-
         if (checkCredentials(email, password)) {
-
             auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener() { task ->
                         if (task.isSuccessful) {

@@ -42,7 +42,7 @@ class FragmentContact : ConnectionFireStore() {
         //adapterUser = RecyclerAdapterUser()
 
 
-        obtenerContactos(uid.uid)
+        obtenerContactos(uid!!.uid)
 
 
         return view

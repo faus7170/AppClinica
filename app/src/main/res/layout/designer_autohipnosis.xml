@@ -58,11 +58,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:drawableBottom="@drawable/ic_arrow_down"
                     android:gravity="center"
                     android:text="Mas información"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    app:drawableBottomCompat="@drawable/ic_arrow_down" />
 
             </LinearLayout>
 

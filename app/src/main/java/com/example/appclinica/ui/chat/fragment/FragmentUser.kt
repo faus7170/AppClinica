@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appclinica.R
 import com.example.appclinica.ui.chat.ChatRoomActivity
 import com.example.appclinica.ui.chat.controlador.ConnectionFireStore
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 
 class FragmentUser :ConnectionFireStore()  {
 
@@ -48,7 +48,7 @@ class FragmentUser :ConnectionFireStore()  {
 
         obtenerDatos()
 
-        updateToken(FirebaseInstanceId.getInstance().getToken()!!)
+        updateToken(FirebaseMessaging.getInstance().token)
 
         return view
 

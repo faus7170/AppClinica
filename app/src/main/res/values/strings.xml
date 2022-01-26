@@ -43,4 +43,8 @@
     <string name="todo6">TODO</string>
     <string name="todo7">TODO</string>
     <string name="button_volver">button_volver</string>
+    <string name="imagen">Clinica de Hipnosis</string>
+    <string name="olvidoContrasena">¿Olvidaste tu clave?</string>
+    <string name="menconfiguracion">Configuracion</string>
+    <string name="mencerrarsesion">Salir</string>
 </resources>

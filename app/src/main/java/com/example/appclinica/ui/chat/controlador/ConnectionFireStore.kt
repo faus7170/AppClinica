@@ -12,6 +12,7 @@ import com.example.appclinica.ui.chat.modelo.ChatsList
 import com.example.appclinica.notification.Token
 import com.example.appclinica.ui.psicologo.DisplayPsicoActivity
 import com.example.appclinica.ui.psicologo.GetDatosPsicologo
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -95,12 +96,12 @@ open class ConnectionFireStore: Fragment() {
 
     }
 
-    fun updateToken(token:String){
+    fun updateToken(token: Task<String>){
 
         val firebaseUser  = FirebaseAuth.getInstance().currentUser
         val reference : DatabaseReference = FirebaseDatabase.getInstance().getReference("tokens")
-        val tokenl = Token(token)
-        reference.child(firebaseUser.uid).setValue(tokenl)
+        val tokenl = Token(token.toString())
+        reference.child(firebaseUser?.uid.toString()).setValue(tokenl)
 
     }
 

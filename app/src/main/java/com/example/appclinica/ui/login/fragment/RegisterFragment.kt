@@ -251,7 +251,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                             // Sign in success, update UI with the signed-in user's information
                             val user = auth.currentUser
                             //setDatos(user.uid)
-                            updateUI(user,user.uid)
+                            updateUI(user, user?.uid.toString())
                             //sendEmailVerification(user)
                         } else {
                             Toast.makeText(activity, "Authentication failed.", Toast.LENGTH_SHORT).show()

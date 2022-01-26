@@ -65,13 +65,12 @@ class MessageAdapter(val dataSet: MutableList<MessageReciver>) : RecyclerView.Ad
 
         //val uid = Firebase.auth.currentUser
 
-        uid = Firebase.auth.currentUser.uid
+        uid = Firebase.auth.currentUser!!.uid
 
         if (dataSet.get(position).sender.equals(uid)){
             return type_right
         }else
             return type_left
-
     }
 
 

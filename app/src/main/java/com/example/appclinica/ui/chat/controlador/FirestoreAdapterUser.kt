@@ -63,7 +63,7 @@ class FirestoreAdapterUser(val dataSet: MutableList<GetDatosPsicologo>, val list
     fun lastMsm(userid:String, lastMsm: TextView){
 
 
-        val uid = Firebase.auth.currentUser.uid
+        val uid = Firebase.auth.currentUser?.uid
 
         thelastmessage = "default"
 

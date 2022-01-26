@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appclinica.R
 import com.example.appclinica.ui.comunidad.controlador.ReadPublicacionHistorial
 import com.example.appclinica.ui.comunidad.model.SetPregunt
-import com.google.firebase.iid.FirebaseInstanceId
+//import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

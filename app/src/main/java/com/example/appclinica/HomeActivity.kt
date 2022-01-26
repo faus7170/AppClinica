@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import android.view.*
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -45,6 +45,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
         //setTheme(R.style.Theme_AppCompat_Light_NoActionBar)
+        //onCreateOptionsMenu(menu: Menu)
 
         val sharedPreferences: SharedPreferences = getSharedPreferences("theme" , Context.MODE_PRIVATE)
         val modo = sharedPreferences.getBoolean("n",false)
@@ -54,27 +55,46 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         }else{
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
-
         elementsById()
         getDatosUser()
+
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_app, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.men_config -> {
+                //newGame()
+                true
+            }
+            R.id.men_salir -> {
+                //showHelp()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
     //Obtener datos del usuario en la base de datos y guardar en la clase SharedPreferences
     private fun getDatosUser() {
         val db = Firebase.firestore
-        val user = Firebase.auth.currentUser
+        val user = FirebaseAuth.getInstance().currentUser
 
         val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
         val editor = pref.edit()
 
-        db.collection("usuarios").document(user.uid).get()
+        db.collection("usuarios").document(user?.uid.toString()).get()
                 .addOnSuccessListener { getdatos ->
                     val nombre = getdatos.getString("nombre")
                     val descripcion = getdatos.getString("descripcion")
                     val titulo = getdatos.getString("titulo")
                     val foto = getdatos.getString("foto")
 
-                    editor.putString("uid",user.uid)
+                    editor.putString("uid", user?.uid)
                     editor.putString("nombre", nombre)
                     editor.putString("descripcion", descripcion)
                     editor.putString("titulo", titulo)
