@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
     tools:context=".ui.chat.ChatActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -11,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@color/green">
+        android:background="@color/azulprincipal">
 
 
         <LinearLayout
@@ -24,7 +25,7 @@
                 android:id="@+id/btnVolverChat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/green"
+                android:background="@color/azulprincipal"
                 android:contentDescription="button_volver"
                 android:padding="5dp"
                 android:src="@drawable/ic_arrow_back" />
@@ -34,7 +35,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:title="Mensajes" />
+                app:title="Mensajes"
+                app:titleTextColor="@color/white"/>
         </LinearLayout>
 
 
@@ -44,7 +46,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabTextColor="@color/white">
 
         </com.google.android.material.tabs.TabLayout>
 

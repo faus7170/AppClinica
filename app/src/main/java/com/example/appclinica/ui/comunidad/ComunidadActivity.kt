@@ -17,19 +17,14 @@ class ComunidadActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comunidad)
-
         tabLayout = findViewById(R.id.idTabLayoutComunidad)
         viewPager = findViewById(R.id.idViewPagerComunidad)
         btnVolver = findViewById(R.id.btnVolverComunidad)
-
         btnVolver.setOnClickListener {
             finish()
         }
-
         val pageAdapterComunidad = PageAdapterComunidad(supportFragmentManager)
         viewPager.adapter = pageAdapterComunidad
-
         tabLayout.setupWithViewPager(viewPager)
-
     }
 }

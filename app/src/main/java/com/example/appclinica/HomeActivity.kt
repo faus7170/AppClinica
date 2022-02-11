@@ -1,10 +1,7 @@
 package com.example.appclinica
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +14,7 @@ import com.example.appclinica.ui.comunidad.ComunidadActivity
 import com.example.appclinica.ui.configuracion.ConfiguracionActivity
 import com.example.appclinica.ui.exercise.ExerciseActivity
 import com.example.appclinica.ui.login.LoginActivity
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -34,66 +32,35 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var cardViewEjercicio: CardView
     lateinit var cardVieweAutohipnosis: CardView
     lateinit var cardVieweChat: CardView
-    lateinit var cardVieweConfiguracion: CardView
-    lateinit var cardViewSignUp: CardView
-    lateinit var cardVieweForo: CardView
     lateinit var btnTestNotification: Button
+
+    lateinit var menConfiguracion :BottomNavigationItemView
+    lateinit var menPrincial :BottomNavigationItemView
+    lateinit var menSalir :BottomNavigationItemView
+
+
+    //lateinit var btnnavegation: BottomNavigationView
     lateinit var auth: FirebaseAuth
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
-        //setTheme(R.style.Theme_AppCompat_Light_NoActionBar)
-        //onCreateOptionsMenu(menu: Menu)
-
-        val sharedPreferences: SharedPreferences = getSharedPreferences("theme" , Context.MODE_PRIVATE)
-        val modo = sharedPreferences.getBoolean("n",false)
-
-        if (modo==false){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }else{
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         elementsById()
         getDatosUser()
-
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu_app, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle item selection
-        return when (item.itemId) {
-            R.id.men_config -> {
-                //newGame()
-                true
-            }
-            R.id.men_salir -> {
-                //showHelp()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+        
     }
     //Obtener datos del usuario en la base de datos y guardar en la clase SharedPreferences
     private fun getDatosUser() {
         val db = Firebase.firestore
         val user = FirebaseAuth.getInstance().currentUser
-
         val pref = applicationContext.getSharedPreferences("dateUser", MODE_PRIVATE)
         val editor = pref.edit()
-
         db.collection("usuarios").document(user?.uid.toString()).get()
                 .addOnSuccessListener { getdatos ->
                     val nombre = getdatos.getString("nombre")
                     val descripcion = getdatos.getString("descripcion")
                     val titulo = getdatos.getString("titulo")
                     val foto = getdatos.getString("foto")
-
                     editor.putString("uid", user?.uid)
                     editor.putString("nombre", nombre)
                     editor.putString("descripcion", descripcion)
@@ -102,12 +69,12 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                     editor.apply()
 
                 }.addOnFailureListener { exception ->
-
-                }
+        }
     }
 
     //Accion para acceder a cada servicio con la clase onClick
     override fun onClick(v: View?) {
+        println("Ingreso a la vista onclick")
         when(v!!.id){
             R.id.bankcardExercice -> {
                 val intent = Intent(this, ExerciseActivity::class.java)
@@ -125,49 +92,77 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
                 Animatoo.animateSlideLeft(this)
             }
-            R.id.bankcardConfiguracion-> {
+            /*R.id.bankcardConfiguracion-> {
                 val intent = Intent(this, ConfiguracionActivity::class.java)
                 startActivity(intent)
                 //Toast.makeText(applicationContext,"En proceso ...",Toast.LENGTH_LONG).show()
                 finish()
 
-            }
+            }*/
             R.id.bankcardForo -> {
                 val intent = Intent(this, ComunidadActivity::class.java)
                 startActivity(intent)
                 Animatoo.animateSlideLeft(this)
             }
-            R.id.bankcardSignUp -> {
+            /*R.id.bankcardSignUp -> {
+                Firebase.auth.signOut()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                Animatoo.animateSlideRight(this)
+                finish()
+            }*/
+           /* R.id.testNotification ->{
+                val intent = Intent(this, ConfiguracionActivity::class.java)
+                startActivity(intent)
+                //Toast.makeText(applicationContext,"En proceso ...",Toast.LENGTH_LONG).show()
+                finish()
+            }*/
+            R.id.menConfiguracion ->{
+                println("Menu configuracion")
+                val intent = Intent(this, ConfiguracionActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            R.id.menPrincial ->{
+                println("Menu principal")
+                val intent = Intent(this, TestNotificationActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.menSalir ->{
+                println("Menu Salir")
                 Firebase.auth.signOut()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 Animatoo.animateSlideRight(this)
                 finish()
             }
-            R.id.testNotification ->{
-                val intent = Intent(this, TestNotificationActivity::class.java)
-                startActivity(intent)
-            }
         }
     }
+/*private fun BottomN()
+{
+    btnnavegation.setOnClickListener{
 
+    }
+}*/
 
     private fun elementsById() {
         cardViewEjercicio = findViewById(R.id.bankcardExercice)
         cardVieweAutohipnosis = findViewById(R.id.bankcardAutohipnosis)
         cardVieweChat = findViewById(R.id.bankcardChat)
-        cardVieweConfiguracion = findViewById(R.id.bankcardConfiguracion)
-        cardViewSignUp= findViewById(R.id.bankcardSignUp)
-        cardVieweForo = findViewById(R.id.bankcardForo)
-        btnTestNotification = findViewById(R.id.testNotification)
+       // btnTestNotification = findViewById(R.id.testNotification)
+
+        menConfiguracion = findViewById(R.id.menConfiguracion)
+        menPrincial= findViewById(R.id.menPrincial)
+        menSalir= findViewById(R.id.menSalir)
 
         cardViewEjercicio.setOnClickListener(this)
         cardVieweAutohipnosis.setOnClickListener(this)
         cardVieweChat.setOnClickListener(this)
-        cardVieweConfiguracion.setOnClickListener(this)
-        cardViewSignUp.setOnClickListener(this)
-        cardVieweForo.setOnClickListener(this)
-        btnTestNotification.setOnClickListener(this)
+
+        menConfiguracion.setOnClickListener(this)
+        menPrincial.setOnClickListener(this)
+        menSalir.setOnClickListener(this)
+
     }
 
 

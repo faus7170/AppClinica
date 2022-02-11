@@ -28,7 +28,7 @@
         android:id="@+id/imageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/ic_liked"
+        android:src="@drawable/ic_like"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.60"
-        android:src="@drawable/ic_comment" />
+        android:src="@drawable/ic_baseline_comment_24" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -61,7 +61,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.70"
-        app:srcCompat="@android:drawable/ic_menu_share" />
+        app:srcCompat="@drawable/ic_share" />
 
     <LinearLayout
         android:layout_width="match_parent"

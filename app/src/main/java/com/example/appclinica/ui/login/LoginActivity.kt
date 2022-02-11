@@ -19,6 +19,7 @@ import com.google.firebase.auth.*
 class LoginActivity :  AppCompatActivity()  {
     //private lateinit var database: DatabaseReference
     lateinit var btnLogin: Button
+    lateinit var btnRegister: Button
     lateinit var btnLoginFacebook: ImageButton
     lateinit var btnLoginGoogle: ImageButton
     lateinit var txtEmail : EditText
@@ -42,6 +43,7 @@ class LoginActivity :  AppCompatActivity()  {
    }
    private fun elementsById() {
        btnLogin = findViewById(R.id.btnLogin)
+       btnRegister = findViewById(R.id.btnRegister)
        //btnLoginFacebook = findViewById(R.id.btnLoginFacebook)
        //btnLoginGoogle = findViewById(R.id.btnLoginGoogle)
        txtEmail =  findViewById(R.id.txtEmail)
@@ -65,6 +67,9 @@ class LoginActivity :  AppCompatActivity()  {
             showAlert("Llena todos los campos.")
         }
        }
+        btnRegister.setOnClickListener{
+            //updateUI(user)
+        }
     }
     private fun updateUI(currentUser: FirebaseUser?) { //send current user to next activity
         if (currentUser == null) return

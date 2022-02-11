@@ -37,9 +37,7 @@ class ActivityPasosHipnoHacking : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pasos_hipno_hacking)
-
         val bundle = intent.extras
-
         mRecyclerView = findViewById(R.id.recyclerViewPasosHipnoHacking)
         mRecyclerView.layoutManager = LinearLayoutManager(this)
         linerlayout = findViewById(R.id.linerAudioHH)
@@ -54,15 +52,12 @@ class ActivityPasosHipnoHacking : AppCompatActivity() {
             linerlayout.visibility = View.GONE
             mediaPlayer.stop()
         }
-
         val key = bundle!!.getString("key")
-
         conexionFirestore(key.toString())
     }
 
     private fun conexionFirestore(keyFB:String) {
         userList = mutableListOf()
-
         database.collection("hipnohacking").document(keyFB).collection("pasos").get().addOnSuccessListener { document ->
             userList.clear()
             for (getdatos in document) {
@@ -74,10 +69,7 @@ class ActivityPasosHipnoHacking : AppCompatActivity() {
 
                 userList.add(testDatos)
             }
-
             adapter = AdapterHipnoHacking(userList) {
-
-                //reproductor(it.audio)
                 val intent = Intent(this, AudioActivity::class.java)
                 intent.putExtra("url", it.audio)
                 startActivity(intent)
@@ -89,27 +81,19 @@ class ActivityPasosHipnoHacking : AppCompatActivity() {
         }
     }
 
-
     private fun reproductor(audio: String) {
-
         linerlayout.visibility = View.VISIBLE
-
         val uri = Uri.parse(audio)
         mediaPlayer = MediaPlayer.create(this,uri)
-
         mRunnable = object : Runnable {
             override fun run() {
                 seekBar.setProgress(mediaPlayer.currentPosition)
                 handler.postDelayed(this,500)
             }
         }
-
         val duration = mediaPlayer.duration
-
         val sDuration = miliSecondToTimer(duration)
-
         txtTotalTime.text = sDuration
-
         imgPlayPause.setOnClickListener {
             if (mediaPlayer.isPlaying){
                 mediaPlayer.pause()
@@ -122,23 +106,18 @@ class ActivityPasosHipnoHacking : AppCompatActivity() {
                 imgPlayPause.setImageResource(R.drawable.ic_pause_circle)
             }
         }
-
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (fromUser){
                     mediaPlayer.seekTo(progress)
                 }
                 txtCurrenTime.text = miliSecondToTimer(mediaPlayer.currentPosition)
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar) {
             }
-
             override fun onStopTrackingTouch(seekBar: SeekBar) {
             }
         })
-
         mediaPlayer.setOnCompletionListener{
             imgPlayPause.setImageResource(R.drawable.ic_play_circle_outline)
             mediaPlayer.seekTo(0)

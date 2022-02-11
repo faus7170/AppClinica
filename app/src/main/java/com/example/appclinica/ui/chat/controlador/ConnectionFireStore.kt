@@ -171,9 +171,7 @@ open class ConnectionFireStore: Fragment() {
     }
 
     fun buscarUser(s: String){
-
         mUserSearch = mutableListOf()
-
         for (test: GetDatosPsicologo in mUser){
             //userListSearch.clear()
             if (test.nombre.toLowerCase().contains(s.toLowerCase())){
@@ -181,17 +179,11 @@ open class ConnectionFireStore: Fragment() {
                 mUserSearch.add(getDatos)
             }
         }
-
          adapter = FirestoreAdapterUser(mUserSearch,{
-
              option(it.id)
-
          },false)
          mRecyclerView.adapter = adapter
-
-
     }
-
     fun cardChatBots(){
 
     }

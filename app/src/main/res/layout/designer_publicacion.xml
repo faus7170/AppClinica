@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@drawable/test_dos">
+    android:background="@drawable/test_hipnohacking">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:background="@color/white"
+        android:background="@color/azulprincipal"
         android:clickable="false"
         android:padding="5dp"
         app:cardCornerRadius="2dp">
@@ -22,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:background="@color/azulprincipal"
             android:visibility="gone">
 
             <TextView
@@ -37,6 +38,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/azulprincipal"
                 android:orientation="horizontal">
 
                 <Button
@@ -63,6 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:background="@color/azulprincipal"
             android:visibility="visible">
 
             <LinearLayout
@@ -78,7 +81,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_margin="10dp"
-                    android:src="@drawable/ic_insert_emoticon" />
+                    android:src="@drawable/ic_emoticon_white" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -89,9 +92,9 @@
                         android:id="@+id/toolbar2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         android:minHeight="?attr/actionBarSize"
                         android:theme="?attr/actionBarTheme"
+                        android:titleTextColor="@color/white"
                         android:title="Nombre ..." />
 
                     <TextView
@@ -100,8 +103,9 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:text="Pregunta ..."
-                        android:textColor="@color/black"
-                        android:textSize="24sp"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:textStyle="italic"
                         android:visibility="visible" />
 
                     <LinearLayout
@@ -169,7 +173,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_liked"
+                        android:src="@drawable/ic_like"
                         android:tag="liked" />
 
                     <TextView
@@ -192,7 +196,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_comment" />
+                        android:src="@drawable/ic_chat_white" />
 
                     <TextView
                         android:id="@+id/cantComent"

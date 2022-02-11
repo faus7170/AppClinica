@@ -47,4 +47,9 @@
     <string name="olvidoContrasena">¿Olvidaste tu clave?</string>
     <string name="menconfiguracion">Configuracion</string>
     <string name="mencerrarsesion">Salir</string>
+    <string name="plantilla">LLENAR PLANTILLA DE CONDUCTA (OPCIONAL)</string>
+    <!--String para botones -->
+    <string name="btnConfiguracion">Configuración</string>
+    <string name="btnInicio">Inicio</string>
+    <string name="btnSalir">Salir</string>
 </resources>

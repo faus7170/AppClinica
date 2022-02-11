@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background_gradient"
     android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/orangebg"
+        android:background="@color/azulprincipal"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -18,7 +19,7 @@
             android:id="@+id/btnVolverAudio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/orangebg"
+            android:background="@color/azulprincipal"
             android:contentDescription="button_volver"
             android:padding="5dp"
             android:src="@drawable/ic_arrow_back" />
@@ -29,8 +30,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Clinica hipnosis"
-            android:textColor="@color/black"
-            android:textSize="36sp" />
+            android:textColor="@color/white"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <ScrollView
@@ -106,8 +107,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/btn_login_register"
-        android:text="Finalizar" />
+        android:background="@drawable/btn_login"
+        android:text="Finalizar"
+        android:textColor="@color/white"/>
 
 
 </LinearLayout>
