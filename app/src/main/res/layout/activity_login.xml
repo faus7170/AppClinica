@@ -77,8 +77,8 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
         android:background="@drawable/btn_login"
         android:text="@string/action_sign"
         app:backgroundTint="#2AFFFFFF"
@@ -90,8 +90,8 @@
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
         android:background="@drawable/btn_login"
         android:text="@string/action_register"
         app:backgroundTint="#2AFFFFFF"

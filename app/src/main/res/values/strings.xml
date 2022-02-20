@@ -24,9 +24,9 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="clave">Clave</string>
-    <string name="option_mensual">$ 6.00 Mensual</string>
-    <string name="option_semestral">$ 12.00 Semestral</string>
-    <string name="option_anual">$ 24.00 Anual</string>
+    <string name="option_mensual">$ 4.99 Mensual</string>
+    <string name="option_semestral">$ 16.99 Trimestral</string>
+    <string name="option_anual">$ 24.99 Anual</string>
     <string name="mensaje">Mensaje</string>
     <string name="clinica_hipnosis">Clinica hipnosis</string>
     <string name="ejercicios">Ejercicios</string>

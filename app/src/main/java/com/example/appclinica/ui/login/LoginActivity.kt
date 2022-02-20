@@ -68,7 +68,7 @@ class LoginActivity :  AppCompatActivity()  {
         }
        }
         btnRegister.setOnClickListener{
-            //updateUI(user)
+            updateUIReg()
         }
     }
     private fun updateUI(currentUser: FirebaseUser?) { //send current user to next activity
@@ -78,6 +78,13 @@ class LoginActivity :  AppCompatActivity()  {
         startActivity(intent)
        // savePrefsData()
        // requireActivity().finish()
+    }
+    private fun updateUIReg() { //send current user to next activity
+        val intent = Intent(this, RegisterActivity::class.java).apply{
+        }
+        startActivity(intent)
+        // savePrefsData()
+        // requireActivity().finish()
     }
     private fun showAlert(mensaje : String){
         val builder=AlertDialog.Builder(this)

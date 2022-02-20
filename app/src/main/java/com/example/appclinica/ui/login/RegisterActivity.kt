@@ -51,34 +51,85 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val view=setContentView(R.layout.activity_register)
-        //elementsById()
+        elementsById()
         title="Autenticación"
-      //  setUp(view)
+        setUp()
 
     }
-     fun setUp (v: View?){
-        when(v!!.id){
-            R.id.btnRegistrarCorreo ->{
-                //registerNewUser(editEmail.text.toString(),editPass.text.toString(),editRepitPass.text.toString())
-            }
-            R.id.checkBoxMes -> {
-                valorPagar = 6.00
-                checkBoxSemestral.isChecked = false
-                checkBoxAnual.isChecked = false
-            }
-            R.id.checkBoxSemestral ->{
-                valorPagar = 12.00
-                checkBoxMensual.isChecked = false
-                checkBoxAnual.isChecked = false
-            }
-            R.id.checkBoxAnual ->{
-                valorPagar = 24.00
-                checkBoxMensual.isChecked = false
-                checkBoxSemestral.isChecked = false
-            }
+    fun setUp (){
+        btnRegisterUser.setOnClickListener{
+            println("==========Se grabo =========== ")
+            println(valorPagar)
+            println(checkBoxSemestral.isChecked)
+            println("============================== ")
+            registerNewUser(editEmail.text.toString(),editPass.text.toString(),editRepitPass.text.toString())
+        }
+        checkBoxMensual.setOnClickListener{
+            valorPagar = 4.99
+            checkBoxSemestral.isChecked = false
+            checkBoxAnual.isChecked = false
+        }
+        checkBoxSemestral.setOnClickListener{
+            valorPagar = 16.99
+            checkBoxMensual.isChecked = false
+            checkBoxAnual.isChecked = false
+        }
+        checkBoxAnual.setOnClickListener{
+            valorPagar = 24.99
+            checkBoxMensual.isChecked = false
+            checkBoxSemestral.isChecked = false
         }
     }
+    fun registerNewUser(email: String, password: String, passwordRepit: String) {
+        val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
+        if (checkCredentials(email,password,passwordRepit)){
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener() { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        val user = auth.currentUser
+                        //setDatos(user.uid)
+                       //--- updateUI(user, user?.uid.toString())
+                        //sendEmailVerification(user)
+                    } else {
+                        //---Toast.makeText(activity, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                        //updateUI(null)
+                    }
+                }
+        }
+
+
+    }
+    fun checkCredentials(email: String, password: String, passwordRepit: String): Boolean {
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(applicationContext, "Llenar los campos", Toast.LENGTH_LONG).show()
+            return false
+        }else if (!email.contains("@") || email.length < 6) {
+            Toast.makeText(applicationContext, "Verificar que el correo", Toast.LENGTH_LONG).show()
+            return false
+        }else if(!password.equals(passwordRepit)){
+            Toast.makeText(applicationContext, "Claves no conciden", Toast.LENGTH_LONG).show()
+            return false
+        }
+
+        return true
+    }
+    private fun elementsById() {
+        editEmail = findViewById(R.id.editEmail)
+        editPass = findViewById(R.id.txtRegisterClave)
+        editRepitPass = findViewById(R.id.txtConfirmarClave)
+        btnRegisterUser = findViewById(R.id.btnRegistrarUser)
+        checkBoxMensual = findViewById(R.id.checkBoxMes)
+        checkBoxSemestral = findViewById(R.id.checkBoxSemestral)
+        checkBoxAnual = findViewById(R.id.checkBoxAnual)
+
+        //checkBoxMensual.setOnClickListener()
+        //checkBoxSemestral.setOnClickListener(this)
+        //checkBoxAnual.setOnClickListener(this)
+
+        imagenDefault = "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"
+    }
   /* fun addCard(){
 
         val cardToSave = cardWidget.card
