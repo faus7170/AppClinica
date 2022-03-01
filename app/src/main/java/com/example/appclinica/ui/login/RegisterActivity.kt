@@ -1,17 +1,13 @@
 package com.example.appclinica.ui.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.example.appclinica.HomeActivity
 import com.example.appclinica.R
 import com.example.appclinica.notification.Alert
@@ -20,8 +16,6 @@ import com.example.appclinica.paymantel.BackendService
 import com.example.appclinica.paymantel.modelo.CreateChargeResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.google.gson.GsonBuilder
 import com.paymentez.android.Paymentez
 import com.paymentez.android.model.Card
@@ -51,8 +45,13 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val view=setContentView(R.layout.activity_register)
+
+        Paymentez.setEnvironment(Constants.PAYMENTEZ_IS_TEST_MODE, Constants.PAYMENTEZ_CLIENT_APP_CODE, Constants.PAYMENTEZ_CLIENT_APP_KEY);
+
         elementsById()
         title="Autenticación"
+        //val uid: String = com.paymentez.examplestore.utils.Constants.USER_ID
+        //val email: String = com.paymentez.examplestore.utils.Constants.USER_EMAIL
         setUp()
 
     }
@@ -81,25 +80,32 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
     fun registerNewUser(email: String, password: String, passwordRepit: String) {
-        val auth: FirebaseAuth = FirebaseAuth.getInstance()
-
+        //val auth: FirebaseAuth = FirebaseAuth.getInstance()
         if (checkCredentials(email,password,passwordRepit)){
-            auth.createUserWithEmailAndPassword(email, password)
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener() { task ->
                     if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        val user = auth.currentUser
-                        //setDatos(user.uid)
-                       //--- updateUI(user, user?.uid.toString())
-                        //sendEmailVerification(user)
+                        println("Guardado")
+                        val user =FirebaseAuth.getInstance().currentUser
+                        //updateUI(user)
+                        addCard()
                     } else {
+                        val s=task.exception.toString()
+                        println("Error: $s")
+
                         //---Toast.makeText(activity, "Authentication failed.", Toast.LENGTH_SHORT).show()
                         //updateUI(null)
                     }
                 }
         }
-
-
+    }
+    private fun updateUI(currentUser: FirebaseUser?) { //send current user to next activity
+        if (currentUser == null) return
+        val intent = Intent(this, HomeActivity::class.java).apply{
+        }
+        startActivity(intent)
+        // savePrefsData()
+        // requireActivity().finish()
     }
     fun checkCredentials(email: String, password: String, passwordRepit: String): Boolean {
         if (email.isEmpty() || password.isEmpty()) {
@@ -123,110 +129,135 @@ class RegisterActivity : AppCompatActivity() {
         checkBoxMensual = findViewById(R.id.checkBoxMes)
         checkBoxSemestral = findViewById(R.id.checkBoxSemestral)
         checkBoxAnual = findViewById(R.id.checkBoxAnual)
-
+        cardWidget =findViewById(R.id.card_multiline_widget)
         //checkBoxMensual.setOnClickListener()
         //checkBoxSemestral.setOnClickListener(this)
         //checkBoxAnual.setOnClickListener(this)
 
         imagenDefault = "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"
     }
-  /* fun addCard(){
-
+   fun addCard(){
+       println("Control ==> ADD1")
+      // cardWidget = findViewById<View>(R.id.card_multiline_widget) as CardMultilineWidget
         val cardToSave = cardWidget.card
-
+       println("Control ==> ADD2")
         if (cardToSave == null) {
-            Alert.show(
-                activity,
+            println("Control ==> ADD3")
+            println("Tarjeta invalida")
+            /*Alert.show(applicationContext,
                 "Error",
                 "Tarjeta invalida"
-            )
+            )*/
             return
         } else {
-            Paymentez.addCard(activity, Constants.USER_ID, Constants.USER_EMAIL, cardToSave, object :
+            println("Control ==> ADD4")
+            Paymentez.addCard(applicationContext, Constants.USER_ID, Constants.USER_EMAIL, cardToSave, object :
                 TokenCallback {
                 override fun onSuccess(card: Card) {
+                    val status=card.status.toString()
+                    println("Control 5 ==> $status")
+                    val message=card.message.toString()
+                    println("Control 6 ==> $message")
                     if (card.status == "valid") {
-
+                        println("Control 7 ==> ADD5")
                         pago(card.token)
 
-                        Alert.show(
-                            activity,
+                      /*  Alert.show(
+                            applicationContext,
                             "La tarjeta fue valida",
                             "status: " + card.status + "\n" +
                                     "Card Token: " + card.token + "\n" +
                                     "transaction_reference: " + card.transactionReference
-                        )
+                        )*/
 
                     } else if ((card.status == "review")) {
-                        Alert.show(
-                            activity,
+                        println("Control 8 ==> ADD5")
+                        val s=card.status.toString()
+                        println("Control ==> $s")
+                        val t=card.token .toString()
+                        println("Control ==> $s Token $t")
+                        /*Alert.show(
+                            applicationContext,
                             "Tarjeta ya esta registrada",
                             ("status: " + card.status + "\n" +
                                     "Card Token: " + card.token + "\n" +
                                     "transaction_reference: " + card.transactionReference)
-                        )
+                        )*/
                     } else {
-                        Alert.show(
-                            activity,
+                        println("Control 9 ==> ADD5")
+                        val t=card.status.toString()
+                        val m= card.message.toString()
+                        println("Control ==> $t Token $m")
+                       /* Alert.show(
+                            applicationContext,
                             "Error",
                             ("status: " + card.status + "\n" +
                                     "message: " + card.message)
-                        )
+                        )*/
                     }
 
                     //TODO: Create charge or Save Token to your backend
                 }
-
                 override fun onError(error: PaymentezError) {
+                    println("Control 10 ==> ADD5")
+                    val t=error.type.toString()
+                    val h= error.help.toString()
+                    val d= error.description.toString()
+                    println("Control Type:$t Help:$h Descripcion:$d")
+                    println("============================")
                     //Log.d("test_TokenD","token"+error.type)
-                    Alert.show(
-                        activity,
+                    /*Alert.show(
+                        applicationContext,
                         "Error",
                         ("Type: " + error.type + "\n" +
                                 "Help: " + error.help + "\n" +
                                 "Description: " + error.description)
-                    )
+                    )*/
 
                 }
             })
         }
-    }*/
+    }
 
-   /* fun pago(CARD_TOKEN: String){
+    fun pago(CARD_TOKEN: String){
+
         Log.d("test_Token", "valor " + CARD_TOKEN)
-
+        println("Control ==> ADD6")
         if (CARD_TOKEN == "") {
             Alert.show(
-                activity,
+                applicationContext,
                 "Error",
                 "Necesitas seleccionar una tarjeta"
             )
         } else {
+            println("Control ==> ADD7")
             val ORDER_AMOUNT = 10.5
             //val ORDER_ID = "" + System.currentTimeMillis()
             val ORDER_ID = "" + millisToDate(System.currentTimeMillis())
             val ORDER_DESCRIPTION = "ORDER #$ORDER_ID"
             backendService.createCharge(
-                Constants.USER_ID, Paymentez.getSessionId(activity),
+                Constants.USER_ID, Paymentez.getSessionId(applicationContext),
                 CARD_TOKEN, ORDER_AMOUNT, ORDER_ID, ORDER_DESCRIPTION
             )!!.enqueue(object : Callback<CreateChargeResponse?> {
+
                 override fun onResponse(
                     call: Call<CreateChargeResponse?>,
                     response: Response<CreateChargeResponse?>
                 ) {
+                    println("Control ==> ADD8")
                     val createChargeResponse: CreateChargeResponse? = response.body()
                     if (response.isSuccessful() && createChargeResponse != null && createChargeResponse.transaction != null) {
-                        /*Alert.show(
-                            this@MainActivity,
+                        Alert.show(
+                            applicationContext,
                             "Successful Charge",
                             """
-                            date: ${createChargeResponse.transaction.paymentDate.toString()}
+                            date: ${createChargeResponse.transaction.payment_date.toString()}
                             date metodo: ${ORDER_ID}
-                            status_detail: ${createChargeResponse.transaction.statusDetail.toString()}
+                            status_detail: ${createChargeResponse.transaction.status.toString()}
                             message: ${createChargeResponse.transaction.message.toString()}
                             transaction_id:${createChargeResponse.transaction.id}
                             """.trimIndent()
-                        )*/
+                        )
                         //sendMail(createChargeResponse.transaction.id, createChargeResponse.transaction.amount,
                         //  ORDER_ID, createChargeResponse.transaction.status)
                     } else {
@@ -237,7 +268,7 @@ class RegisterActivity : AppCompatActivity() {
                                 ErrorResponse::class.java
                             )
                             Alert.show(
-                                activity,
+                                applicationContext,
                                 "Error",
                                 errorResponse.error.type
                             )
@@ -249,19 +280,19 @@ class RegisterActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<CreateChargeResponse?>, e: Throwable) {
                     Alert.show(
-                        activity,
+                        applicationContext,
                         "Error",
                         e.localizedMessage
                     )
                 }
             })
         }
-    }*/
+    }
 
-    /*private fun millisToDate(millis: Long): String? {
+    private fun millisToDate(millis: Long): String? {
         return DateFormat.getDateInstance(DateFormat.SHORT).format(millis)
         //You can use DateFormat.LONG instead of SHORT
-    }*/
+    }
 
     //Verificar los campos de correo y password
     /*fun checkCredentials(email: String, password: String, passwordRepit: String): Boolean {

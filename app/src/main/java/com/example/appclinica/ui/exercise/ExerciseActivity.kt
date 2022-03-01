@@ -13,7 +13,9 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.example.appclinica.HomeActivity
 import com.example.appclinica.R
 import com.example.appclinica.ui.exercise.controlador.AdapterExercise
+import com.example.appclinica.ui.exercise.controlador.VideoViewHolder
 import com.example.appclinica.ui.exercise.model.Exercise
+import com.example.appclinica.ui.exercise.model.VideoViewModelo
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -27,6 +29,7 @@ class ExerciseActivity : AppCompatActivity() {
     lateinit var adapter: AdapterExercise
     lateinit var mRecyclerView: RecyclerView
     lateinit var userList: MutableList<Exercise>
+    lateinit var userListPasos: MutableList<Exercise>
     lateinit var userListSearches: MutableList<Exercise>
     lateinit var search:SearchView
     lateinit var imageButton: ImageButton
@@ -89,6 +92,8 @@ class ExerciseActivity : AppCompatActivity() {
         val database = Firebase.firestore
         userList = mutableListOf()
         db.collection("ejercicios").get().addOnSuccessListener { document ->
+            println("=================Ejercicios============")
+
             userList.clear()
             for (getdatos in document) {
                 val nombre = getdatos.getString("nombre")
@@ -97,7 +102,24 @@ class ExerciseActivity : AppCompatActivity() {
                 val testDatos = Exercise(descripcion!!, nombre!!, id)
                 userList.add(testDatos)
             }
+            println(userList)
             adapter(userList)
+        }.addOnFailureListener { exception ->
+      }
+        userListPasos = mutableListOf()
+        db.collection("ejercicios").document(dato.toString()).collection("pasos").get().addOnSuccessListener { document ->
+            userList.clear()
+            for (getdatos in document) {
+                val ident = getdatos.getString("identificador")
+                val contenido = getdatos.getString("contenido")
+                val tipo= getdatos.getString("otro")
+                val id = getdatos.id
+                val testDatos = VideoViewModelo(ident!!,contenido!!,tipo!!)
+                userList.add(testDatos)
+            }
+            videoViewHolder = VideoViewHolder(userList) {
+            }
+            viewpager.setAdapter(videoViewHolder)
         }.addOnFailureListener { exception ->
         }
     }

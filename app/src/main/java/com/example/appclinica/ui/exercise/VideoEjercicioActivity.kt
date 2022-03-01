@@ -43,39 +43,22 @@ class VideoEjercicioActivity : AppCompatActivity() {
         viewpager.setAdapter(videoViewHolder)*/
 
     }
-
     private fun getDatosFirestore(dato: String?) {
         val db = Firebase.firestore
         userList = mutableListOf()
-
-        //var ischeck = false
-
         db.collection("ejercicios").document(dato.toString()).collection("pasos").get().addOnSuccessListener { document ->
             for (getdatos in document) {
-
                 val ident = getdatos.getString("identificador")
                 val contenido = getdatos.getString("contenido")
                 val tipo= getdatos.getString("otro")
                 val id = getdatos.id
-
-                //val testDatos = Exercise("null","null","null",ident!!,contenido!!, tipo!!)
-
                 val testDatos = VideoViewModelo(ident!!,contenido!!,tipo!!)
                 userList.add(testDatos)
-
+                }
+                videoViewHolder = VideoViewHolder(userList) {
             }
-
-            //viewpager.setCurrentItem(VideoViewHolder)
-
-            videoViewHolder = VideoViewHolder(userList) {
-
-            }
-
             viewpager.setAdapter(videoViewHolder)
-
-
-        }.addOnFailureListener { exception ->
-
+          }.addOnFailureListener { exception ->
         }
     }
 }
